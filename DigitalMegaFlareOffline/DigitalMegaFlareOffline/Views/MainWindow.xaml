@@ -4,8 +4,34 @@
         xmlns:s="clr-namespace:DigitalMegaFlareOffline"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}" Height="350" Width="525" >
+        Title="{Binding Title}"
+        Width="1100" Height="800"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        >
     <Grid>
-        <ContentControl prism:RegionManager.RegionName="{x:Static s:RegionNames.ContentRegion}" />
+        <!-- 画面分割の定義 -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <!-- メニュー -->
+            <Menu IsMainMenu="True">
+                <MenuItem Icon="{materialDesign:PackIcon Kind=Home}" Header="説明" Command="{Binding NavigateCommand}" CommandParameter="Home"></MenuItem>
+                <MenuItem Icon="{materialDesign:PackIcon Kind=Cog}" Header="設定" Command="{Binding NavigateCommand}" CommandParameter="Config"></MenuItem>
+                <MenuItem Icon="{materialDesign:PackIcon Kind=Pencil}" Header="Excel管理と生成" Command="{Binding NavigateCommand}" CommandParameter="Excel"></MenuItem>
+                <MenuItem Icon="{materialDesign:PackIcon Kind=FileDownload}" Header="Razor読み込み" Command="{Binding NavigateCommand}" CommandParameter="RazorLoad"></MenuItem>
+                <MenuItem Icon="{materialDesign:PackIcon Kind=Pencil}" Header="Razor編集" Command="{Binding NavigateCommand}" CommandParameter="RazorEdit"></MenuItem>
+            </Menu>
+        </StackPanel>
+        <ContentControl prism:RegionManager.RegionName="{x:Static s:RegionNames.ContentRegion}" Grid.Row="1" Margin="15,0,15,15"/>
     </Grid>
 </Window>

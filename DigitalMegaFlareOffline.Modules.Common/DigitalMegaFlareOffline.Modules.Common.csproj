@@ -5,6 +5,7 @@
     <AssemblyName>DigitalMegaFlareOffline.Modules.Common</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="4.2.1" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>

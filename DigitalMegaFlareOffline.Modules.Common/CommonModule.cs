@@ -13,7 +13,11 @@ namespace DigitalMegaFlareOffline.Modules.Common
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //containerRegistry.RegisterForNavigation<Home>();
+            containerRegistry.RegisterForNavigation<Config>();
+            containerRegistry.RegisterForNavigation<Excel>();
+            containerRegistry.RegisterForNavigation<Home>();
+            containerRegistry.RegisterForNavigation<RazorEdit>();
+            containerRegistry.RegisterForNavigation<RazorLoad>();
         }
     }
 

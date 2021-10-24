@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
 {
-    public class ViewAViewModel : RegionViewModelBase
+    public class RazorEditViewModel : RegionViewModelBase
     {
         private string _message;
         public string Message
@@ -20,7 +20,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             set { SetProperty(ref _message, value); }
         }
 
-        public ViewAViewModel(IRegionManager regionManager, IMessageService messageService) :
+        public RazorEditViewModel(IRegionManager regionManager, IMessageService messageService) :
             base(regionManager)
         {
             Message = messageService.GetMessage() + GetType().Name;
