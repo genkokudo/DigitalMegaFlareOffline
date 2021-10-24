@@ -9,12 +9,19 @@ namespace DigitalMegaFlareOffline.Modules.Common
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
- 
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            
+            //containerRegistry.RegisterForNavigation<Home>();
         }
+    }
+
+    /// <summary>
+    /// このモジュールに含まれるView名を定数にしておく
+    /// </summary>
+    public static class ViewNames
+    {
+        public const string ViewHome = "Home";
     }
 }
