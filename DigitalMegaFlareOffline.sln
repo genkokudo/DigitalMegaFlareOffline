@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalMegaFlareOffline.Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalMegaFlareOffline", "DigitalMegaFlareOffline\DigitalMegaFlareOffline\DigitalMegaFlareOffline.csproj", "{A629B6EA-1A1E-49BE-BD82-E88B34CFF01E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalMegaFlareOffline.Core", "DigitalMegaFlareOffline\DigitalMegaFlareOffline.Core\DigitalMegaFlareOffline.Core.csproj", "{193107F3-E731-422C-80CB-21A580512B6F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalMegaFlareOffline.Modules.Common", "DigitalMegaFlareOffline.Modules.Common\DigitalMegaFlareOffline.Modules.Common.csproj", "{FA101D11-0C47-4838-ADEF-A15917BF47A8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalMegaFlareOffline.Modules.Common.Tests", "DigitalMegaFlareOffline.Modules.Common.Tests\DigitalMegaFlareOffline.Modules.Common.Tests.csproj", "{78892A37-A819-4A40-A8D1-C6EF0015575D}"
@@ -33,10 +31,6 @@ Global
 		{A629B6EA-1A1E-49BE-BD82-E88B34CFF01E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A629B6EA-1A1E-49BE-BD82-E88B34CFF01E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A629B6EA-1A1E-49BE-BD82-E88B34CFF01E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{193107F3-E731-422C-80CB-21A580512B6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{193107F3-E731-422C-80CB-21A580512B6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{193107F3-E731-422C-80CB-21A580512B6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{193107F3-E731-422C-80CB-21A580512B6F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FA101D11-0C47-4838-ADEF-A15917BF47A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FA101D11-0C47-4838-ADEF-A15917BF47A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA101D11-0C47-4838-ADEF-A15917BF47A8}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,4 +1,4 @@
-﻿using DigitalMegaFlareOffline.Core.Mvvm;
+﻿using DigitalMegaFlareOffline.Modules.Common.Mvvm;
 using DigitalMegaFlareOffline.Services;
 using Prism.Commands;
 using Prism.Mvvm;

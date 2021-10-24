@@ -8,7 +8,6 @@
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DigitalMegaFlareOffline\DigitalMegaFlareOffline.Core\DigitalMegaFlareOffline.Core.csproj" />
     <ProjectReference Include="..\DigitalMegaFlareOffline\Services\DigitalMegaFlareOffline.Services\DigitalMegaFlareOffline.Services.csproj" />
   </ItemGroup>
 </Project>

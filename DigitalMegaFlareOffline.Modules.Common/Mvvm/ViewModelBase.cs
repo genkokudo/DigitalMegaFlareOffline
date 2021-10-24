@@ -1,7 +1,7 @@
 ﻿using Prism.Mvvm;
 using Prism.Navigation;
 
-namespace DigitalMegaFlareOffline.Core.Mvvm
+namespace DigitalMegaFlareOffline.Modules.Common.Mvvm
 {
     public abstract class ViewModelBase : BindableBase, IDestructible
     {

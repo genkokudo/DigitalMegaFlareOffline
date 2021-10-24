@@ -1,7 +1,7 @@
 ﻿using Prism.Regions;
 using System;
 
-namespace DigitalMegaFlareOffline.Core.Mvvm
+namespace DigitalMegaFlareOffline.Modules.Common.Mvvm
 {
     public class RegionViewModelBase : ViewModelBase, INavigationAware, IConfirmNavigationRequest
     {
