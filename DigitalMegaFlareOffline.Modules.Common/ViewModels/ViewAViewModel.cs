@@ -1,5 +1,5 @@
 ﻿using DigitalMegaFlareOffline.Core.Mvvm;
-using DigitalMegaFlareOffline.Services.Interfaces;
+using DigitalMegaFlareOffline.Services;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;

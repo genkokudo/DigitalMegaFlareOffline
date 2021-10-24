@@ -11,7 +11,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\DigitalMegaFlareOffline.Modules.Common\DigitalMegaFlareOffline.Modules.Common.csproj" />
     <ProjectReference Include="..\DigitalMegaFlareOffline.Core\DigitalMegaFlareOffline.Core.csproj" />
-    <ProjectReference Include="..\Services\DigitalMegaFlareOffline.Services.Interfaces\DigitalMegaFlareOffline.Services.Interfaces.csproj" />
     <ProjectReference Include="..\Services\DigitalMegaFlareOffline.Services\DigitalMegaFlareOffline.Services.csproj" />
   </ItemGroup>
 </Project>

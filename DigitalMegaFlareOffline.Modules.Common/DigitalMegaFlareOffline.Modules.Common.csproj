@@ -9,6 +9,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DigitalMegaFlareOffline\DigitalMegaFlareOffline.Core\DigitalMegaFlareOffline.Core.csproj" />
-    <ProjectReference Include="..\DigitalMegaFlareOffline\Services\DigitalMegaFlareOffline.Services.Interfaces\DigitalMegaFlareOffline.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\DigitalMegaFlareOffline\Services\DigitalMegaFlareOffline.Services\DigitalMegaFlareOffline.Services.csproj" />
   </ItemGroup>
 </Project>

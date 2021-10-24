@@ -1,6 +1,5 @@
 ﻿using DigitalMegaFlareOffline.Modules.Common;
 using DigitalMegaFlareOffline.Services;
-using DigitalMegaFlareOffline.Services.Interfaces;
 using DigitalMegaFlareOffline.Views;
 using Prism.Ioc;
 using Prism.Modularity;

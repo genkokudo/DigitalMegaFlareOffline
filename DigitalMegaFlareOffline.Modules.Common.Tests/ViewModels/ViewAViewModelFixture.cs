@@ -1,5 +1,5 @@
 ﻿using DigitalMegaFlareOffline.Modules.Common.ViewModels;
-using DigitalMegaFlareOffline.Services.Interfaces;
+using DigitalMegaFlareOffline.Services;
 using Moq;
 using Prism.Regions;
 using Xunit;

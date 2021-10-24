@@ -1,7 +1,10 @@
-﻿using DigitalMegaFlareOffline.Services.Interfaces;
-
-namespace DigitalMegaFlareOffline.Services
+﻿namespace DigitalMegaFlareOffline.Services
 {
+    public interface IMessageService
+    {
+        string GetMessage();
+    }
+
     public class MessageService : IMessageService
     {
         public string GetMessage()

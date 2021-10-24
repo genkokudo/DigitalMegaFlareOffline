@@ -4,8 +4,4 @@
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DigitalMegaFlareOffline.Services.Interfaces\DigitalMegaFlareOffline.Services.Interfaces.csproj" />
-  </ItemGroup>
-
 </Project>

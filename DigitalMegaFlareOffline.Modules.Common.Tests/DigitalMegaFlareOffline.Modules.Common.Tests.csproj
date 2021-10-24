@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DigitalMegaFlareOffline.Modules.Common\DigitalMegaFlareOffline.Modules.Common.csproj" />
-    <ProjectReference Include="..\DigitalMegaFlareOffline\Services\DigitalMegaFlareOffline.Services.Interfaces\DigitalMegaFlareOffline.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\DigitalMegaFlareOffline\Services\DigitalMegaFlareOffline.Services\DigitalMegaFlareOffline.Services.csproj" />
   </ItemGroup>
 
 </Project>
