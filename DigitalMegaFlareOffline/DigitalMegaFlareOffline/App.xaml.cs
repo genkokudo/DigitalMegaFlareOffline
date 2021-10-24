@@ -1,4 +1,4 @@
-﻿using DigitalMegaFlareOffline.Modules.ModuleName;
+﻿using DigitalMegaFlareOffline.Modules.Common;
 using DigitalMegaFlareOffline.Services;
 using DigitalMegaFlareOffline.Services.Interfaces;
 using DigitalMegaFlareOffline.Views;
@@ -25,7 +25,7 @@ namespace DigitalMegaFlareOffline
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            moduleCatalog.AddModule<ModuleNameModule>();
+            moduleCatalog.AddModule<CommonModule>();
         }
     }
 }

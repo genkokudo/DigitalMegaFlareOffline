@@ -9,8 +9,8 @@
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DigitalMegaFlareOffline.Modules.Common\DigitalMegaFlareOffline.Modules.Common.csproj" />
     <ProjectReference Include="..\DigitalMegaFlareOffline.Core\DigitalMegaFlareOffline.Core.csproj" />
-    <ProjectReference Include="..\Modules\DigitalMegaFlareOffline.Modules.ModuleName\DigitalMegaFlareOffline.Modules.ModuleName.csproj" />
     <ProjectReference Include="..\Services\DigitalMegaFlareOffline.Services.Interfaces\DigitalMegaFlareOffline.Services.Interfaces.csproj" />
     <ProjectReference Include="..\Services\DigitalMegaFlareOffline.Services\DigitalMegaFlareOffline.Services.csproj" />
   </ItemGroup>

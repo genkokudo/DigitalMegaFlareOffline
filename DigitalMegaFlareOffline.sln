@@ -5,11 +5,7 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DA668292-0CA7-4AE4-855D-55B4AC1285DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalMegaFlareOffline.Modules.ModuleName.Tests", "DigitalMegaFlareOffline\Tests\DigitalMegaFlareOffline.Modules.ModuleName.Tests\DigitalMegaFlareOffline.Modules.ModuleName.Tests.csproj", "{C95684C1-61DD-4228-9897-6877B13CE187}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{EF113FB3-E953-4A35-A51D-717C2BA0C951}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalMegaFlareOffline.Modules.ModuleName", "DigitalMegaFlareOffline\Modules\DigitalMegaFlareOffline.Modules.ModuleName\DigitalMegaFlareOffline.Modules.ModuleName.csproj", "{850D5BA5-A376-438F-9238-115FFDC02C01}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{64CFA3A6-D5AB-4E8E-B65A-EB28A281FDD2}"
 EndProject
@@ -21,20 +17,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalMegaFlareOffline", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalMegaFlareOffline.Core", "DigitalMegaFlareOffline\DigitalMegaFlareOffline.Core\DigitalMegaFlareOffline.Core.csproj", "{193107F3-E731-422C-80CB-21A580512B6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalMegaFlareOffline.Modules.Common", "DigitalMegaFlareOffline.Modules.Common\DigitalMegaFlareOffline.Modules.Common.csproj", "{FA101D11-0C47-4838-ADEF-A15917BF47A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalMegaFlareOffline.Modules.Common.Tests", "DigitalMegaFlareOffline.Modules.Common.Tests\DigitalMegaFlareOffline.Modules.Common.Tests.csproj", "{78892A37-A819-4A40-A8D1-C6EF0015575D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C95684C1-61DD-4228-9897-6877B13CE187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C95684C1-61DD-4228-9897-6877B13CE187}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C95684C1-61DD-4228-9897-6877B13CE187}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C95684C1-61DD-4228-9897-6877B13CE187}.Release|Any CPU.Build.0 = Release|Any CPU
-		{850D5BA5-A376-438F-9238-115FFDC02C01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{850D5BA5-A376-438F-9238-115FFDC02C01}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{850D5BA5-A376-438F-9238-115FFDC02C01}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{850D5BA5-A376-438F-9238-115FFDC02C01}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9C0F1382-D0B5-4A6C-B3B5-35FCB59FFDA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9C0F1382-D0B5-4A6C-B3B5-35FCB59FFDA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C0F1382-D0B5-4A6C-B3B5-35FCB59FFDA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,15 +43,23 @@ Global
 		{193107F3-E731-422C-80CB-21A580512B6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{193107F3-E731-422C-80CB-21A580512B6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{193107F3-E731-422C-80CB-21A580512B6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA101D11-0C47-4838-ADEF-A15917BF47A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA101D11-0C47-4838-ADEF-A15917BF47A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA101D11-0C47-4838-ADEF-A15917BF47A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA101D11-0C47-4838-ADEF-A15917BF47A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78892A37-A819-4A40-A8D1-C6EF0015575D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78892A37-A819-4A40-A8D1-C6EF0015575D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78892A37-A819-4A40-A8D1-C6EF0015575D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78892A37-A819-4A40-A8D1-C6EF0015575D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C95684C1-61DD-4228-9897-6877B13CE187} = {DA668292-0CA7-4AE4-855D-55B4AC1285DA}
-		{850D5BA5-A376-438F-9238-115FFDC02C01} = {EF113FB3-E953-4A35-A51D-717C2BA0C951}
 		{9C0F1382-D0B5-4A6C-B3B5-35FCB59FFDA2} = {64CFA3A6-D5AB-4E8E-B65A-EB28A281FDD2}
 		{B674CDCD-A381-4F5F-95C2-7F20A887B235} = {64CFA3A6-D5AB-4E8E-B65A-EB28A281FDD2}
+		{FA101D11-0C47-4838-ADEF-A15917BF47A8} = {EF113FB3-E953-4A35-A51D-717C2BA0C951}
+		{78892A37-A819-4A40-A8D1-C6EF0015575D} = {DA668292-0CA7-4AE4-855D-55B4AC1285DA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {15E68241-E827-4397-A375-2867C926DAFD}

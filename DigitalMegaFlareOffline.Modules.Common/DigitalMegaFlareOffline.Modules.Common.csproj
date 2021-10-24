@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>DigitalMegaFlareOffline.Modules.Common</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Prism.Wpf" Version="8.1.97" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DigitalMegaFlareOffline\DigitalMegaFlareOffline.Core\DigitalMegaFlareOffline.Core.csproj" />
+    <ProjectReference Include="..\DigitalMegaFlareOffline\Services\DigitalMegaFlareOffline.Services.Interfaces\DigitalMegaFlareOffline.Services.Interfaces.csproj" />
+  </ItemGroup>
+</Project>
