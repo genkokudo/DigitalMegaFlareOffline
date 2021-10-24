@@ -21,11 +21,16 @@ namespace DigitalMegaFlareOffline.Modules.Common
         }
     }
 
+    // TODO:これらの定数をMainWindowのXAMLから参照させること。
     /// <summary>
     /// このモジュールに含まれるView名を定数にしておく
     /// </summary>
     public static class ViewNames
     {
+        public const string ViewConfig = "Config";
+        public const string ViewExcel = "Excel";
         public const string ViewHome = "Home";
+        public const string ViewRazorEdit = "RazorEdit";
+        public const string ViewRazorLoad = "RazorLoad";
     }
 }
