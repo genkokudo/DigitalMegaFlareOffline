@@ -4,6 +4,7 @@
         xmlns:s="clr-namespace:DigitalMegaFlareOffline"
         xmlns:prism="http://prismlibrary.com/"
         prism:ViewModelLocator.AutoWireViewModel="True"
+        xmlns:module="clr-namespace:DigitalMegaFlareOffline.Modules.Common;assembly=DigitalMegaFlareOffline.Modules.Common"
         Title="{Binding Title}"
         Width="1100" Height="800"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -25,11 +26,11 @@
         <StackPanel Grid.Row="0">
             <!-- メニュー -->
             <Menu IsMainMenu="True">
-                <MenuItem Icon="{materialDesign:PackIcon Kind=Home}" Header="説明" Command="{Binding NavigateCommand}" CommandParameter="Home"></MenuItem>
-                <MenuItem Icon="{materialDesign:PackIcon Kind=Cog}" Header="設定" Command="{Binding NavigateCommand}" CommandParameter="Config"></MenuItem>
-                <MenuItem Icon="{materialDesign:PackIcon Kind=Pencil}" Header="Excel管理と生成" Command="{Binding NavigateCommand}" CommandParameter="Excel"></MenuItem>
-                <MenuItem Icon="{materialDesign:PackIcon Kind=FileDownload}" Header="Razor読み込み" Command="{Binding NavigateCommand}" CommandParameter="RazorLoad"></MenuItem>
-                <MenuItem Icon="{materialDesign:PackIcon Kind=Pencil}" Header="Razor編集" Command="{Binding NavigateCommand}" CommandParameter="RazorEdit"></MenuItem>
+                <MenuItem Icon="{materialDesign:PackIcon Kind=Home}" Header="説明" Command="{Binding NavigateCommand}" CommandParameter="{x:Static module:ViewNames.ViewHome}"></MenuItem>
+                <MenuItem Icon="{materialDesign:PackIcon Kind=Cog}" Header="設定" Command="{Binding NavigateCommand}" CommandParameter="{x:Static module:ViewNames.ViewConfig}"></MenuItem>
+                <MenuItem Icon="{materialDesign:PackIcon Kind=Pencil}" Header="Excel管理と生成" Command="{Binding NavigateCommand}" CommandParameter="{x:Static module:ViewNames.ViewExcel}"></MenuItem>
+                <MenuItem Icon="{materialDesign:PackIcon Kind=FileDownload}" Header="Razor読み込み" Command="{Binding NavigateCommand}" CommandParameter="{x:Static module:ViewNames.ViewRazorLoad}"></MenuItem>
+                <MenuItem Icon="{materialDesign:PackIcon Kind=Pencil}" Header="Razor編集" Command="{Binding NavigateCommand}" CommandParameter="{x:Static module:ViewNames.ViewRazorEdit}"></MenuItem>
             </Menu>
         </StackPanel>
         <ContentControl prism:RegionManager.RegionName="{x:Static s:RegionNames.ContentRegion}" Grid.Row="1" Margin="15,0,15,15"/>
