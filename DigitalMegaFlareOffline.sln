@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalMegaFlareOffline.Mod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinteaCore", "..\Mintea\MinteaCore\MinteaCore.csproj", "{5DBE0D4A-A005-4F10-B068-618DA04B6E3F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MithrilCube", "..\MithrilCube\MithrilCube\MithrilCube.csproj", "{2A4CBA8C-8A61-46FF-A370-74DCFAFA1692}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{5DBE0D4A-A005-4F10-B068-618DA04B6E3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DBE0D4A-A005-4F10-B068-618DA04B6E3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DBE0D4A-A005-4F10-B068-618DA04B6E3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A4CBA8C-8A61-46FF-A370-74DCFAFA1692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A4CBA8C-8A61-46FF-A370-74DCFAFA1692}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A4CBA8C-8A61-46FF-A370-74DCFAFA1692}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A4CBA8C-8A61-46FF-A370-74DCFAFA1692}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
