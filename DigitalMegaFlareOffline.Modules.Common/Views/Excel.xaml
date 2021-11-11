@@ -10,8 +10,14 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True" >
     <Grid>
-        <TextBlock Text="{Binding Message}"
+        <!-- 元ファイル名、日時、コメント -->
+        <TextBlock Text="リストを表示する。ボタンを5つ表示。"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center" />
+        <Button Content="ロック" Margin="24,0,0,0" Width="60" Command="{Binding MakeFolderCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
+        <Button Content="DL" Margin="24,0,0,0" Width="60" Command="{Binding MakeFolderCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
+        <Button Content="詳細" Margin="24,0,0,0" Width="60" Command="{Binding MakeFolderCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
+        <Button Content="削除" Margin="24,0,0,0" Width="60" Command="{Binding MakeFolderCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
+        <Button Content="生成" Margin="24,0,0,0" Width="60" Command="{Binding MakeFolderCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
     </Grid>
 </UserControl>
