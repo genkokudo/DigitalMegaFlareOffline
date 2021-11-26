@@ -10,14 +10,28 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True" >
     <Grid>
-        <!-- 元ファイル名、日時、コメント -->
-        <TextBlock Text="リストを表示する。ボタンを5つ表示。"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
-        <Button Content="ロック" Margin="24,0,0,0" Width="60" Command="{Binding MakeFolderCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
-        <Button Content="DL" Margin="24,0,0,0" Width="60" Command="{Binding MakeFolderCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
-        <Button Content="詳細" Margin="24,0,0,0" Width="60" Command="{Binding MakeFolderCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
-        <Button Content="削除" Margin="24,0,0,0" Width="60" Command="{Binding MakeFolderCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
-        <Button Content="生成" Margin="24,0,0,0" Width="60" Command="{Binding MakeFolderCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
+        <ListView ItemsSource="{Binding ExcelItems}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="ファイル名" />
+                    <GridViewColumn DisplayMemberBinding="{Binding UpdatedDate}" Header="更新日" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Description}" Header="説明" />
+                    
+                    <GridViewColumn Header="操作" Width="480">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="開く" ToolTip="Excelでファイルを開きます。" Margin="0,0,10,0" Width="60" Height="24" Command="{Binding DataContext.AaaaCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" CommandParameter="{Binding Id}"></Button>
+                                    <Button Content="生成" ToolTip="ファイルの内容でソースコードを生成します。" Margin="0,0,10,0" Width="60" Height="24" Command="{Binding DataContext.AaaaCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" CommandParameter="{Binding Id}"></Button>
+                                    <Button Content="削除" ToolTip="削除します。" Background="Red" BorderBrush="Red" Margin="0,0,10,0" Width="60" Height="24" Command="{Binding DataContext.AaaaCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" CommandParameter="{Binding Id}"></Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
     </Grid>
 </UserControl>
