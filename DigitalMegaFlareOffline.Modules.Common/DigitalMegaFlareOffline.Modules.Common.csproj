@@ -12,4 +12,17 @@
     <ProjectReference Include="..\..\MithrilCube\MithrilCube\MithrilCube.csproj" />
     <ProjectReference Include="..\DigitalMegaFlareOffline\Services\DigitalMegaFlareOffline.Services\DigitalMegaFlareOffline.Services.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="ModuleSettings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ModuleSettings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="ModuleSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>ModuleSettings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
 </Project>

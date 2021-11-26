@@ -11,8 +11,10 @@
              prism:ViewModelLocator.AutoWireViewModel="True" >
     <Grid>
         <StackPanel>
-            <TextBlock Text="{Binding Message}" />
-            <Button  Content="サンプルデータ作成" ToolTip="サンプルデータを作成します。データフォルダが無い初期状態のみ使用可能です。" IsEnabled="{Binding IsEnableSampleButton}" Command="{Binding ClearCommand}"></Button>
+            <TextBlock Margin="0,10,0,0" Text="これは、コードテンプレートとExcelでソースコードを生成するソフトウェアです。" />
+        </StackPanel>
+        <StackPanel VerticalAlignment="Bottom">
+            <Button  Content="サンプルデータ作成" ToolTip="サンプルデータを作成します。データフォルダが無い初期状態のみ使用可能です。" IsEnabled="{Binding IsEnableSampleButton}" Command="{Binding MakeSampleCommand}"></Button>
         </StackPanel>
     </Grid>
 </UserControl>

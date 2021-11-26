@@ -25,9 +25,13 @@
 
 ・Razor編集
 
-■調べること
-マテリアルデザインにTreeViewってのがあるので
-どうやって使うのか、データ構造はどうなってるのか調べること。
-https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit/blob/d3a35aa701f921238c7c1e70d11e2815d35799db/MainDemo.Wpf/Domain/TreesViewModel.cs
-ObservableCollectionっていうのを使ってる。これはなんだ？
-→通知機能がある以外はただのコレクションで、別にツリー構造持たせるとかいうやつじゃないらしい。
+■次作るもの（優先度高いものから）
+・Excel管理画面のリスト表示（今は表示のみで良い）
+取り敢えず画面だけ。データは適当でよい。
+
+・サンプルデータ作成（仕組みのみ）
+
+・MithrilCubeの、フォルダ読み取りサービス
+フォルダ階層構造を読み込み、RazorLoadViewModelにあるようなツリー式のデータにする
+ObservableCollection<TreeSource>
+

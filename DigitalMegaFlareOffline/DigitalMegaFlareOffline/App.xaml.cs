@@ -1,6 +1,7 @@
 ﻿using DigitalMegaFlareOffline.Modules.Common;
 using DigitalMegaFlareOffline.Services;
 using DigitalMegaFlareOffline.Views;
+using MithrilCube.Services;
 using Prism.Ioc;
 using Prism.Modularity;
 using System.Windows;
@@ -20,6 +21,7 @@ namespace DigitalMegaFlareOffline
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IMessageService, MessageService>();
+            containerRegistry.Register<IDirectoryService, DirectoryService>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
