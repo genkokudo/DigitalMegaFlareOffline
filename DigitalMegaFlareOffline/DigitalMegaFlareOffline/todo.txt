@@ -26,12 +26,9 @@
 ・Razor編集
 
 ■次作るもの（優先度高いものから）
-・Excel管理画面のリスト表示（今は表示のみで良い）
-取り敢えず画面だけ。データは適当でよい。
-
-・サンプルデータ作成（仕組みのみ）
-
 ・MithrilCubeの、フォルダ読み取りサービス
 フォルダ階層構造を読み込み、RazorLoadViewModelにあるようなツリー式のデータにする
 ObservableCollection<TreeSource>
 
+これを表示する。
+TreeSourceクラスはもう1つのツリー用クラスを見直して書き直す。

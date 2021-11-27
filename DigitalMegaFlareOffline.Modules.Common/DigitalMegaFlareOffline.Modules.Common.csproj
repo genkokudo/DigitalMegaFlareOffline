@@ -5,6 +5,20 @@
     <AssemblyName>DigitalMegaFlareOffline.Modules.Common</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Sample\Excel\Sample1.xlsx" />
+    <None Remove="Sample\Razor\CSharp\ASP\Aaaa.razor" />
+    <None Remove="Sample\Razor\CSharp\WPF\SampleWpf.razor" />
+    <None Remove="Sample\Razor\React\Tsx\Bbbb.razor" />
+    <None Remove="Sample\Razor\React\Ts\Bbbb.razor" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sample\Excel\Sample1.xlsx" />
+    <EmbeddedResource Include="Sample\Razor\CSharp\ASP\Aaaa.razor" />
+    <EmbeddedResource Include="Sample\Razor\CSharp\WPF\SampleWpf.razor" />
+    <EmbeddedResource Include="Sample\Razor\React\Tsx\Bbbb.razor" />
+    <EmbeddedResource Include="Sample\Razor\React\Ts\Bbbb.razor" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.2.1" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>

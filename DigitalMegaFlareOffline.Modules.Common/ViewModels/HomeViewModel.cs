@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,18 +19,6 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
     {
         private readonly IDirectoryService _directoryService;
 
-        /// <summary>サンプルデータを作成するコマンド</summary>
-        public DelegateCommand MakeSampleCommand { get; private set; }
-
-        // サンプルデータ作成ボタンが有効か
-        private bool _isEnableSampleButton;
-        public bool IsEnableSampleButton
-        {
-            get { return _isEnableSampleButton; }
-            set { SetProperty(ref _isEnableSampleButton, value); }
-        }
-        
-
         public HomeViewModel(IRegionManager regionManager, IDirectoryService directoryService) :
             base(regionManager)
         {
@@ -37,10 +26,6 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             _directoryService = directoryService;
 
             // コマンドの設定
-            MakeSampleCommand = new DelegateCommand(MakeSample);
-
-            // TODO:サンプルデータ作成済みかを判定する
-            IsEnableSampleButton = true;
 
             // 起動時処理
             // データフォルダが無ければ作成する
@@ -58,39 +43,23 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         {
             var excelDir = $"./{ModuleSettings.Default.ExcelDirectory}";
             var razorDir = $"./{ModuleSettings.Default.RazorDirectory}";
-            if (!Directory.Exists(excelDir) || !Directory.Exists(razorDir))
+            if ((!Directory.Exists("./Sample") && !Directory.Exists(excelDir) || !Directory.Exists(razorDir)))
             {
-                MessageBox.Show($"初回起動なのでフォルダを作成します。");
-                _directoryService.SafeCreateDirectory(excelDir);
-                _directoryService.SafeCreateDirectory(razorDir);
-                MessageBox.Show($"フォルダを作成しました。");
+                MessageBox.Show($"初回起動なのでフォルダとサンプルデータを作成します。");
+
+                // サンプルデータを作成する
+                // 埋め込みリソースから外に出す
+                _directoryService.CopyResources(Assembly.GetExecutingAssembly());
+
+                // 出力したサンプルファイルをフォルダごと移動する
+                new DirectoryInfo($"./Sample/Razor").MoveTo(razorDir);
+                new DirectoryInfo($"./Sample/Excel").MoveTo(excelDir);
+
+                // Sampleフォルダを削除する
+                Directory.Delete("./Sample", true);
+
+                MessageBox.Show($"フォルダとサンプルデータを作成しました。");
             }
-        }
-
-        /// <summary>
-        /// サンプルデータを作成する
-        /// </summary>
-        private void MakeSample()
-        {
-            var res = MessageBox.Show(
-                "サンプルデータを作成します。",
-                "確認メッセージ",
-                MessageBoxButton.OKCancel,
-                MessageBoxImage.Question, MessageBoxResult.Cancel
-                );
-            if (res == MessageBoxResult.Cancel)
-            {
-                return;
-            }
-
-            // フォルダチェック・作成
-            CheckDataFolder();
-
-            // TODO:サンプルデータを作成する
-
-            // 作成完了
-            IsEnableSampleButton = false;
-            MessageBox.Show($"サンプルデータを作成しました。");
         }
     }
 }
