@@ -19,6 +19,9 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
     {
         private readonly IDirectoryService _directoryService;
 
+        /// <summary>フォルダを開くコマンド</summary>
+        public DelegateCommand<string> OpenFolderCommand { get; private set; }
+
         public HomeViewModel(IRegionManager regionManager, IDirectoryService directoryService) :
             base(regionManager)
         {
@@ -26,6 +29,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             _directoryService = directoryService;
 
             // コマンドの設定
+            OpenFolderCommand = new DelegateCommand<string>(OpenFolder);
 
             // 起動時処理
             // データフォルダが無ければ作成する
@@ -60,6 +64,15 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
 
                 MessageBox.Show($"フォルダとサンプルデータを作成しました。");
             }
+        }
+
+        /// <summary>
+        /// フォルダを開く
+        /// </summary>
+        private void OpenFolder(string folder)
+        {
+            string path = Environment.CurrentDirectory;
+            System.Diagnostics.Process.Start("explorer.exe", $"{Path.Combine(path, folder)}");
         }
     }
 }

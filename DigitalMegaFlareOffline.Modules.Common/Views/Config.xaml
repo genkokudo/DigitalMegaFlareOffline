@@ -10,8 +10,9 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True" >
     <Grid>
-        <TextBlock Text="設定することってそんなにないと思う。"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
+        <StackPanel>
+            <TextBlock Text="設定することってそんなにないと思う。"/>
+            <TextBlock Text="Excel一覧の説明の所に、どのシートのどのセルを表示するか設定したい。"/>
+        </StackPanel>
     </Grid>
 </UserControl>

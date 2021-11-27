@@ -7,7 +7,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="600"
-             xmlns:prism="http://prismlibrary.com/"
+             xmlns:prism="http://prismlibrary.com/" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              prism:ViewModelLocator.AutoWireViewModel="True" >
     <Grid>
         <ListView ItemsSource="{Binding ExcelItems}">
@@ -21,6 +21,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
+                                    <Button Content="名前変更" ToolTip="ファイル名を変更します。" Margin="0,0,10,0" Width="60" Height="24" IsEnabled="{Binding DataContext.IsEnableName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" Command="{Binding DataContext.AaaaCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" CommandParameter="{Binding Id}"></Button>
                                     <Button Content="開く" ToolTip="Excelでファイルを開きます。" Margin="0,0,10,0" Width="60" Height="24" Command="{Binding DataContext.AaaaCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" CommandParameter="{Binding Id}"></Button>
                                     <Button Content="生成" ToolTip="ファイルの内容でソースコードを生成します。" Margin="0,0,10,0" Width="60" Height="24" Command="{Binding DataContext.AaaaCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" CommandParameter="{Binding Id}"></Button>
                                     <Button Content="削除" ToolTip="削除します。" Background="Red" BorderBrush="Red" Margin="0,0,10,0" Width="60" Height="24" Command="{Binding DataContext.AaaaCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" CommandParameter="{Binding Id}"></Button>
@@ -32,6 +33,20 @@
             </ListView.View>
         </ListView>
 
-
+        <StackPanel VerticalAlignment="Bottom">
+            <TextBlock Margin="0,10,0,0" Text="Excelの作成や名前変更ボタンは今の所優先度が低いので、フォルダ開いて直接やってください。" />
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{Binding InputFileName, UpdateSourceTrigger=PropertyChanged}" ToolTip="ファイル名を指定します。拡張子不要。" materialDesign:HintAssist.Hint="SampleSystem" materialDesign:HintAssist.HelperTextFontSize="16" MinWidth="400">
+                    <i:Interaction.Triggers>
+                        <!-- 入力時の処理 -->
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding SetIsEnableNameCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <Button Content="空Excel作成" ToolTip="指定した名前で空のExcelファイルを作成します。" Margin="10,0,0,0" Command="{Binding FolderCommand}" IsEnabled="{Binding IsEnableName}" CommandParameter="VS" HorizontalAlignment="Right" VerticalAlignment="Center" Height="24"/>
+                <Button Content="新規作成" ToolTip="指定した名前で初期値入りのExcelファイルを作成します。" Margin="10,0,0,0" Command="{Binding FolderCommand}" IsEnabled="{Binding IsEnableName}" CommandParameter="VS" HorizontalAlignment="Right" VerticalAlignment="Center" Height="24"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </UserControl>
