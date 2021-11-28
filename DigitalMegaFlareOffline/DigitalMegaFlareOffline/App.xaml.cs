@@ -22,6 +22,7 @@ namespace DigitalMegaFlareOffline
         {
             containerRegistry.RegisterSingleton<IMessageService, MessageService>();
             containerRegistry.Register<IDirectoryService, DirectoryService>();
+            containerRegistry.Register<IExcelService, ExcelService>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

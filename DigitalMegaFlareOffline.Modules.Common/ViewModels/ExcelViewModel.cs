@@ -1,11 +1,14 @@
-﻿using DigitalMegaFlareOffline.Modules.Common.Mvvm;
+﻿using DigitalMegaFlareOffline.Modules.Common.Models;
+using DigitalMegaFlareOffline.Modules.Common.Mvvm;
 using DigitalMegaFlareOffline.Services;
+using MithrilCube.Services;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +18,9 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
 {
     public class ExcelViewModel : RegionViewModelBase
     {
+        private readonly IDirectoryService _directoryService;
+        private readonly IExcelService _excelService;
+
         // TODO:行ごとの処理：「開く」「生成」「削除」「名前変更」
         /// <summary>コマンド</summary>
         public DelegateCommand<long?> AaaaCommand { get; private set; }
@@ -46,9 +52,13 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             set { SetProperty(ref _excelItems, value); }
         }
 
-        public ExcelViewModel(IRegionManager regionManager, IMessageService messageService) :
+        public ExcelViewModel(IRegionManager regionManager, IDirectoryService directoryService, IExcelService excelService) :
             base(regionManager)
         {
+            // DI
+            _directoryService = directoryService;
+            _excelService = excelService;
+
             // コマンドの設定
             AaaaCommand = new DelegateCommand<long?>(Aaaa);
             SetIsEnableNameCommand = new DelegateCommand(SetIsEnableName);
@@ -59,18 +69,6 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             IsEnableName = false;
             InputFileName = string.Empty;
             Reload();
-        }
-
-        /// <summary>
-        /// Excelフォルダ内を読んで、一覧を作成する
-        /// </summary>
-        private void Reload()
-        {
-            ExcelItems = new ObservableCollection<ExcelItem>
-            {
-                new ExcelItem {Id=1, Description = "aaaa", Name = "bbbb", UpdatedDate = DateTime.Now },
-                new ExcelItem {Id=2, Description = "cccc", Name = "dddd", UpdatedDate = DateTime.Now }
-            };
         }
 
         /// <summary>
@@ -108,13 +106,37 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
 
             //ExcelItems.Any(x => x.Name.Trim(".xlsx") == InputFileName);
         }
+
+        /// <summary>
+        /// Excelフォルダ内を読んで、一覧を作成する
+        /// </summary>
+        private void Reload()
+        {
+            var excelDir = $"./{ModuleSettings.Default.ExcelDirectory}";
+            //ExcelItems = new ObservableCollection<ExcelItem>
+            //{
+            //    new ExcelItem {Id=1, Description = "aaaa", Name = "bbbb", UpdatedDate = DateTime.Now },
+            //    new ExcelItem {Id=2, Description = "cccc", Name = "dddd", UpdatedDate = DateTime.Now }
+            //};
+
+
+            // 指定拡張子のファイルを全て探す
+            var fileList = _directoryService.FolderInsiteSearch(excelDir, new string[] { ".xlsx" });
+
+            var id = 0;
+            ExcelItems = new ObservableCollection<ExcelItem>();
+            foreach (var filePath in fileList)
+            {
+                // Excelを読み込んで、"A1"を読み取る
+                id++;
+                var description = _excelService.GetCell(filePath);
+                ExcelItems.Add(new ExcelItem { Id = id, FullPath = filePath, UpdatedDate = File.GetLastWriteTime(filePath), Name = Path.GetFileName(filePath), Description = description });
+            }
+
+
+
+
+        }
     }
 
-    public class ExcelItem
-    {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public DateTime UpdatedDate { get; set; }
-        public string Description { get; set; }
-    }
 }
