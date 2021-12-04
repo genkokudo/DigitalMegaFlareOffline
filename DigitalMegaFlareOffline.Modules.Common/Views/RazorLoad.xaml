@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:DigitalMegaFlareOffline.Modules.Common.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:xx="clr-namespace:MithrilCube.Data;assembly=MithrilCube"
+             xmlns:xx="clr-namespace:DigitalMegaFlareOffline.Modules.Common.Models"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
@@ -25,12 +25,12 @@
         <TreeView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding TreeRoot}">
             <TreeView.Resources>
                 <Style TargetType="TreeViewItem">
-                    <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded,Mode=TwoWay}"/>
+                    <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded}"/>
                 </Style>
             </TreeView.Resources>
             <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type xx:TreeSource}" ItemsSource="{Binding Children}">
-                    <TextBlock Text="{Binding Text}"/>
+                <HierarchicalDataTemplate DataType="{x:Type xx:FileTree}" ItemsSource="{Binding Children}">
+                    <TextBlock Text="{Binding Value}"/>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
@@ -53,12 +53,12 @@
                     </i:Interaction.Triggers>
                 </TextBox>
             </StackPanel>
-            <Button Content="ファイル作成" Margin="24,0,0,0" Width="240" Command="{Binding MakeFileCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
-            <Button Content="フォルダ作成" Margin="24,0,0,0" Width="240" Command="{Binding MakeFolderCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
+            <Button Content="ファイル作成" Margin="24,0,0,0" Width="200" Command="{Binding MakeFileCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
+            <Button Content="フォルダ作成" Margin="24,0,0,0" Width="200" Command="{Binding MakeFolderCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="削除" Margin="24,0,0,0" Background="Red" BorderBrush="Red" Command="{Binding DeleteCommand}" IsEnabled="{Binding IsEnableEditButton}"></Button>
-            <Button Content="編集" Margin="24,0,0,0" Width="240" Command="{Binding EditCommand}" IsEnabled="{Binding IsEnableDeleteButton}"></Button>
+            <Button Content="編集" Margin="24,0,0,0" Width="200" Command="{Binding EditCommand}" IsEnabled="{Binding IsEnableDeleteButton}"></Button>
         </StackPanel>
     </Grid>
 </UserControl>

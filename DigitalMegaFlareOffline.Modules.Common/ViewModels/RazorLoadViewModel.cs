@@ -1,4 +1,5 @@
-﻿using DigitalMegaFlareOffline.Modules.Common.Mvvm;
+﻿using DigitalMegaFlareOffline.Modules.Common.Models;
+using DigitalMegaFlareOffline.Modules.Common.Mvvm;
 using DigitalMegaFlareOffline.Services;
 using MithrilCube.Data;
 using Prism.Commands;
@@ -55,7 +56,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         }
 
 
-        public ObservableCollection<TreeSource> TreeRoot { get; set; }
+        public ObservableCollection<TreeSource<string>> TreeRoot { get; set; }
 
         private string _message;
         public string Message
@@ -81,21 +82,21 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             IsEnableDeleteButton = false;
 
             // データ読み込み
-            TreeRoot = new ObservableCollection<TreeSource>();
-            var item1 = new TreeSource() { Text = "Item1", IsExpanded = true };
-            var item11 = new TreeSource() { Text = "Item1-1", IsExpanded = true };
-            var item12 = new TreeSource() { Text = "Item1-2", IsExpanded = true };
-            var item2 = new TreeSource() { Text = "Item2", IsExpanded = false };
-            var item21 = new TreeSource() { Text = "Item2-1", IsExpanded = true };
-            var item211 = new TreeSource() { Text = "Item2-1-1", IsExpanded = true };
-            var item212 = new TreeSource() { Text = "Item2-1-2", IsExpanded = true };
+            TreeRoot = new ObservableCollection<TreeSource<string>>();
+            var item1 = new FileTree() { Value = "Item1" };
+            var item11 = new FileTree() { Value = "Item1-1" };
+            var item12 = new FileTree() { Value = "Item1-2" };
+            var item2 = new FileTree() { Value = "Item2" };
+            var item21 = new FileTree() { Value = "Item2-1" };
+            var item211 = new FileTree() { Value = "Item2-1-1" };
+            var item212 = new FileTree() { Value = "Item2-1-2" };
             TreeRoot.Add(item1);
             TreeRoot.Add(item2);
-            item1.Add(item11);
-            item1.Add(item12);
-            item2.Add(item21);
-            item21.Add(item211);
-            item21.Add(item212);
+            item1.AddChild(item11);
+            item1.AddChild(item12);
+            item2.AddChild(item21);
+            item21.AddChild(item211);
+            item21.AddChild(item212);
         }
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
