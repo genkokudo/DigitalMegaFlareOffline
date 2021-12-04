@@ -1,7 +1,7 @@
 ﻿using DigitalMegaFlareOffline.Modules.Common.Models;
 using DigitalMegaFlareOffline.Modules.Common.Mvvm;
 using DigitalMegaFlareOffline.Services;
-using MithrilCube.Data;
+using MithrilCube.Prism;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -83,13 +83,13 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
 
             // データ読み込み
             TreeRoot = new ObservableCollection<TreeSource<string>>();
-            var item1 = new FileTree() { Value = "Item1" };
-            var item11 = new FileTree() { Value = "Item1-1" };
-            var item12 = new FileTree() { Value = "Item1-2" };
-            var item2 = new FileTree() { Value = "Item2" };
-            var item21 = new FileTree() { Value = "Item2-1" };
-            var item211 = new FileTree() { Value = "Item2-1-1" };
-            var item212 = new FileTree() { Value = "Item2-1-2" };
+            var item1 = new FileTree("Item1");
+            var item11 = new FileTree("Item1-1");
+            var item12 = new FileTree("Item1-2");
+            var item2 = new FileTree("Item2");
+            var item21 = new FileTree("Item2-1");
+            var item211 = new FileTree("Item2-1-1");
+            var item212 = new FileTree("Item2-1-2");
             TreeRoot.Add(item1);
             TreeRoot.Add(item2);
             item1.AddChild(item11);
