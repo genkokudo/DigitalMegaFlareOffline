@@ -22,7 +22,13 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <!-- 左上：ツリー表示 -->
-        <TreeView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding TreeRoot}">
+        <TreeView x:Name="myTreeView" Grid.Row="0" Grid.Column="0" ItemsSource="{Binding TreeRoot}">
+            <!-- クリックしたものをVMに伝える -->
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectedItemChanged">
+                    <i:InvokeCommandAction Command="{Binding TreeSelectCommand}" CommandParameter="{Binding ElementName=myTreeView ,Path=SelectedItem}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <TreeView.Resources>
                 <Style TargetType="TreeViewItem">
                     <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded}"/>

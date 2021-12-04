@@ -25,6 +25,8 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         public DelegateCommand EditCommand { get; private set; }
         /// <summary>ファイル・フォルダを作成するコマンド</summary>
         public DelegateCommand DeleteCommand { get; private set; }
+        /// <summary>ツリー選択時コマンド</summary>
+        public DelegateCommand<TreeSource<string>> TreeSelectCommand { get; private set; }
 
         // TODO:ボタンの有効状態は、選択中の項目によって判定すべき
         // 選択中が何かを示すプロパティ1つ置けば良いのでは？
@@ -75,6 +77,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             MakeFolderCommand = new DelegateCommand(MakeFolder);
             EditCommand = new DelegateCommand(Edit);
             DeleteCommand = new DelegateCommand(Delete);
+            TreeSelectCommand = new DelegateCommand<TreeSource<string>>(TreeSelect);
 
             // ボタンの状態
             IsEnableMakeButton = false;
@@ -101,6 +104,14 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
+        }
+
+        /// <summary>
+        /// 空のファイルを作成する
+        /// </summary>
+        private void TreeSelect(TreeSource<string> aaaa)
+        {
+            MessageBox.Show(aaaa.Value);
         }
 
         /// <summary>
