@@ -18,6 +18,11 @@ using System.Windows;
 // ・Treeの選択状態を解除したいけど、ここから制御できないのでは？
 // ・全体再取得すると、開閉状態が消える。本当に全体再取得でいいの？
 
+// ・nullの時にボタンを無効にしたい
+// ・https://stackoverflow.com/questions/51162551/disable-button-if-value-is-null-via-databinding
+// ・https://stackoverflow.com/questions/7140662/isenabled-false-if-binding-source-is-not-available
+// ↑DataTriggerが複数の場合はMultiDataTriggerを使う、またはDataConverterを作って頑張る
+
 namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
 {
     public class RazorLoadViewModel : RegionViewModelBase
