@@ -14,10 +14,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
+// 課題
+// ・Treeの選択状態を解除したいけど、ここから制御できないのでは？
+// ・全体再取得すると、開閉状態が消える。本当に全体再取得でいいの？
+
 namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
 {
     public class RazorLoadViewModel : RegionViewModelBase
     {
+        private readonly IWpfDirectoryService _wpfDirectoryService;
+
         /// <summary>空のファイルを作成するコマンド</summary>
         public DelegateCommand MakeFileCommand { get; private set; }
         /// <summary>フォルダを作成するコマンド</summary>
@@ -29,9 +35,18 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         /// <summary>ツリー選択時コマンド</summary>
         public DelegateCommand<TreeSource<FileData>> TreeSelectCommand { get; private set; }
 
-        // TODO:ボタンの有効状態は、選択中の項目によって判定すべき
-        // 選択中が何かを示すプロパティ1つ置けば良いのでは？
+        /// <summary>
+        /// 現在選択中のファイル
+        /// 初期及び何か処理をした時はnull
+        /// </summary>
+        private FileData _selectedFileData;
+        public FileData SelectedFileData
+        {
+            get { return _selectedFileData; }
+            set { SetProperty(ref _selectedFileData, value); }
+        }
 
+        // TODO:フォルダを選択している場合true
         // 作成ボタンが有効か
         private bool _isEnableMakeButton;
         public bool IsEnableMakeButton
@@ -45,7 +60,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         private bool _isEnableEditButton;
         public bool IsEnableEditButton
         {
-            get { return _isEnableEditButton; }
+            get { return SelectedFileData != null; }
             set { SetProperty(ref _isEnableEditButton, value); }
         }
 
@@ -58,12 +73,21 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             set { SetProperty(ref _isEnableDeleteButton, value); }
         }
 
-        //public ObservableCollection<TreeSource<FileData>> TreeRoot { get; set; }
-        public FileTree TreeRoot { get; set; }
+        // Razorフォルダ階層データ
+        // ツリーのデータ
+        private FileTree _treeRoot;
+        public FileTree TreeRoot
+        {
+            get { return _treeRoot; }
+            set { SetProperty(ref _treeRoot, value); }
+        }
 
         public RazorLoadViewModel(IRegionManager regionManager, IWpfDirectoryService wpfDirectoryService) :
             base(regionManager)
         {
+            // DI
+            _wpfDirectoryService = wpfDirectoryService;
+
             // コマンドの設定
             MakeFileCommand = new DelegateCommand(MakeFile);
             MakeFolderCommand = new DelegateCommand(MakeFolder);
@@ -78,7 +102,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
 
             // ディレクトリ階層を読み込み
             var razorDir = $"./{ModuleSettings.Default.RazorDirectory}";
-            TreeRoot = wpfDirectoryService.GetDirectoryFileTree(razorDir);
+            TreeRoot = _wpfDirectoryService.GetDirectoryFileTree(razorDir);
         }
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
@@ -86,11 +110,13 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         }
 
         /// <summary>
-        /// 空のファイルを作成する
+        /// ファイルまたはフォルダを選択
         /// </summary>
-        private void TreeSelect(TreeSource<FileData> aaaa)
+        private void TreeSelect(TreeSource<FileData> selectedFile)
         {
-            MessageBox.Show(aaaa.Value.Name);
+            SelectedFileData = selectedFile.Value;
+
+            IsEnableMakeButton = SelectedFileData != null;
         }
 
         /// <summary>
@@ -101,6 +127,8 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             // ファイルを作成する
 
             // 作成完了
+            SelectedFileData = null;
+            IsEnableMakeButton = SelectedFileData != null;
         }
 
         /// <summary>
@@ -108,7 +136,8 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         /// </summary>
         private void MakeFolder()
         {
-            IsEnableMakeButton = false;
+            SelectedFileData = null;
+            IsEnableMakeButton = SelectedFileData != null;
         }
 
         /// <summary>
@@ -135,6 +164,8 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             IsEnableMakeButton = false;
             IsEnableEditButton = false;
             IsEnableDeleteButton = false;
+
+            SelectedFileData = null;
         }
     }
 }
