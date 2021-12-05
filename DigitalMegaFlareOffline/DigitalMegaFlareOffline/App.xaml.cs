@@ -1,6 +1,7 @@
 ﻿using DigitalMegaFlareOffline.Modules.Common;
 using DigitalMegaFlareOffline.Services;
 using DigitalMegaFlareOffline.Views;
+using MithrilCube.Prism.Services;
 using MithrilCube.Services;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -23,6 +24,7 @@ namespace DigitalMegaFlareOffline
             containerRegistry.RegisterSingleton<IMessageService, MessageService>();
             containerRegistry.Register<IDirectoryService, DirectoryService>();
             containerRegistry.Register<IExcelService, ExcelService>();
+            containerRegistry.Register<IWpfDirectoryService, WpfDirectoryService>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

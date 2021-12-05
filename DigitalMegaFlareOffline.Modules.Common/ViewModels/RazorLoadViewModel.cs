@@ -2,6 +2,7 @@
 using DigitalMegaFlareOffline.Modules.Common.Mvvm;
 using DigitalMegaFlareOffline.Services;
 using MithrilCube.Prism;
+using MithrilCube.Prism.Services;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -26,7 +27,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         /// <summary>ファイル・フォルダを作成するコマンド</summary>
         public DelegateCommand DeleteCommand { get; private set; }
         /// <summary>ツリー選択時コマンド</summary>
-        public DelegateCommand<TreeSource<string>> TreeSelectCommand { get; private set; }
+        public DelegateCommand<TreeSource<FileData>> TreeSelectCommand { get; private set; }
 
         // TODO:ボタンの有効状態は、選択中の項目によって判定すべき
         // 選択中が何かを示すプロパティ1つ置けば良いのでは？
@@ -57,49 +58,27 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             set { SetProperty(ref _isEnableDeleteButton, value); }
         }
 
+        //public ObservableCollection<TreeSource<FileData>> TreeRoot { get; set; }
+        public FileTree TreeRoot { get; set; }
 
-        public ObservableCollection<TreeSource<string>> TreeRoot { get; set; }
-
-        private string _message;
-        public string Message
-        {
-            get { return _message; }
-            set { SetProperty(ref _message, value); }
-        }
-
-        public RazorLoadViewModel(IRegionManager regionManager, IMessageService messageService) :
+        public RazorLoadViewModel(IRegionManager regionManager, IWpfDirectoryService wpfDirectoryService) :
             base(regionManager)
         {
-            Message = messageService.GetMessage() + GetType().Name;
-
             // コマンドの設定
             MakeFileCommand = new DelegateCommand(MakeFile);
             MakeFolderCommand = new DelegateCommand(MakeFolder);
             EditCommand = new DelegateCommand(Edit);
             DeleteCommand = new DelegateCommand(Delete);
-            TreeSelectCommand = new DelegateCommand<TreeSource<string>>(TreeSelect);
+            TreeSelectCommand = new DelegateCommand<TreeSource<FileData>>(TreeSelect);
 
             // ボタンの状態
             IsEnableMakeButton = false;
             IsEnableEditButton = false;
             IsEnableDeleteButton = false;
 
-            // データ読み込み
-            TreeRoot = new ObservableCollection<TreeSource<string>>();
-            var item1 = new FileTree("Item1");
-            var item11 = new FileTree("Item1-1");
-            var item12 = new FileTree("Item1-2");
-            var item2 = new FileTree("Item2");
-            var item21 = new FileTree("Item2-1");
-            var item211 = new FileTree("Item2-1-1");
-            var item212 = new FileTree("Item2-1-2");
-            TreeRoot.Add(item1);
-            TreeRoot.Add(item2);
-            item1.AddChild(item11);
-            item1.AddChild(item12);
-            item2.AddChild(item21);
-            item21.AddChild(item211);
-            item21.AddChild(item212);
+            // ディレクトリ階層を読み込み
+            var razorDir = $"./{ModuleSettings.Default.RazorDirectory}";
+            TreeRoot = wpfDirectoryService.GetDirectoryFileTree(razorDir);
         }
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
@@ -109,9 +88,9 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         /// <summary>
         /// 空のファイルを作成する
         /// </summary>
-        private void TreeSelect(TreeSource<string> aaaa)
+        private void TreeSelect(TreeSource<FileData> aaaa)
         {
-            MessageBox.Show(aaaa.Value);
+            MessageBox.Show(aaaa.Value.Name);
         }
 
         /// <summary>

@@ -1,14 +1,13 @@
 ﻿<UserControl x:Class="DigitalMegaFlareOffline.Modules.Common.Views.RazorLoad"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:DigitalMegaFlareOffline.Modules.Common.Views"
+             xmlns:xx="clr-namespace:MithrilCube.Prism;assembly=MithrilCube"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:xx="clr-namespace:DigitalMegaFlareOffline.Modules.Common.Models"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="600"
+             d:DesignHeight="600" d:DesignWidth="800"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True" >
     <Grid>
@@ -22,7 +21,7 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <!-- 左上：ツリー表示 -->
-        <TreeView x:Name="myTreeView" Grid.Row="0" Grid.Column="0" ItemsSource="{Binding TreeRoot}">
+        <TreeView x:Name="myTreeView" Grid.Row="0" Grid.Column="0" ItemsSource="{Binding TreeRoot.Children}">
             <!-- クリックしたものをVMに伝える -->
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectedItemChanged">
@@ -36,7 +35,7 @@
             </TreeView.Resources>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type xx:FileTree}" ItemsSource="{Binding Children}">
-                    <TextBlock Text="{Binding Value}"/>
+                    <TextBlock Text="{Binding Value.Name}"/>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
@@ -50,7 +49,7 @@
         <!-- 下：ボタンと入力 -->
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
             <StackPanel Margin="0,0,0,10" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom">
-                <TextBox Text="{Binding FileOrFolderName, UpdateSourceTrigger=PropertyChanged}" MinWidth="240" materialDesign:HintAssist.Hint="作成する名前を入力" ToolTip="名前を入力します。">
+                <TextBox Text="{Binding FileOrFolderName, UpdateSourceTrigger=PropertyChanged}" MinWidth="300" materialDesign:HintAssist.Hint="作成する名前を入力" ToolTip="名前を入力します。">
                     <i:Interaction.Triggers>
                         <!-- 入力時の処理：作成可能か判定する (TODO:階層制限付けようと思ったけど多分要らない、なのでこのトリガー要らない) -->
                         <i:EventTrigger EventName="TextChanged">
@@ -59,12 +58,12 @@
                     </i:Interaction.Triggers>
                 </TextBox>
             </StackPanel>
-            <Button Content="ファイル作成" Margin="24,0,0,0" Width="200" Command="{Binding MakeFileCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
-            <Button Content="フォルダ作成" Margin="24,0,0,0" Width="200" Command="{Binding MakeFolderCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
+            <Button Content="ファイル作成" Margin="24,0,0,0" Command="{Binding MakeFileCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
+            <Button Content="フォルダ作成" Margin="24,0,0,0" Command="{Binding MakeFolderCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="削除" Margin="24,0,0,0" Background="Red" BorderBrush="Red" Command="{Binding DeleteCommand}" IsEnabled="{Binding IsEnableEditButton}"></Button>
-            <Button Content="編集" Margin="24,0,0,0" Width="200" Command="{Binding EditCommand}" IsEnabled="{Binding IsEnableDeleteButton}"></Button>
+            <Button Content="編集" Margin="24,0,0,0" Command="{Binding EditCommand}" IsEnabled="{Binding IsEnableDeleteButton}" Cursor="Hand"></Button>
         </StackPanel>
     </Grid>
 </UserControl>
