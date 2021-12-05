@@ -16,6 +16,10 @@ using System.Windows;
 
 // 課題
 // ・Treeの選択状態を解除したいけど、ここから制御できないのでは？
+// https://stackoverflow.com/questions/7153813/wpf-mvvm-treeview-selecteditem
+// https://stackoverflow.com/questions/9143107/get-selected-treeviewitem-using-mvvm
+
+
 // ・全体再取得すると、開閉状態が消える。本当に全体再取得でいいの？
 
 // ・nullの時にボタンを無効にしたい
