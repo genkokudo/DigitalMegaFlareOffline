@@ -9,23 +9,18 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
 // 課題
-// ・Treeの選択状態を解除したいけど、ここから制御できないのでは？
-// https://stackoverflow.com/questions/7153813/wpf-mvvm-treeview-selecteditem
-// https://stackoverflow.com/questions/9143107/get-selected-treeviewitem-using-mvvm
+// ■全体再取得すると、開閉状態が消える。本当に全体再取得でいいの？
+
+// まず、追加した時にツリー表示反映するか確認。それから考える。
 
 
-// ・全体再取得すると、開閉状態が消える。本当に全体再取得でいいの？
-
-// ・nullの時にボタンを無効にしたい
-// ・https://stackoverflow.com/questions/51162551/disable-button-if-value-is-null-via-databinding
-// ・https://stackoverflow.com/questions/7140662/isenabled-false-if-binding-source-is-not-available
-// ↑DataTriggerが複数の場合はMultiDataTriggerを使う、またはDataConverterを作って頑張る
 
 namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
 {
@@ -37,10 +32,14 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         public DelegateCommand MakeFileCommand { get; private set; }
         /// <summary>フォルダを作成するコマンド</summary>
         public DelegateCommand MakeFolderCommand { get; private set; }
+        /// <summary>名前を変更するコマンド</summary>
+        public DelegateCommand RenameCommand { get; private set; }
         /// <summary>ファイルを編集するコマンド</summary>
         public DelegateCommand EditCommand { get; private set; }
         /// <summary>ファイル・フォルダを作成するコマンド</summary>
         public DelegateCommand DeleteCommand { get; private set; }
+        /// <summary>ファイル・フォルダ名入力時のコマンド</summary>
+        public DelegateCommand TextChangedCommand { get; private set; }
         /// <summary>ツリー選択時コマンド</summary>
         public DelegateCommand<TreeSource<FileData>> TreeSelectCommand { get; private set; }
 
@@ -48,15 +47,22 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         /// 現在選択中のファイル
         /// 初期及び何か処理をした時はnull
         /// </summary>
-        private FileData _selectedFileData;
-        public FileData SelectedFileData
+        private TreeSource<FileData> _selectedFileData;
+        public TreeSource<FileData> SelectedFile
         {
             get { return _selectedFileData; }
             set { SetProperty(ref _selectedFileData, value); }
         }
 
-        // TODO:フォルダを選択している場合true
-        // 作成ボタンが有効か
+        // 入力中のファイル・フォルダ名
+        private string _fileOrFolderName;
+        public string FileOrFolderName
+        {
+            get { return _fileOrFolderName; }
+            set { SetProperty(ref _fileOrFolderName, value); }
+        }
+
+        // ファイル・フォルダ作成ボタンが有効か
         private bool _isEnableMakeButton;
         public bool IsEnableMakeButton
         {
@@ -64,16 +70,14 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             set { SetProperty(ref _isEnableMakeButton, value); }
         }
 
-        // TODO:ファイル（＝子なし項目）を選択している場合true
         // 編集ボタンが有効か
         private bool _isEnableEditButton;
         public bool IsEnableEditButton
         {
-            get { return SelectedFileData != null; }
+            get { return SelectedFile != null; }
             set { SetProperty(ref _isEnableEditButton, value); }
         }
 
-        // TODO:ファイルまたはフォルダを選択している場合true
         // 削除ボタンが有効か
         private bool _isEnableDeleteButton;
         public bool IsEnableDeleteButton
@@ -103,11 +107,14 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             EditCommand = new DelegateCommand(Edit);
             DeleteCommand = new DelegateCommand(Delete);
             TreeSelectCommand = new DelegateCommand<TreeSource<FileData>>(TreeSelect);
+            TextChangedCommand = new DelegateCommand(TextChanged);
+            RenameCommand = new DelegateCommand(Rename);
 
-            // ボタンの状態
+            // 画面の状態
             IsEnableMakeButton = false;
             IsEnableEditButton = false;
             IsEnableDeleteButton = false;
+            _fileOrFolderName = string.Empty;
 
             // ディレクトリ階層を読み込み
             var razorDir = $"./{ModuleSettings.Default.RazorDirectory}";
@@ -123,9 +130,38 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         /// </summary>
         private void TreeSelect(TreeSource<FileData> selectedFile)
         {
-            SelectedFileData = selectedFile.Value;
+            SelectedFile = selectedFile;
 
-            IsEnableMakeButton = SelectedFileData != null;
+            // ボタン有効化
+            IsEnableMakeButton = true;                  // TODO:選択中のフォルダ内、または選択ファイルと同一ディレクトリに同名のファイルがある場合は有効にしない
+            IsEnableDeleteButton = true;
+            var result = CheckAvailableName();
+
+            // ファイルの場合のみ有効化
+            IsEnableEditButton = !selectedFile.Value.IsDirectory;
+        }
+
+        /// <summary>
+        /// ファイル名と、選択中のディレクトリでボタンを有効にするか判断する
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckAvailableName()
+        {
+            var result = false;
+            if (string.IsNullOrWhiteSpace(FileOrFolderName))
+            {
+                return false;
+            }
+            if (SelectedFile.Value.IsDirectory)
+            {
+                // ディレクトリの場合、その中に指定された名前が無いこと
+                return !File.Exists(Path.Combine(SelectedFile.Value.FullPath, $"{FileOrFolderName}.razor"));        // これだと、ファイルとフォルダの区別がない。IsEnableMakeButtonを2つにわけること。
+            }
+            else
+            {
+                // ファイルの場合、同一ディレクトリ内に指定された名前が無いこと
+                return !File.Exists(Path.Combine(Path.GetDirectoryName(SelectedFile.Value.FullPath), $"{FileOrFolderName}.razor"));
+            }
         }
 
         /// <summary>
@@ -133,20 +169,25 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         /// </summary>
         private void MakeFile()
         {
-            // ファイルを作成する
+            // ファイルを選択している場合、同ディレクトリにファイルを作成する
+            // フォルダを選択している場合、そのディレクトリにファイルを作成する
+            MessageBox.Show("ファイルを作成する");
+            IsEnableMakeButton = false;
 
-            // 作成完了
-            SelectedFileData = null;
-            IsEnableMakeButton = SelectedFileData != null;
+            // ツリー表示を更新（どうやって？）
         }
 
         /// <summary>
-        /// フォルダを作成する
+        /// 空のフォルダを作成する
         /// </summary>
         private void MakeFolder()
         {
-            SelectedFileData = null;
-            IsEnableMakeButton = SelectedFileData != null;
+            // ファイルを選択している場合、同ディレクトリにファイルを作成する
+            // フォルダを選択している場合、そのディレクトリにファイルを作成する
+            MessageBox.Show("フォルダを作成する");
+            IsEnableMakeButton = false;
+
+            // ツリー表示を更新（どうやって？）
         }
 
         /// <summary>
@@ -162,7 +203,6 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             };
             RegionNavigation.RequestNavigate(ViewNames.ViewRazorEdit, param);
 
-            // TODO:同一Region内で画面遷移をしないので、IRegionNavigationServiceにすること。RegionViewModelBaseを変更すること。
         }
 
         /// <summary>
@@ -170,11 +210,27 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         /// </summary>
         private void Delete()
         {
+            // TODO:確認する
+
             IsEnableMakeButton = false;
             IsEnableEditButton = false;
             IsEnableDeleteButton = false;
 
-            SelectedFileData = null;
+            SelectedFile = null;
+        }
+
+        /// <summary>
+        /// ファイル・フォルダの名前を変更する
+        /// </summary>
+        private void Rename()
+        {
+            // 多分、選択状態が保たれないので、選択し直すこと（IsSelected=true）
+        }
+
+        // ファイル・フォルダ名の入力時
+        private void TextChanged()
+        {
+            // FileOrFolderName
         }
     }
 }

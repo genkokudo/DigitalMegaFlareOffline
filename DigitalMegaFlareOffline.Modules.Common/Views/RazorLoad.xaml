@@ -28,11 +28,14 @@
                     <i:InvokeCommandAction Command="{Binding TreeSelectCommand}" CommandParameter="{Binding ElementName=myTreeView ,Path=SelectedItem}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
+            <!-- 表示アイテムのバインド -->
             <TreeView.Resources>
                 <Style TargetType="TreeViewItem">
                     <Setter Property="IsExpanded" Value="{Binding Path=IsExpanded}"/>
+                    <Setter Property="IsSelected" Value="{Binding Path=IsSelected}"/>
                 </Style>
             </TreeView.Resources>
+            <!-- 表示形式 -->
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type xx:FileTree}" ItemsSource="{Binding Children}">
                     <TextBlock Text="{Binding Value.Name}"/>
@@ -49,17 +52,18 @@
         <!-- 下：ボタンと入力 -->
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
             <StackPanel Margin="0,0,0,10" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom">
-                <TextBox Text="{Binding FileOrFolderName, UpdateSourceTrigger=PropertyChanged}" MinWidth="300" materialDesign:HintAssist.Hint="作成する名前を入力" ToolTip="名前を入力します。">
+                <TextBox Text="{Binding FileOrFolderName, UpdateSourceTrigger=PropertyChanged}" MinWidth="300" materialDesign:HintAssist.Hint="拡張子なしで指定する" ToolTip="作成・変更する名前を入力します。">
                     <i:Interaction.Triggers>
                         <!-- 入力時の処理：作成可能か判定する (TODO:階層制限付けようと思ったけど多分要らない、なのでこのトリガー要らない) -->
                         <i:EventTrigger EventName="TextChanged">
-                            <i:InvokeCommandAction Command="{Binding SetIsEnableOutputCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBox>
             </StackPanel>
             <Button Content="ファイル作成" Margin="24,0,0,0" Command="{Binding MakeFileCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
             <Button Content="フォルダ作成" Margin="24,0,0,0" Command="{Binding MakeFolderCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
+            <Button Content="名前変更" Margin="24,0,0,0" Command="{Binding RenameCommand}" IsEnabled="{Binding IsEnableMakeButton}"></Button>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="削除" Margin="24,0,0,0" Background="Red" BorderBrush="Red" Command="{Binding DeleteCommand}" IsEnabled="{Binding IsEnableEditButton}"></Button>
