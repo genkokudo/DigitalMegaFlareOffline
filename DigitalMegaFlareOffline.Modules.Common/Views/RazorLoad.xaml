@@ -47,7 +47,7 @@
                 AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
                 materialDesign:HintAssist.Hint="プレビュー"
                 ToolTip="選択したファイルの内容を表示します。"
-                Text="{Binding TemplateInput}">
+                Text="{Binding PreviewText}">
         </TextBox>
         <!-- 下：ボタンと入力 -->
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">

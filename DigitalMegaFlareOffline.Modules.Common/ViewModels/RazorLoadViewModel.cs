@@ -19,8 +19,8 @@ using System.Windows;
 // ■全体再取得すると、開閉状態が消える。本当に全体再取得でいいの？
 
 // まず、追加した時にツリー表示反映するか確認。それから考える。
-
-
+// 表示反映させるには、再取得と開閉状態の引継ぎが必要。そうすると、対象ディレクトリだけ行うべき。
+// 再取得して、開閉状態を引き継いで反映・・・。ツリーを再帰的に引き継ぐのは面倒。
 
 namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
 {
@@ -48,7 +48,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         /// 初期及び何か処理をした時はnull
         /// </summary>
         private TreeSource<FileData> _selectedFileData;
-        public TreeSource<FileData> SelectedFile
+        public TreeSource<FileData> SelectedFileOrDirectory
         {
             get { return _selectedFileData; }
             set { SetProperty(ref _selectedFileData, value); }
@@ -59,7 +59,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         public string FileOrFolderName
         {
             get { return _fileOrFolderName; }
-            set { SetProperty(ref _fileOrFolderName, value); CheckAvailableName(); }
+            set { SetProperty(ref _fileOrFolderName, value); }
         }
 
         // ファイル作成ボタンが有効か
@@ -111,6 +111,14 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             set { SetProperty(ref _treeRoot, value); }
         }
 
+        // プレビュー
+        private string _previewText;
+        public string PreviewText
+        {
+            get { return _previewText; }
+            set { SetProperty(ref _previewText, value); }
+        }
+
         public RazorLoadViewModel(IRegionManager regionManager, IWpfDirectoryService wpfDirectoryService) :
             base(regionManager)
         {
@@ -126,21 +134,24 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             TextChangedCommand = new DelegateCommand(TextChanged);
             RenameCommand = new DelegateCommand(Rename);
 
+            // ツリー取得
+            // ディレクトリ階層を読み込み
+            var razorDir = $"./{ModuleSettings.Default.RazorDirectory}";
+            TreeRoot = _wpfDirectoryService.GetDirectoryFileTree(razorDir);
+
             // 画面の状態
             IsEnableMakeFileButton = false;
             IsEnableMakeDirectoryButton = false;
             IsEnableEditButton = false;
             IsEnableDeleteButton = false;
             IsEnableChangeButton = false;
-            _fileOrFolderName = string.Empty;
-
-            // ディレクトリ階層を読み込み
-            var razorDir = $"./{ModuleSettings.Default.RazorDirectory}";
-            TreeRoot = _wpfDirectoryService.GetDirectoryFileTree(razorDir);
+            FileOrFolderName = string.Empty;
+            PreviewText = string.Empty;
         }
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
+            // 画面の状態はリセットしない
         }
 
         /// <summary>
@@ -148,10 +159,20 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         /// </summary>
         private void TreeSelect(TreeSource<FileData> selectedFile)
         {
-            SelectedFile = selectedFile;
+            SelectedFileOrDirectory = selectedFile;
 
             // ボタン有効化
             CheckAvailableName();
+
+            // ファイルの場合は内容を表示する
+            if (selectedFile.Value.IsDirectory)
+            {
+                PreviewText = string.Empty;
+            }
+            else
+            {
+                PreviewText = File.ReadAllText(selectedFile.Value.FullPath);
+            }
         }
 
         /// <summary>
@@ -160,8 +181,18 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         /// <returns></returns>
         private void CheckAvailableName()
         {
+            if (SelectedFileOrDirectory == null)
+            {
+                IsEnableMakeFileButton = false;
+                IsEnableMakeDirectoryButton = false;
+                IsEnableEditButton = false;
+                IsEnableDeleteButton = false;
+                IsEnableChangeButton = false;
+                return;
+            }
+
             IsEnableDeleteButton = true;
-            IsEnableEditButton = !SelectedFile.Value.IsDirectory;
+            IsEnableEditButton = !SelectedFileOrDirectory.Value.IsDirectory;
 
             if (string.IsNullOrWhiteSpace(FileOrFolderName))
             {
@@ -171,23 +202,23 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
                 return;
             }
 
-            if (SelectedFile.Value.IsDirectory)
+            if (SelectedFileOrDirectory.Value.IsDirectory)
             {
                 // ディレクトリを選択している場合、その中に指定された名前が無いこと
-                IsEnableMakeFileButton = !File.Exists(Path.Combine(SelectedFile.Value.FullPath, $"{FileOrFolderName}.razor"));
-                IsEnableMakeDirectoryButton = !Directory.Exists(Path.Combine(SelectedFile.Value.FullPath, $"{FileOrFolderName}"));
+                IsEnableMakeFileButton = !File.Exists(Path.Combine(SelectedFileOrDirectory.Value.FullPath, $"{FileOrFolderName}.razor"));
+                IsEnableMakeDirectoryButton = !Directory.Exists(Path.Combine(SelectedFileOrDirectory.Value.FullPath, $"{FileOrFolderName}"));
 
                 // 名前変更ボタン：同一ディレクトリに同名のディレクトリが無いこと
-                IsEnableChangeButton = !Directory.Exists(Path.Combine(Path.GetDirectoryName(SelectedFile.Value.FullPath), $"{FileOrFolderName}"));
+                IsEnableChangeButton = !Directory.Exists(Path.Combine(Path.GetDirectoryName(SelectedFileOrDirectory.Value.FullPath), $"{FileOrFolderName}"));
             }
             else
             {
                 // ファイルを選択している場合、同一ディレクトリ内に指定された名前が無いこと
-                IsEnableMakeFileButton = !File.Exists(Path.Combine(Path.GetDirectoryName(SelectedFile.Value.FullPath), $"{FileOrFolderName}.razor"));
-                IsEnableMakeDirectoryButton = !Directory.Exists(Path.Combine(Path.GetDirectoryName(SelectedFile.Value.FullPath), $"{FileOrFolderName}"));
+                IsEnableMakeFileButton = !File.Exists(Path.Combine(Path.GetDirectoryName(SelectedFileOrDirectory.Value.FullPath), $"{FileOrFolderName}.razor"));
+                IsEnableMakeDirectoryButton = !Directory.Exists(Path.Combine(Path.GetDirectoryName(SelectedFileOrDirectory.Value.FullPath), $"{FileOrFolderName}"));
 
                 // 名前変更ボタン：同一ディレクトリに同名のファイルが無いこと
-                IsEnableChangeButton = !File.Exists(Path.Combine(Path.GetDirectoryName(SelectedFile.Value.FullPath), $"{FileOrFolderName}.razor"));
+                IsEnableChangeButton = !File.Exists(Path.Combine(Path.GetDirectoryName(SelectedFileOrDirectory.Value.FullPath), $"{FileOrFolderName}.razor"));
             }
         }
 
@@ -196,38 +227,54 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         /// </summary>
         private void MakeFile()
         {
-            if (SelectedFile.Value.IsDirectory)
+            var filename = $"{FileOrFolderName}.razor";
+            if (SelectedFileOrDirectory.Value.IsDirectory)
             {
-                File.Create(Path.Combine(SelectedFile.Value.FullPath, $"{FileOrFolderName}.razor"));
+                // 選択ディレクトリの中に作成
+                var fullpath = Path.Combine(SelectedFileOrDirectory.Value.FullPath, filename);
+                File.Create(fullpath).Dispose();    // 解放しないと掴みっぱなしになり、その状態でカーソルを合わせると読み込めなくて落ちる
+
+                // ツリー表示を更新
+                SelectedFileOrDirectory.AddChild(new TreeSource<FileData>(new FileData { IsDirectory = false, Name = filename, FullPath = fullpath }));
             }
             else
             {
-                File.Create(Path.Combine(Path.GetDirectoryName(SelectedFile.Value.FullPath), $"{FileOrFolderName}.razor"));
-            }
-            MessageBox.Show("ファイルを作成する");
+                // 選択ファイルと同じディレクトリに作成
+                var fullpath = Path.Combine(Path.GetDirectoryName(SelectedFileOrDirectory.Value.FullPath), filename);
+                File.Create(fullpath).Dispose();
 
-            // TODO:ツリー表示を更新（どうやって？）
+                // ツリー表示を更新
+                SelectedFileOrDirectory.Parent.AddChild(new TreeSource<FileData>(new FileData { IsDirectory = false, Name = filename, FullPath = fullpath }));
+            }
 
             // ボタン更新
             CheckAvailableName();
         }
 
         /// <summary>
-        /// 空のフォルダを作成する
+        /// 空のディレクトリを作成する
         /// </summary>
         private void MakeDirectory()
         {
-            if (SelectedFile.Value.IsDirectory)
+            var dirname = $"{FileOrFolderName}";
+            if (SelectedFileOrDirectory.Value.IsDirectory)
             {
-                Directory.CreateDirectory(Path.Combine(SelectedFile.Value.FullPath, $"{FileOrFolderName}"));
+                var fullpath = Path.Combine(SelectedFileOrDirectory.Value.FullPath, dirname);
+                Directory.CreateDirectory(fullpath);
+
+                // ツリー表示を更新
+                SelectedFileOrDirectory.AddChild(new TreeSource<FileData>(new FileData { IsDirectory = true, Name = dirname, FullPath = fullpath }));
+
+                // TODO:作成したフォルダの中にファイルを作っても表示に反映されない不具合
             }
             else
             {
-                Directory.CreateDirectory(Path.Combine(Path.GetDirectoryName(SelectedFile.Value.FullPath), $"{FileOrFolderName}"));
-            }
-            MessageBox.Show("フォルダを作成する");
+                var fullpath = Path.Combine(Path.GetDirectoryName(SelectedFileOrDirectory.Value.FullPath), dirname);
+                Directory.CreateDirectory(fullpath);
 
-            // TODO:ツリー表示を更新（どうやって？）
+                // ツリー表示を更新
+                SelectedFileOrDirectory.Parent.AddChild(new TreeSource<FileData>(new FileData { IsDirectory = true, Name = dirname, FullPath = fullpath }));
+            }
 
             // ボタン更新
             CheckAvailableName();
@@ -239,6 +286,8 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         /// </summary>
         private void Edit()
         {
+            // TODO:なんか編集画面要らない気がしてきた。
+
             // 遷移処理
             var param = new NavigationParameters
             {
@@ -264,26 +313,20 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
                 return;
             }
 
-            if (SelectedFile.Value.IsDirectory)
+            if (SelectedFileOrDirectory.Value.IsDirectory)
             {
                 // ディレクトリ削除
-                Directory.Delete(SelectedFile.Value.FullPath, true);
+                Directory.Delete(SelectedFileOrDirectory.Value.FullPath, true);
             }
             else
             {
                 // ファイル削除
-                File.Delete(SelectedFile.Value.FullPath);
+                File.Delete(SelectedFileOrDirectory.Value.FullPath);
             }
-            // TODO:表示更新を実装
+            // 表示更新
+            SelectedFileOrDirectory.RemoveOwn();
 
-            IsEnableMakeFileButton = false;
-            IsEnableMakeDirectoryButton = false;
-            IsEnableEditButton = false;
-            IsEnableDeleteButton = false;
-            IsEnableChangeButton = false;
-            //CheckAvailableName();     // TODO:表示更新を実装したら、なるべくこっちで制御すること
-
-            SelectedFile = null;
+            // 削除した時、カーソルが自動的に親に移動してファイル選択イベントが実行されるので、ここでボタンの更新などは不要
             MessageBox.Show("削除しました。", "結果", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
@@ -298,7 +341,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         // ファイル・フォルダ名の入力時
         private void TextChanged()
         {
-            // FileOrFolderName
+            CheckAvailableName();
         }
     }
 }
