@@ -27,6 +27,7 @@
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\MithrilCube\MithrilCubeWpf\MithrilCubeWpf.csproj" />
     <ProjectReference Include="..\..\MithrilCube\MithrilCube\MithrilCube.csproj" />
     <ProjectReference Include="..\DigitalMegaFlareOffline\Services\DigitalMegaFlareOffline.Services\DigitalMegaFlareOffline.Services.csproj" />
   </ItemGroup>

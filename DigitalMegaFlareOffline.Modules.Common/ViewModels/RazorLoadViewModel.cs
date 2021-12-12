@@ -1,18 +1,9 @@
-﻿using DigitalMegaFlareOffline.Modules.Common.Models;
-using DigitalMegaFlareOffline.Modules.Common.Mvvm;
-using DigitalMegaFlareOffline.Services;
-using MithrilCube.Prism;
-using MithrilCube.Prism.Services;
+﻿using DigitalMegaFlareOffline.Modules.Common.Mvvm;
+using MithrilCubeWpf.Prism;
+using MithrilCubeWpf.Prism.Services;
 using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Regions;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 // 課題
@@ -34,8 +25,8 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         public DelegateCommand MakeDirectoryCommand { get; private set; }
         /// <summary>名前を変更するコマンド</summary>
         public DelegateCommand RenameCommand { get; private set; }
-        ///// <summary>ファイルを編集するコマンド</summary>
-        //public DelegateCommand EditCommand { get; private set; }
+        /// <summary>ファイルを更新するコマンド</summary>
+        public DelegateCommand EditCommand { get; private set; }
         /// <summary>ファイル・フォルダを作成するコマンド</summary>
         public DelegateCommand DeleteCommand { get; private set; }
         /// <summary>ファイル・フォルダ名入力時のコマンド</summary>
@@ -128,7 +119,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             // コマンドの設定
             MakeFileCommand = new DelegateCommand(MakeFile);
             MakeDirectoryCommand = new DelegateCommand(MakeDirectory);
-            //EditCommand = new DelegateCommand(Edit);
+            EditCommand = new DelegateCommand(Edit);
             DeleteCommand = new DelegateCommand(Delete);
             TreeSelectCommand = new DelegateCommand<TreeSource<FileData>>(TreeSelect);
             TextChangedCommand = new DelegateCommand(TextChanged);
@@ -280,22 +271,26 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             CheckAvailableName();
         }
 
-        ///// <summary>
-        ///// 編集画面へ遷移する
-        ///// ファイル情報を編集画面へ渡す
-        ///// </summary>
-        //private void Edit()
-        //{
-        //    // TODO:なんか編集画面要らない気がしてきた。
+        /// <summary>
+        /// ファイルを更新する
+        /// </summary>
+        private void Edit()
+        {
+            var res = MessageBox.Show(
+                "上書きしてしまいますが\nよろしいですか？",
+                "確認メッセージ",
+                MessageBoxButton.OKCancel,
+                MessageBoxImage.Question, MessageBoxResult.Cancel
+                );
+            if (res == MessageBoxResult.Cancel)
+            {
+                return;
+            }
 
-        //    // 遷移処理
-        //    var param = new NavigationParameters
-        //    {
-        //        //{ "SnippetFullPath", Snippet.FullPath }     // TODO:何を渡すべき？フルパスだけで良い？→クラスごと渡せば安心。
-        //    };
-        //    RegionNavigation.RequestNavigate(ViewNames.ViewRazorEdit, param);
+            File.WriteAllText(SelectedFileOrDirectory.Value.FullPath, PreviewText);
 
-        //}
+            MessageBox.Show("保存しました。", "結果", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
 
         /// <summary>
         /// ファイル・フォルダを削除する

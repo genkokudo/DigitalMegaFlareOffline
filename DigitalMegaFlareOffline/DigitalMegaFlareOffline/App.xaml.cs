@@ -1,7 +1,7 @@
 ﻿using DigitalMegaFlareOffline.Modules.Common;
 using DigitalMegaFlareOffline.Services;
 using DigitalMegaFlareOffline.Views;
-using MithrilCube.Prism.Services;
+using MithrilCubeWpf.Prism.Services;
 using MithrilCube.Services;
 using Prism.Ioc;
 using Prism.Modularity;
