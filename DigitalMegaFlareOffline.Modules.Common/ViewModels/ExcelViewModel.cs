@@ -87,7 +87,14 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
                 return;
             }
 
-            MessageBox.Show($"サンプルデータを作成しました。");
+            //MessageBox.Show($"なにもしませんでした。");
+
+            // Excelブックを開く
+            var xlApp = new Microsoft.Office.Interop.Excel.Application();
+            var xlBooks = xlApp.Workbooks;
+            var xlBook = xlBooks.Open(ExcelItems.First(x => x.Id == Id).FullPath);
+            xlApp.Visible = true;
+
         }
 
         /// <summary>
@@ -113,12 +120,6 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         private void Reload()
         {
             var excelDir = $"./{ModuleSettings.Default.ExcelDirectory}";
-            //ExcelItems = new ObservableCollection<ExcelItem>
-            //{
-            //    new ExcelItem {Id=1, Description = "aaaa", Name = "bbbb", UpdatedDate = DateTime.Now },
-            //    new ExcelItem {Id=2, Description = "cccc", Name = "dddd", UpdatedDate = DateTime.Now }
-            //};
-
 
             // 指定拡張子のファイルを全て探す
             var fileList = _directoryService.FolderInsiteSearch(excelDir, new string[] { ".xlsx" });
@@ -130,7 +131,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
                 // Excelを読み込んで、"A1"を読み取る
                 id++;
                 var description = _excelService.GetCell(filePath);
-                ExcelItems.Add(new ExcelItem { Id = id, FullPath = filePath, UpdatedDate = File.GetLastWriteTime(filePath), Name = Path.GetFileName(filePath), Description = description });
+                ExcelItems.Add(new ExcelItem { Id = id, FullPath = Path.GetFullPath(filePath), UpdatedDate = File.GetLastWriteTime(filePath), Name = Path.GetFileName(filePath), Description = description });
             }
 
 

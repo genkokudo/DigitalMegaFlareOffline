@@ -16,12 +16,11 @@ namespace DigitalMegaFlareOffline.Modules.Common
             containerRegistry.RegisterForNavigation<Config>();
             containerRegistry.RegisterForNavigation<Excel>();
             containerRegistry.RegisterForNavigation<Home>();
-            containerRegistry.RegisterForNavigation<RazorEdit>();
+            containerRegistry.RegisterForNavigation<Labo>();
             containerRegistry.RegisterForNavigation<RazorLoad>();
         }
     }
 
-    // TODO:これらの定数をMainWindowのXAMLから参照させること。
     /// <summary>
     /// このモジュールに含まれるView名を定数にしておく
     /// </summary>
@@ -30,7 +29,7 @@ namespace DigitalMegaFlareOffline.Modules.Common
         public const string ViewConfig = "Config";
         public const string ViewExcel = "Excel";
         public const string ViewHome = "Home";
-        public const string ViewRazorEdit = "RazorEdit";
         public const string ViewRazorLoad = "RazorLoad";
+        public const string ViewLabo = "Labo";
     }
 }

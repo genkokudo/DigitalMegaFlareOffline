@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace DigitalMegaFlareOffline.Modules.Common.Views
 {
     /// <summary>
-    /// RazorEdit.xaml の相互作用ロジック
+    /// Labo.xaml の相互作用ロジック
     /// </summary>
-    public partial class RazorEdit : UserControl
+    public partial class Labo : UserControl
     {
-        public RazorEdit()
+        public Labo()
         {
             InitializeComponent();
         }

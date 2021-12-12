@@ -28,9 +28,9 @@
             <Menu IsMainMenu="True">
                 <MenuItem Icon="{materialDesign:PackIcon Kind=Home}" Header="説明" Command="{Binding NavigateCommand}" CommandParameter="{x:Static module:ViewNames.ViewHome}"></MenuItem>
                 <MenuItem Icon="{materialDesign:PackIcon Kind=Cog}" Header="設定" Command="{Binding NavigateCommand}" CommandParameter="{x:Static module:ViewNames.ViewConfig}"></MenuItem>
-                <MenuItem Icon="{materialDesign:PackIcon Kind=Pencil}" Header="Excel管理と生成" Command="{Binding NavigateCommand}" CommandParameter="{x:Static module:ViewNames.ViewExcel}"></MenuItem>
+                <MenuItem Icon="{materialDesign:PackIcon Kind=MicrosoftExcel}" Header="Excel管理と生成" Command="{Binding NavigateCommand}" CommandParameter="{x:Static module:ViewNames.ViewExcel}"></MenuItem>
                 <MenuItem Icon="{materialDesign:PackIcon Kind=FileDownload}" Header="Razor読み込み" Command="{Binding NavigateCommand}" CommandParameter="{x:Static module:ViewNames.ViewRazorLoad}"></MenuItem>
-                <!--<MenuItem Icon="{materialDesign:PackIcon Kind=Pencil}" Header="Razor編集" Command="{Binding NavigateCommand}" CommandParameter="{x:Static module:ViewNames.ViewRazorEdit}"></MenuItem>-->
+                <MenuItem Icon="{materialDesign:PackIcon Kind=TestTube}" Header="実験・仮実装" Command="{Binding NavigateCommand}" CommandParameter="{x:Static module:ViewNames.ViewLabo}"></MenuItem>
             </Menu>
         </StackPanel>
         <ContentControl prism:RegionManager.RegionName="{x:Static s:RegionNames.ContentRegion}" Grid.Row="1" Margin="15,0,15,15"/>
