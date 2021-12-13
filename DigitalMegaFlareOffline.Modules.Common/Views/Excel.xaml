@@ -21,10 +21,10 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Content="名前変更" ToolTip="ファイル名を変更します。" Margin="0,0,10,0" Width="60" Height="24" IsEnabled="{Binding DataContext.IsEnableName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" Command="{Binding DataContext.AaaaCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" CommandParameter="{Binding Id}"></Button>
-                                    <Button Content="開く" ToolTip="Excelでファイルを開きます。" Margin="0,0,10,0" Width="60" Height="24" Command="{Binding DataContext.AaaaCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" CommandParameter="{Binding Id}"></Button>
-                                    <Button Content="生成" ToolTip="ファイルの内容でソースコードを生成します。" Margin="0,0,10,0" Width="60" Height="24" Command="{Binding DataContext.AaaaCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" CommandParameter="{Binding Id}"></Button>
-                                    <Button Content="削除" ToolTip="削除します。" Background="Red" BorderBrush="Red" Margin="0,0,10,0" Width="60" Height="24" Command="{Binding DataContext.AaaaCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" CommandParameter="{Binding Id}"></Button>
+                                    <Button Content="名前変更" ToolTip="ファイル名を変更します。" Margin="0,0,10,0" Width="120" Height="24" IsEnabled="{Binding DataContext.IsEnableName, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" Command="{Binding DataContext.RenameCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" CommandParameter="{Binding Id}"></Button>
+                                    <Button Content="開く" ToolTip="Excelでファイルを開きます。" Margin="0,0,10,0" Width="60" Height="24" Command="{Binding DataContext.OpenCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" CommandParameter="{Binding Id}"></Button>
+                                    <Button Content="生成" ToolTip="ファイルの内容でソースコードを生成します。" Margin="0,0,10,0" Width="60" Height="24" Command="{Binding DataContext.GenerateCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" CommandParameter="{Binding Id}"></Button>
+                                    <Button Content="削除" ToolTip="削除します。" Background="Red" BorderBrush="Red" Margin="0,0,10,0" Width="60" Height="24" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:Excel}}}" CommandParameter="{Binding Id}"></Button>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -44,8 +44,8 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBox>
-                <Button Content="空Excel作成" ToolTip="指定した名前で空のExcelファイルを作成します。" Margin="10,0,0,0" Command="{Binding FolderCommand}" IsEnabled="{Binding IsEnableName}" CommandParameter="VS" HorizontalAlignment="Right" VerticalAlignment="Center" Height="24"/>
-                <Button Content="新規作成" ToolTip="指定した名前で初期値入りのExcelファイルを作成します。" Margin="10,0,0,0" Command="{Binding FolderCommand}" IsEnabled="{Binding IsEnableName}" CommandParameter="VS" HorizontalAlignment="Right" VerticalAlignment="Center" Height="24"/>
+                <!--<Button Content="空Excel作成" ToolTip="指定した名前で空のExcelファイルを作成します。" Margin="10,0,0,0" Command="{Binding FolderCommand}" IsEnabled="{Binding IsEnableName}" CommandParameter="VS" HorizontalAlignment="Right" VerticalAlignment="Center" Height="24"/>-->
+                <Button Content="新規作成" ToolTip="指定した名前で初期値入りのExcelファイルを作成します。" Margin="10,0,0,0" Command="{Binding CreateCommand}" IsEnabled="{Binding IsEnableName}" CommandParameter="VS" HorizontalAlignment="Right" VerticalAlignment="Center" Height="24"/>
             </StackPanel>
         </StackPanel>
     </Grid>

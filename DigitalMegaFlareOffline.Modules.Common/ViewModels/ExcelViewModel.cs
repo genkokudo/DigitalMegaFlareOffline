@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,9 +22,16 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         private readonly IDirectoryService _directoryService;
         private readonly IExcelService _excelService;
 
-        // TODO:行ごとの処理：「開く」「生成」「削除」「名前変更」
-        /// <summary>コマンド</summary>
-        public DelegateCommand<long?> AaaaCommand { get; private set; }
+        /// <summary>生成コマンド</summary>
+        public DelegateCommand<long?> GenerateCommand { get; private set; }
+        /// <summary>Excelを開くコマンド</summary>
+        public DelegateCommand<long?> OpenCommand { get; private set; }
+        /// <summary>削除コマンド</summary>
+        public DelegateCommand<long?> DeleteCommand { get; private set; }
+        /// <summary>新規作成コマンド</summary>
+        public DelegateCommand CreateCommand { get; private set; }
+        /// <summary>名前変更コマンド</summary>
+        public DelegateCommand<long?> RenameCommand { get; private set; }
 
         /// <summary>名前変更・Excel作成ボタンの有効化を判断するコマンド</summary>
         public DelegateCommand SetIsEnableNameCommand { get; private set; }
@@ -60,11 +68,20 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             _excelService = excelService;
 
             // コマンドの設定
-            AaaaCommand = new DelegateCommand<long?>(Aaaa);
+            GenerateCommand = new DelegateCommand<long?>(Generate);
+            OpenCommand = new DelegateCommand<long?>(Open);
+            DeleteCommand = new DelegateCommand<long?>(Delete);
             SetIsEnableNameCommand = new DelegateCommand(SetIsEnableName);
+            CreateCommand = new DelegateCommand(Create);
+            RenameCommand = new DelegateCommand<long?>(Rename);
         }
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            Init();
+        }
+
+        private void Init()
         {
             IsEnableName = false;
             InputFileName = string.Empty;
@@ -72,12 +89,33 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         }
 
         /// <summary>
-        /// ????
+        /// 新規作成
         /// </summary>
-        private void Aaaa(long? Id)
+        private void Create()
+        {
+            MessageBox.Show($"{InputFileName}");
+        }
+
+        /// <summary>
+        /// 名前変更
+        /// </summary>
+        private void Rename(long? Id)
+        {
+            var filename = $"{InputFileName}.xlsx";
+            var target = ExcelItems.First(x => x.Id == Id);
+            var parentDir = new DirectoryInfo(target.FullPath).Parent.FullName;
+            File.Move(target.FullPath, Path.Combine(parentDir, filename));
+
+            Init();   // 表示更新
+        }
+
+        /// <summary>
+        /// ソース生成
+        /// </summary>
+        private void Generate(long? Id)
         {
             var res = MessageBox.Show(
-                $"IDは{Id}です。",
+                $"？",
                 "確認メッセージ",
                 MessageBoxButton.OKCancel,
                 MessageBoxImage.Question, MessageBoxResult.Cancel
@@ -86,15 +124,43 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             {
                 return;
             }
+        }
 
-            //MessageBox.Show($"なにもしませんでした。");
+        /// <summary>
+        /// ファイルを削除する
+        /// </summary>
+        private void Delete(long? Id)
+        {
+            var res = MessageBox.Show(
+                $"本当に削除しますか？",
+                "確認メッセージ",
+                MessageBoxButton.OKCancel,
+                MessageBoxImage.Question, MessageBoxResult.Cancel
+                );
+            if (res == MessageBoxResult.Cancel)
+            {
+                return;
+            }
+            var target = ExcelItems.First(x => x.Id == Id);
+            File.Delete(target.FullPath);
+            ExcelItems.Remove(target);
+        }
 
+        /// <summary>
+        /// Excelを開く
+        /// </summary>
+        private void Open(long? Id)
+        {
             // Excelブックを開く
             var xlApp = new Microsoft.Office.Interop.Excel.Application();
             var xlBooks = xlApp.Workbooks;
             var xlBook = xlBooks.Open(ExcelItems.First(x => x.Id == Id).FullPath);
             xlApp.Visible = true;
 
+            // Excelアプリケーションを解放
+            Marshal.ReleaseComObject(xlBook);
+            Marshal.ReleaseComObject(xlBooks);
+            Marshal.ReleaseComObject(xlApp);
         }
 
         /// <summary>
@@ -108,10 +174,9 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
                 return;
             }
 
-            // TODO:Excel一覧に無い名前であること
-            IsEnableName = true;
-
-            //ExcelItems.Any(x => x.Name.Trim(".xlsx") == InputFileName);
+            // 存在しないファイル名であること
+            var excelDir = $"./{ModuleSettings.Default.ExcelDirectory}";
+            IsEnableName = !File.Exists(Path.Combine(excelDir, $"{InputFileName.ToLower()}.xlsx"));
         }
 
         /// <summary>
@@ -133,10 +198,6 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
                 var description = _excelService.GetCell(filePath);
                 ExcelItems.Add(new ExcelItem { Id = id, FullPath = Path.GetFullPath(filePath), UpdatedDate = File.GetLastWriteTime(filePath), Name = Path.GetFileName(filePath), Description = description });
             }
-
-
-
-
         }
     }
 

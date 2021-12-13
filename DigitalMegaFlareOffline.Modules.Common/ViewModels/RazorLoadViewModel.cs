@@ -6,13 +6,6 @@ using Prism.Regions;
 using System.IO;
 using System.Windows;
 
-// 課題
-// ■全体再取得すると、開閉状態が消える。本当に全体再取得でいいの？
-
-// まず、追加した時にツリー表示反映するか確認。それから考える。
-// 表示反映させるには、再取得と開閉状態の引継ぎが必要。そうすると、対象ディレクトリだけ行うべき。
-// 再取得して、開閉状態を引き継いで反映・・・。ツリーを再帰的に引き継ぐのは面倒。
-
 namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
 {
     public class RazorLoadViewModel : RegionViewModelBase
