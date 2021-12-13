@@ -1,0 +1,10 @@
+/* ClientApp/src.custom.css */
+/* ----- マスタメンテ ----- */
+.input-number {
+    width: 54px;
+}
+
+/* 改行コードを反映させてテキスト表示 */
+.text-return {
+    white-space: pre-wrap;
+}

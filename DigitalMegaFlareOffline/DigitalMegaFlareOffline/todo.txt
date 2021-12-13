@@ -22,3 +22,4 @@ https://www.ipentec.com/document/csharp-open-xml-sdk-create-blank-excel-book
 
 ・Razor選択画面で、コピペ用の欄が欲しい。（ReadOnlyと、クリップボードにコピーボタン）
 
+スクリプトの拡張子をtxtからrazorに変えること。

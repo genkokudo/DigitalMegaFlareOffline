@@ -10,8 +10,6 @@
     <None Remove="Sample\Excel\Sample3.xlsx" />
     <None Remove="Sample\Razor\CSharp\ASP\Aaaa.razor" />
     <None Remove="Sample\Razor\CSharp\WPF\SampleWpf.razor" />
-    <None Remove="Sample\Razor\React\Tsx\Bbbb.razor" />
-    <None Remove="Sample\Razor\React\Ts\Bbbb.razor" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Interop.Excel">
@@ -30,8 +28,6 @@
     <EmbeddedResource Include="Sample\Excel\Sample1.xlsx" />
     <EmbeddedResource Include="Sample\Razor\CSharp\ASP\Aaaa.razor" />
     <EmbeddedResource Include="Sample\Razor\CSharp\WPF\SampleWpf.razor" />
-    <EmbeddedResource Include="Sample\Razor\React\Tsx\Bbbb.razor" />
-    <EmbeddedResource Include="Sample\Razor\React\Ts\Bbbb.razor" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.2.1" />

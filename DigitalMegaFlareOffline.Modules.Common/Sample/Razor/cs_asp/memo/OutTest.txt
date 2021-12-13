@@ -1,0 +1,16 @@
+@{
+	var Index = int.Parse(Model.General.Index); 
+	var Mod = Model.RootList[Index];
+}
+		// Aaaaê∂ê¨
+		/// @(Model.Out.Aaaa)
+
+
+		// Bbbbê∂ê¨
+		/// @(Model.Out.Bbbb)
+
+		// Ccccê∂ê¨
+		/// @(Model.Out.Cccc)
+
+		// Ddddê∂ê¨
+		/// @(Model.Out.Dddd)
