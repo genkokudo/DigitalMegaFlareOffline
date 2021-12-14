@@ -10,6 +10,23 @@
     <None Remove="Sample\Excel\Sample3.xlsx" />
     <None Remove="Sample\Razor\CSharp\ASP\Aaaa.razor" />
     <None Remove="Sample\Razor\CSharp\WPF\SampleWpf.razor" />
+    <None Remove="Sample\Razor\cs_asp\crud\Controller.razor" />
+    <None Remove="Sample\Razor\cs_asp\crud\DbContext.razor" />
+    <None Remove="Sample\Razor\cs_asp\crud\EntityBase.razor" />
+    <None Remove="Sample\Razor\cs_asp\crud\Model.razor" />
+    <None Remove="Sample\Razor\cs_asp\crud\ViewModel.razor" />
+    <None Remove="Sample\Razor\cs_asp\database\ApplicationDbContext.razor" />
+    <None Remove="Sample\Razor\cs_asp\database\DbInitializer.razor" />
+    <None Remove="Sample\Razor\cs_asp\database\Model.razor" />
+    <None Remove="Sample\Razor\cs_asp\memo\OutTest.razor" />
+    <None Remove="Sample\Razor\react\crud\componentsList.razor" />
+    <None Remove="Sample\Razor\react\crud\custom.razor" />
+    <None Remove="Sample\Razor\react\crud\storeList.razor" />
+    <None Remove="Sample\Razor\react\crud\useFetch.razor" />
+    <None Remove="Sample\Razor\react\crud\Utils.razor" />
+    <None Remove="Sample\Razor\react\navMenu\App.razor" />
+    <None Remove="Sample\Razor\react\navMenu\index.razor" />
+    <None Remove="Sample\Razor\react\navMenu\Nav.razor" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Interop.Excel">
@@ -28,6 +45,57 @@
     <EmbeddedResource Include="Sample\Excel\Sample1.xlsx" />
     <EmbeddedResource Include="Sample\Razor\CSharp\ASP\Aaaa.razor" />
     <EmbeddedResource Include="Sample\Razor\CSharp\WPF\SampleWpf.razor" />
+    <EmbeddedResource Include="Sample\Razor\cs_asp\crud\Controller.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\cs_asp\crud\DbContext.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\cs_asp\crud\EntityBase.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\cs_asp\crud\Model.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\cs_asp\crud\ViewModel.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\cs_asp\database\ApplicationDbContext.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\cs_asp\database\DbInitializer.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\cs_asp\database\Model.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\cs_asp\memo\OutTest.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\react\crud\componentsList.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\react\crud\custom.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\react\crud\storeList.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\react\crud\useFetch.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\react\crud\Utils.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\react\navMenu\App.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\react\navMenu\index.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\react\navMenu\Nav.razor">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.2.1" />

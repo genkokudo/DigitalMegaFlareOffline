@@ -115,7 +115,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         private void Generate(long? Id)
         {
             var res = MessageBox.Show(
-                $"？",
+                $"ソース生成してよろしいですか？",
                 "確認メッセージ",
                 MessageBoxButton.OKCancel,
                 MessageBoxImage.Question, MessageBoxResult.Cancel
