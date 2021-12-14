@@ -146,8 +146,11 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         /// </summary>
         private void Clip()
         {
-            MessageBox.Show(SelectedFileOrDirectory.Value.FullPath);
-            Clipboard.SetText(SelectedFileOrDirectory.Value.FullPath);
+            var dirLength = "./Razor\\".Length; // ./Razor\\CSharp\WPF\SampleWpf.razor
+            var path = SelectedFileOrDirectory.Value.FullPath;
+            path = path.Substring(dirLength, path.Length - dirLength - ".razor".Length);    // CSharp\WPF\SampleWpf
+
+            Clipboard.SetText(path);
         }
 
         /// <summary>
