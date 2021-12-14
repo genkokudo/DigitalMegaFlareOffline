@@ -13,22 +13,22 @@ using TimeZoneConverter;
 namespace @(Model.Settings.Name).Entities
 {
 	/// <summary>
-	/// @(Mod.Comment)‚Å‚·B
+	/// @(Mod.Comment)ã§ã™ã€‚
 	/// </summary>
 	public class @(Mod.Name)Entity : EntityBase
 	{
 		/// <summary>
-		/// ID‚ğæ“¾A‚à‚µ‚­‚ÍAİ’è‚µ‚Ü‚·B
+		/// IDã‚’å–å¾—ã€ã‚‚ã—ãã¯ã€è¨­å®šã—ã¾ã™ã€‚
 		/// </summary>
 		[Key]
 		public long @(Mod.Pascal)Id { get; set; }
 
 		/// <summary>
-		/// @(Model.Settings.IdComment)‚ğæ“¾A‚à‚µ‚­‚ÍAİ’è‚µ‚Ü‚·B
+		/// @(Model.Settings.IdComment)ã‚’å–å¾—ã€ã‚‚ã—ãã¯ã€è¨­å®šã—ã¾ã™ã€‚
 		/// </summary>
 		public long @(Model.Settings.Id) { get; set; }
 		@foreach(var field in Mod.FieldList){
-		@* ƒtƒB[ƒ‹ƒh‚ÌƒŠƒXƒg *@
+		@* ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®ãƒªã‚¹ãƒˆ *@
 		var attribute = string.Empty;
 		if(field.Type == "string" && !string.IsNullOrWhiteSpace(field.MaxLength)){
 			attribute = $"\r\n\t\t[StringLength({field.MaxLength})]";
@@ -38,19 +38,19 @@ namespace @(Model.Settings.Name).Entities
 		}
 		@:
 		@:/// <summary>
-		@:/// @(field.Comment)‚ğæ“¾A‚à‚µ‚­‚ÍAİ’è‚µ‚Ü‚·B
+		@:/// @(field.Comment)ã‚’å–å¾—ã€ã‚‚ã—ãã¯ã€è¨­å®šã—ã¾ã™ã€‚
 		@:/// </summary>@(attribute)
 		@:public @(field.Type) @(field.Name) { get; set; }
 		}
 		@if(Mod.IsMaster){
 		@:
 		@:/// <summary>
-		@:/// •À‚Ñ‡‚ğæ“¾A‚à‚µ‚­‚ÍAİ’è‚µ‚Ü‚·B
+		@:/// ä¸¦ã³é †ã‚’å–å¾—ã€ã‚‚ã—ãã¯ã€è¨­å®šã—ã¾ã™ã€‚
 		@:/// </summary>
 		@:public int Order { get; set; }
 		if(Mod.FieldList.Count > 0){
-			// ƒtƒB[ƒ‹ƒh‚ª‚ ‚éê‡
-			// ‰Šú’l‚ª‚ ‚é‚©
+			// ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ãŒã‚ã‚‹å ´åˆ
+			// åˆæœŸå€¤ãŒã‚ã‚‹ã‹
 			var existValues = false;
 			foreach(var field in Mod.FieldList){
 				if(field.ValueList.Count > 0){
@@ -58,18 +58,18 @@ namespace @(Model.Settings.Name).Entities
 				}
 			}
 			if(existValues){
-			// ‰Šú’l‚ª‚ ‚ê‚Î‰Šú’lì¬ƒƒ\ƒbƒh‚ğì¬‚·‚é
+			// åˆæœŸå€¤ãŒã‚ã‚Œã°åˆæœŸå€¤ä½œæˆãƒ¡ã‚½ãƒƒãƒ‰ã‚’ä½œæˆã™ã‚‹
 		@:
 		@:/// <summary>
-		@:/// ‰Šú’l‚ğì¬‚µ‚Ü‚·B
+		@:/// åˆæœŸå€¤ã‚’ä½œæˆã—ã¾ã™ã€‚
 		@:/// </summary>
 		@:/// <returns></returns>
 		@:internal static @(Mod.Name)Entity[] GetInitialData()
 		@:{
-			// ‰Šú’l‚ÌƒŠƒXƒg
+			// åˆæœŸå€¤ã®ãƒªã‚¹ãƒˆ
 			var listName = "";
 			foreach(var field in Mod.FieldList){
-				// string‚Ìê‡ˆø—p•„‚ğ“ü‚ê‚é
+				// stringã®å ´åˆå¼•ç”¨ç¬¦ã‚’å…¥ã‚Œã‚‹
 				var quotation = field.Type == "string" ? "\"" : "";
 				var comma = "";
 				if(field.ValueList.Count > 0){

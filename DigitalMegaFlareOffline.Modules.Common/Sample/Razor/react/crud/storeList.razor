@@ -30,15 +30,15 @@ import { createSlice, PayloadAction } from "@@reduxjs/toolkit";
 // state
 export interface ListState {
     @(Mod.CamelPlural): @(Mod.Pascal)[];
-    message: string;  // ³íƒƒbƒZ[ƒW
-    error: string;  // ƒGƒ‰[ƒƒbƒZ[ƒW
+    message: string;  // æ­£å¸¸ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
+    error: string;  // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 
-    isEdited: boolean;  // ‚±‚Ì‰æ–Ê‚Å•ÒW‚µ‚Ä‚¢‚½‚çtrue
-    formData: FormData; // ƒT[ƒo‘—M‚Ì‚½‚ß‚Ìƒf[ƒ^
-    postTrigger: number;// ‚±‚Ì’l‚ª•Ï‰»‚µ‚½‚çPost‚·‚é
+    isEdited: boolean;  // ã“ã®ç”»é¢ã§ç·¨é›†ã—ã¦ã„ãŸã‚‰true
+    formData: FormData; // ã‚µãƒ¼ãƒé€ä¿¡ã®ãŸã‚ã®ãƒ‡ãƒ¼ã‚¿
+    postTrigger: number;// ã“ã®å€¤ãŒå¤‰åŒ–ã—ãŸã‚‰Postã™ã‚‹
 }
 
-// •â•ƒf[ƒ^
+// è£œåŠ©ãƒ‡ãƒ¼ã‚¿
 interface @(Mod.Pascal) {
     @(Mod.Camel)Id: number;
     @foreach(var field in Mod.FieldList){
@@ -54,26 +54,26 @@ interface @(Mod.Pascal) {
     version: number;
     updatedBy: string;
     updatedDate: string;
-    isDeleted: boolean;  // ‚±‚Ì‰æ–Ê‚Å•ÒW‚µ‚½‚©
-    isEditMode: boolean;  // Œ»İ•ÒW’†
-    isEdited: boolean;  // ‚±‚Ì‰æ–Ê‚Å•ÒW‚µ‚½‚©
-    isNgInput: boolean;  // •K{“ü—Í‚È‚Ç‚Å“ü—ÍNG
-    errorMessage: string;  // NGƒƒbƒZ[ƒW
+    isDeleted: boolean;  // ã“ã®ç”»é¢ã§ç·¨é›†ã—ãŸã‹
+    isEditMode: boolean;  // ç¾åœ¨ç·¨é›†ä¸­
+    isEdited: boolean;  // ã“ã®ç”»é¢ã§ç·¨é›†ã—ãŸã‹
+    isNgInput: boolean;  // å¿…é ˆå…¥åŠ›ãªã©ã§å…¥åŠ›NG
+    errorMessage: string;  // NGãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 }
 
-// ‰Šú’l
+// åˆæœŸå€¤
 const ListInitialState: ListState = {
     @(Mod.CamelPlural): [],
     message: '',
     error: '',
 
-    isEdited: false,  // ‚±‚Ì‰æ–Ê‚Å‚¢‚¸‚ê‚©‚Ìs‚ğ•ÒW‚µ‚½‚©
+    isEdited: false,  // ã“ã®ç”»é¢ã§ã„ãšã‚Œã‹ã®è¡Œã‚’ç·¨é›†ã—ãŸã‹
     formData: new FormData(),
     postTrigger: 0
 };
 
-// ‘—M‰Â”\‚©”»’è‚·‚é
-// “ü—ÍNG‚ª‚ ‚éê‡‚Ífalse
+// é€ä¿¡å¯èƒ½ã‹åˆ¤å®šã™ã‚‹
+// å…¥åŠ›NGãŒã‚ã‚‹å ´åˆã¯false
 function isEditedState(state: ListState) {
     if (state.@(Mod.CamelPlural).find(data => data.isNgInput && !data.isDeleted)) {
         state.isEdited = false;
@@ -85,7 +85,7 @@ function isEditedState(state: ListState) {
         state.isEdited = false;
     }
 }
-// íœ:1,•ÒW‚µ‚½:2,•ÒW‚µ‚Ä‚¢‚È‚¢‚Ü‚½‚ÍNG:0
+// å‰Šé™¤:1,ç·¨é›†ã—ãŸ:2,ç·¨é›†ã—ã¦ã„ãªã„ã¾ãŸã¯NG:0
 function isEdited(data: @(Mod.Pascal)) {
     if (data.isDeleted) {
         return 1;
@@ -95,13 +95,13 @@ function isEdited(data: @(Mod.Pascal)) {
     return 0;
 }
 
-// createSlice() ‚Ì’†‚Å‚ÍAstate‚ÌXV‚ğs‚Á‚Ä‚à—Ç‚¢i‘¼‚Å‚Í‚¾‚ßj
+// createSlice() ã®ä¸­ã§ã¯ã€stateã®æ›´æ–°ã‚’è¡Œã£ã¦ã‚‚è‰¯ã„ï¼ˆä»–ã§ã¯ã ã‚ï¼‰
 export let List@(Mod.Pascal)Module = createSlice({
     name: "List@(Mod.Pascal)",
     initialState: ListInitialState,
-    reducers:   // ˆ—‚Ì’è‹`
+    reducers:   // å‡¦ç†ã®å®šç¾©
     {
-        // Fetch‚µ‚½ƒf[ƒ^‚ğstate‚É”½‰f‚³‚¹‚é
+        // Fetchã—ãŸãƒ‡ãƒ¼ã‚¿ã‚’stateã«åæ˜ ã•ã›ã‚‹
         setData: (state, action: PayloadAction<ListState>) => {
             if (action.payload) {
                 state.@(Mod.CamelPlural) = action.payload.@(Mod.CamelPlural);
@@ -112,38 +112,38 @@ export let List@(Mod.Pascal)Module = createSlice({
             }
             return state;
         },
-        // s‚ğ’Ç‰Á‚·‚é
+        // è¡Œã‚’è¿½åŠ ã™ã‚‹
         addLine: (state) => {
-            // •\¦‡‚ÌÅ‘å+1‚ğİ’è
+            // è¡¨ç¤ºé †ã®æœ€å¤§+1ã‚’è¨­å®š
             let orders = state.@(Mod.CamelPlural).map(({ order }) => order);
             var max = Math.max(...orders);
             state.@(Mod.CamelPlural).push({
                 @(Mod.Camel)Id: 0, order: max + 1, isDeleted: false, isEditMode: true, isEdited: true
-                ,isNgInput: true, errorMessage: '“ü—Í‚ª‚ ‚è‚Ü‚¹‚ñ', version: 0, updatedBy: '(new)', updatedDate: '(new)'@(initValues)
+                ,isNgInput: true, errorMessage: 'å…¥åŠ›ãŒã‚ã‚Šã¾ã›ã‚“', version: 0, updatedBy: '(new)', updatedDate: '(new)'@(initValues)
             });
             isEditedState(state);
             return state;
         },
-        // s‚ğíœ‚·‚é
+        // è¡Œã‚’å‰Šé™¤ã™ã‚‹
         removeLine: (state, action: PayloadAction<string>) => {
             state.@(Mod.CamelPlural)[Number(action.payload)].isDeleted = !state.@(Mod.CamelPlural)[Number(action.payload)].isDeleted;
             isEditedState(state);
             return state;
         },
-        // s‚ğ•ÒW‚·‚é
+        // è¡Œã‚’ç·¨é›†ã™ã‚‹
         editLine: (state, action: PayloadAction<string>) => {
             state.@(Mod.CamelPlural)[Number(action.payload)].isEditMode = !state.@(Mod.CamelPlural)[Number(action.payload)].isEditMode;
             state.@(Mod.CamelPlural)[Number(action.payload)].isEdited = true;
             isEditedState(state);
             return state;
         },
-        // Še€–Ú‚Ì•ÒW
+        // å„é …ç›®ã®ç·¨é›†
         editOrder: (state, action: PayloadAction<{ id: string, order: number }>) => {
             state.@(Mod.CamelPlural)[Number(action.payload.id)].order = action.payload.order;
             return state;
         },
         @foreach(var field in Mod.FieldList){
-        // ”’lŒ^‚©‚Ç‚¤‚©”»’è
+        // æ•°å€¤å‹ã‹ã©ã†ã‹åˆ¤å®š
         var type = field.Type.Trim('?');
         var isNumeric = (type == "int" || type == "double" || type == "decimal" || type == "float");
         if(isNumeric){
@@ -174,8 +174,8 @@ export let List@(Mod.Pascal)Module = createSlice({
         @:},
         }
         }
-        // ƒT[ƒo‚É‘—M‚·‚é‚½‚ß‚ÌFormDataì¬
-        // FormData‚ğ•ÏX‚·‚é‚ÆuseEffect‚É‚æ‚Á‚ÄƒT[ƒo‚ÉPost‚³‚ê‚éd‘g‚İ‚É‚µ‚Ä‚¢‚éB
+        // ã‚µãƒ¼ãƒã«é€ä¿¡ã™ã‚‹ãŸã‚ã®FormDataä½œæˆ
+        // FormDataã‚’å¤‰æ›´ã™ã‚‹ã¨useEffectã«ã‚ˆã£ã¦ã‚µãƒ¼ãƒã«Postã•ã‚Œã‚‹ä»•çµ„ã¿ã«ã—ã¦ã„ã‚‹ã€‚
         makeFormData: (state) => {
             var formData = new FormData();
             state.@(Mod.CamelPlural).forEach(@(Mod.Camel) => {
@@ -187,7 +187,7 @@ export let List@(Mod.Pascal)Module = createSlice({
                 }
                 @:formData.append('@(field.CamelPlural)', @(Mod.Camel).@(field.Camel)@(tostring));
                 }
-                formData.append('isEdited', isEdited(@(Mod.Camel)).toString());  // íœ:1,•ÒW‚µ‚½:2,•ÒW‚µ‚Ä‚¢‚È‚¢:0
+                formData.append('isEdited', isEdited(@(Mod.Camel)).toString());  // å‰Šé™¤:1,ç·¨é›†ã—ãŸ:2,ç·¨é›†ã—ã¦ã„ãªã„:0
                 formData.append('orders', @(Mod.Camel).order.toString());
                 formData.append('versions', @(Mod.Camel).version.toString());
             });
@@ -200,44 +200,44 @@ export let List@(Mod.Pascal)Module = createSlice({
     }
 });
 
-// •¶š—ñ‚Ì“ü—Íƒ`ƒFƒbƒN‚ğs‚¤
+// æ–‡å­—åˆ—ã®å…¥åŠ›ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
 function validation(state: ListState, id: number, text: string, list: string[]) {
     let tempText = text.trim();
     let isConfirmed = list.some(data => data.trim() === tempText);
     if (tempText == '') {
-        // •K{“ü—Íƒ`ƒFƒbƒN
+        // å¿…é ˆå…¥åŠ›ãƒã‚§ãƒƒã‚¯
         state.@(Mod.CamelPlural)[id].isNgInput = true;
-        state.@(Mod.CamelPlural)[id].errorMessage = '“ü—Í‚ª‚ ‚è‚Ü‚¹‚ñ';
+        state.@(Mod.CamelPlural)[id].errorMessage = 'å…¥åŠ›ãŒã‚ã‚Šã¾ã›ã‚“';
     } else if (isConfirmed) {
-        // d•¡“ü—Íƒ`ƒFƒbƒN
+        // é‡è¤‡å…¥åŠ›ãƒã‚§ãƒƒã‚¯
         state.@(Mod.CamelPlural)[id].isNgInput = true;
-        state.@(Mod.CamelPlural)[id].errorMessage = '‘¼‚Ì’l‚Æd•¡‚µ‚Ä‚¢‚Ü‚·';
+        state.@(Mod.CamelPlural)[id].errorMessage = 'ä»–ã®å€¤ã¨é‡è¤‡ã—ã¦ã„ã¾ã™';
     } else {
-        // ˆÙí‚È‚µ
+        // ç•°å¸¸ãªã—
         state.@(Mod.CamelPlural)[id].isNgInput = false;
         state.@(Mod.CamelPlural)[id].errorMessage = '';
     }
-    // ‘—M‰Â”\‚©”»’è‚·‚é
+    // é€ä¿¡å¯èƒ½ã‹åˆ¤å®šã™ã‚‹
     isEditedState(state);
     return state;
 }
 
 @if(isExistNumber){
-@:// ”’l‚Ì“ü—Íƒ`ƒFƒbƒNAd•¡ƒ`ƒFƒbƒN‚ª•K—v‚È‚à‚Ì‚Ì‚İ
+@:// æ•°å€¤ã®å…¥åŠ›ãƒã‚§ãƒƒã‚¯ã€é‡è¤‡ãƒã‚§ãƒƒã‚¯ãŒå¿…è¦ãªã‚‚ã®ã®ã¿
 @:function validationNumber(state: ListState, id: number, text: number, list: number[]) {
 @:    if (state.@(Mod.CamelPlural)[id].isNgInput == false) {
 @:        let tempText = text;
 @:        let isConfirmed = list.some(data => data === tempText);
 @:        if (isConfirmed) {
-@:            // d•¡“ü—Íƒ`ƒFƒbƒN
+@:            // é‡è¤‡å…¥åŠ›ãƒã‚§ãƒƒã‚¯
 @:            state.@(Mod.CamelPlural)[id].isNgInput = true;
-@:            state.@(Mod.CamelPlural)[id].errorMessage = '‘¼‚Ì’l‚Æd•¡‚µ‚Ä‚¢‚Ü‚·';
+@:            state.@(Mod.CamelPlural)[id].errorMessage = 'ä»–ã®å€¤ã¨é‡è¤‡ã—ã¦ã„ã¾ã™';
 @:        } else {
-@:            // ˆÙí‚È‚µ
+@:            // ç•°å¸¸ãªã—
 @:            state.@(Mod.CamelPlural)[id].isNgInput = false;
 @:            state.@(Mod.CamelPlural)[id].errorMessage = '';
 @:        }
-@:        // ‘—M‰Â”\‚©”»’è‚·‚é
+@:        // é€ä¿¡å¯èƒ½ã‹åˆ¤å®šã™ã‚‹
 @:        isEditedState(state);
 @:    }
 @:    return state;
@@ -245,23 +245,23 @@ function validation(state: ListState, id: number, text: string, list: string[]) 
 }
 
 @if(isExistDecimal){
-@:// ”’l‚Ì“ü—Íƒ`ƒFƒbƒNAÅ‘åÅ¬ƒ`ƒFƒbƒN‚ª•K—v‚È‚à‚Ì‚Ì‚İ
+@:// æ•°å€¤ã®å…¥åŠ›ãƒã‚§ãƒƒã‚¯ã€æœ€å¤§æœ€å°ãƒã‚§ãƒƒã‚¯ãŒå¿…è¦ãªã‚‚ã®ã®ã¿
 @:function checkNumber(state: ListState, id: number, text: number, min: number, max: number) {
 @:    if (state.@(Mod.CamelPlural)[id].isNgInput == false) {
 @:        let tempText = text;
 @:        if (tempText > max) {
-@:            // Å‘å’lƒ`ƒFƒbƒN
+@:            // æœ€å¤§å€¤ãƒã‚§ãƒƒã‚¯
 @:            state.@(Mod.CamelPlural)[id].isNgInput = true;
-@:            state.@(Mod.CamelPlural)[id].errorMessage = '’l‚Í' + max + 'ˆÈ‰º‚Å“ü—Í‚µ‚Ä‚­‚¾‚³‚¢';
+@:            state.@(Mod.CamelPlural)[id].errorMessage = 'å€¤ã¯' + max + 'ä»¥ä¸‹ã§å…¥åŠ›ã—ã¦ãã ã•ã„';
 @:        } else if (tempText < min) {
-@:            // Å¬’lƒ`ƒFƒbƒN
+@:            // æœ€å°å€¤ãƒã‚§ãƒƒã‚¯
 @:            state.@(Mod.CamelPlural)[id].isNgInput = true;
-@:            state.@(Mod.CamelPlural)[id].errorMessage = '’l‚Í' + min + 'ˆÈã‚Å“ü—Í‚µ‚Ä‚­‚¾‚³‚¢';
+@:            state.@(Mod.CamelPlural)[id].errorMessage = 'å€¤ã¯' + min + 'ä»¥ä¸Šã§å…¥åŠ›ã—ã¦ãã ã•ã„';
 @:        } else {
-@:            // ˆÙí‚È‚µ
+@:            // ç•°å¸¸ãªã—
 @:            state.@(Mod.CamelPlural)[id].errorMessage = '';
 @:        }
-@:        // ‘—M‰Â”\‚©”»’è‚·‚é
+@:        // é€ä¿¡å¯èƒ½ã‹åˆ¤å®šã™ã‚‹
 @:        isEditedState(state);
 @:    }
 @:    return state;

@@ -199,6 +199,12 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
                 ExcelItems.Add(new ExcelItem { Id = id, FullPath = Path.GetFullPath(filePath), UpdatedDate = File.GetLastWriteTime(filePath), Name = Path.GetFileName(filePath), Description = description });
             }
         }
+
+
+
+
+
+
     }
 
 }

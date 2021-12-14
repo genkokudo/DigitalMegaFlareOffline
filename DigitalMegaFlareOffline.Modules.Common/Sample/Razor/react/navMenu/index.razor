@@ -6,19 +6,19 @@
     }
     var component = reducer.Pascal;
     if(reducer.TsxName != ""){
-        // ‰æ–Êƒ\[ƒX–¼itsx‚Æ‚©j‚Ìw’è‚ª‚ ‚éê‡
+        // ç”»é¢ã‚½ãƒ¼ã‚¹åï¼ˆtsxã¨ã‹ï¼‰ã®æŒ‡å®šãŒã‚ã‚‹å ´åˆ
         component = reducer.TsxPascal + reducer.Pascal;
     }
 @:import { @(reducer.TsxPascal)@(reducer.Pascal)Module } from './@(path)@(component)';
 }
 
-// ƒAƒNƒVƒ‡ƒ“‚ªƒfƒBƒXƒpƒbƒ`‚³‚ê‚é‚½‚Ñ‚ÉARedux‚ÍA–¼‘O‚ªˆê’v‚·‚éREDUCER‚ğg—p‚µ‚ÄŠeƒgƒbƒvƒŒƒxƒ‹‚ÌƒAƒvƒŠƒP[ƒVƒ‡ƒ“ó‘ÔƒvƒƒpƒeƒB‚ğXV‚µ‚Ü‚·B
-// –¼‘O‚ª³Šm‚Éˆê’v‚·‚é‚±‚ÆA‚¨‚æ‚ÑREDUCER‚ªd—v‚Å‚·B
+// ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ãŒãƒ‡ã‚£ã‚¹ãƒ‘ãƒƒãƒã•ã‚Œã‚‹ãŸã³ã«ã€Reduxã¯ã€åå‰ãŒä¸€è‡´ã™ã‚‹REDUCERã‚’ä½¿ç”¨ã—ã¦å„ãƒˆãƒƒãƒ—ãƒ¬ãƒ™ãƒ«ã®ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³çŠ¶æ…‹ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã‚’æ›´æ–°ã—ã¾ã™ã€‚
+// åå‰ãŒæ­£ç¢ºã«ä¸€è‡´ã™ã‚‹ã“ã¨ã€ãŠã‚ˆã³REDUCERãŒé‡è¦ã§ã™ã€‚
 export const reducers = {
     @foreach(var reducer in Model.NavList){
     var state = reducer.Camel;
     if(reducer.TsxName != ""){
-        // ‰æ–Êƒ\[ƒX–¼itsx‚Æ‚©j‚Ìw’è‚ª‚ ‚éê‡
+        // ç”»é¢ã‚½ãƒ¼ã‚¹åï¼ˆtsxã¨ã‹ï¼‰ã®æŒ‡å®šãŒã‚ã‚‹å ´åˆ
         state = reducer.TsxCamel + reducer.Pascal;
     }
     @:@(state): @(reducer.TsxPascal)@(reducer.Pascal)Module.reducer,

@@ -7,28 +7,28 @@ using System.Threading.Tasks;
 namespace @(Model.Settings.Name).Entities
 {
     /// <summary>
-    /// �}�X�^�����e�p�G���e�B�e�B�̋��ʍ��ڂł��B
+    /// マスタメンテ用エンティティの共通項目です。
     /// </summary>
     public class EntityBase
     {
         /// <summary>
-        /// �X�V���[�UID���擾�A�������́A�ݒ肵�܂��B
+        /// 更新ユーザIDを取得、もしくは、設定します。
         /// </summary>
         public long UpdatedUserId { get; set; }
 
         /// <summary>
-        /// �X�V���[�U�����擾�A�������́A�ݒ肵�܂��B
+        /// 更新ユーザ名を取得、もしくは、設定します。
         /// </summary>
         public string UpdatedBy { get; set; }
 
         /// <summary>
-        /// �X�V�������擾�A�������́A�ݒ肵�܂��B
+        /// 更新日時を取得、もしくは、設定します。
         /// </summary>
         public DateTime UpdatedDate { get; set; }
 
         /// <summary>
-        /// �y�ϓI�r��������擾�A�������́A�ݒ肵�܂��B
-        /// �蓮�X�V
+        /// 楽観的排他制御を取得、もしくは、設定します。
+        /// 手動更新
         /// </summary>
         public long Version { get; set; }
 

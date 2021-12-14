@@ -11,7 +11,7 @@ import Layout from './components/Layout';
     }
     var tsxPath = $"./components/{path}{reducer.Pascal}";
     if(reducer.TsxName != ""){
-        // ‰æ–Êƒ\[ƒX–¼itsx‚Æ‚©j‚Ìw’è‚ª‚ ‚éê‡
+        // ç”»é¢ã‚½ãƒ¼ã‚¹åï¼ˆtsxã¨ã‹ï¼‰ã®æŒ‡å®šãŒã‚ã‚‹å ´åˆ
         component = reducer.TsxPascal + reducer.Pascal;
         tsxPath = $"./components{reducer.Path}/{reducer.Camel}/{reducer.TsxPascal}";
     }
@@ -21,15 +21,15 @@ import Layout from './components/Layout';
 import './custom.css'
 
 /**
- * index.tsx‚©‚çŒÄ‚Ño‚³‚ê‚é
- * ‚±‚±‚ÅƒfƒtƒHƒ‹ƒg‚Ì‰æ–Ê•\¦‚ğİ’è‚·‚é
- * Œ»İ‚ÍLayout.tsx‚ğŒÄ‚Ño‚·‚Ì‚İ
- * ƒ‹[ƒeƒBƒ“ƒO‚àİ’è‚·‚é
+ * index.tsxã‹ã‚‰å‘¼ã³å‡ºã•ã‚Œã‚‹
+ * ã“ã“ã§ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ç”»é¢è¡¨ç¤ºã‚’è¨­å®šã™ã‚‹
+ * ç¾åœ¨ã¯Layout.tsxã‚’å‘¼ã³å‡ºã™ã®ã¿
+ * ãƒ«ãƒ¼ãƒ†ã‚£ãƒ³ã‚°ã‚‚è¨­å®šã™ã‚‹
  */
 export default () => (
     <Layout>
         @foreach(var reducer in Model.NavList){
-        // ƒRƒ“ƒ|[ƒlƒ“ƒg–¼‚ÆƒpƒXì¬
+        // ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆåã¨ãƒ‘ã‚¹ä½œæˆ
         var component = reducer.Pascal;
         var path = reducer.Path;
         if(path != ""){
@@ -38,7 +38,7 @@ export default () => (
         }
         var addressPath = $"/react/{path}{reducer.Hyphen}";
         if(reducer.TsxName != ""){
-            // ‰æ–Êƒ\[ƒX–¼itsx‚Æ‚©j‚Ìw’è‚ª‚ ‚éê‡
+            // ç”»é¢ã‚½ãƒ¼ã‚¹åï¼ˆtsxã¨ã‹ï¼‰ã®æŒ‡å®šãŒã‚ã‚‹å ´åˆ
             component = reducer.TsxPascal + reducer.Pascal;
             addressPath = $"{addressPath}/{reducer.TsxHyphen}";
         }

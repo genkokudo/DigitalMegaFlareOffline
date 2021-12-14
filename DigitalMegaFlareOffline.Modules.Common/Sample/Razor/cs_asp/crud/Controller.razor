@@ -10,8 +10,8 @@
     foreach(var field in Mod.FieldList){
         fieldLists += $", List<{field.Type}> {field.CamelPlural}";
         fieldList += $", {field.Type} {field.Camel}";
-        fieldLogList += ", " + field.Comment + "F{query." + field.Pascal + "}";
-        fieldTargetLogList += ", " + field.Comment + "F{target." + field.Pascal + "}";
+        fieldLogList += ", " + field.Comment + "ï¼š{query." + field.Pascal + "}";
+        fieldTargetLogList += ", " + field.Comment + "ï¼š{target." + field.Pascal + "}";
         fieldArgs += $"{field.CamelPlural}[i], ";
     }
 }
@@ -33,7 +33,7 @@ using CmmpWeb.Models.Master;
 namespace CmmpWeb.Controllers.Master
 {
     /// <summary>
-    /// @(Mod.Comment)ƒ}ƒXƒ^ƒƒ“ƒe
+    /// @(Mod.Comment)ãƒã‚¹ã‚¿ãƒ¡ãƒ³ãƒ†
     /// </summary>
     [Authorize(Roles = "Administrator")]
     public class @(Mod.Pascal)Controller : ControllerBase
@@ -52,8 +52,8 @@ namespace CmmpWeb.Controllers.Master
         #region List
         /// <summary>
         /// @(Mod.Pascal)/GetList
-        /// @(Mod.Comment)ˆê——‚ğæ“¾‚µ‚Ü‚·B
-        /// iPostListTableAsync‚ªŒ“‚Ë‚é‚Ì‚ÅA’¼Ú‰æ–Ê‚©‚çŒÄ‚Ô•K—v‚ª‚È‚­‚È‚Á‚½j
+        /// @(Mod.Comment)ä¸€è¦§ã‚’å–å¾—ã—ã¾ã™ã€‚
+        /// ï¼ˆPostListTableAsyncãŒå…¼ã­ã‚‹ã®ã§ã€ç›´æ¥ç”»é¢ã‹ã‚‰å‘¼ã¶å¿…è¦ãŒãªããªã£ãŸï¼‰
         /// </summary>
         /// <returns></returns>
         public async Task<Get@(Mod.Pascal)ListResult> GetListAsync()
@@ -65,10 +65,10 @@ namespace CmmpWeb.Controllers.Master
 
         /// <summary>
         /// @(Mod.Pascal)/PostListTable
-        /// @(Mod.Comment)ˆê——‚ğDB‚É”½‰f‚µ‚Ü‚·B
-        /// ‚Ü‚½AÅV‚Ìó‘Ô‚ğŒŸõ‚µ‚ÄŒ‹‰Ê‚ğ‰æ–Ê‚É•Ô‚µ‚Ü‚·B
+        /// @(Mod.Comment)ä¸€è¦§ã‚’DBã«åæ˜ ã—ã¾ã™ã€‚
+        /// ã¾ãŸã€æœ€æ–°ã®çŠ¶æ…‹ã‚’æ¤œç´¢ã—ã¦çµæœã‚’ç”»é¢ã«è¿”ã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="ids">0:’Ç‰Á</param>
+        /// <param name="ids">0:è¿½åŠ </param>
         /// <returns></returns>
         public async Task<Get@(Mod.Pascal)ListResult> PostListTableAsync(List<long> ids@(fieldLists), List<int> isEdited, List<int> orders, List<long> versions)
         {
@@ -76,7 +76,7 @@ namespace CmmpWeb.Controllers.Master
             var userId = long.Parse(User.FindFirst("UserId").Value);
             var userName = User.FindFirst("UserName").Value;
 
-            // ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“
+            // ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³
             await _db.BeginTransactionAsync();
 
             var results = new List<string>();
@@ -87,8 +87,8 @@ namespace CmmpWeb.Controllers.Master
                 {
                     if (isEdited[i] == 0 || ids[i] == 0 && isEdited[i] == 1)
                     {
-                        // •ÒW‚µ‚Ä‚¢‚È‚¢
-                        // ’Ç‰Á‚µ‚½‚¯‚Çíœ
+                        // ç·¨é›†ã—ã¦ã„ãªã„
+                        // è¿½åŠ ã—ãŸã‘ã©å‰Šé™¤
                         continue;
                     }
 
@@ -96,20 +96,20 @@ namespace CmmpWeb.Controllers.Master
 
                     if (isEdited[i] == 1)
                     {
-                        // íœ
+                        // å‰Šé™¤
                         tempResult = await PostDeleteAsync(ids[i], versions[i]) as ObjectResult;
                     }
                     else if (ids[i] == 0)
                     {
-                        // ’Ç‰Á
+                        // è¿½åŠ 
                         tempResult = await PostCreateAsync(orders[i], @(fieldArgs)userId, userName) as ObjectResult;
                     }
                     else
                     {
-                        // XV
+                        // æ›´æ–°
                         tempResult = await PostUpdateAsync(ids[i], @(fieldArgs)orders[i], versions[i], userId, userName) as ObjectResult;
                     }
-                    // ÀsŒ‹‰Ê
+                    // å®Ÿè¡Œçµæœ
                     if (tempResult.StatusCode == 200)
                     {
                         results.Add((tempResult.Value as dynamic).Message);
@@ -123,32 +123,32 @@ namespace CmmpWeb.Controllers.Master
                 {
                     if (e.InnerException.Message.Contains("duplicate"))
                     {
-                        errors.Add($"Šù‚É‘¼‚Ìƒ†[ƒU‚ªXV‚µ‚½‚©A’l‚ªd•¡‚µ‚½‚½‚ßˆ—‚ªƒLƒƒƒ“ƒZƒ‹‚³‚ê‚Ü‚µ‚½B\n‰æ–Ê‚ğƒŠƒ[ƒh‚µ‚Ä‚â‚è’¼‚µ‚Ä‚­‚¾‚³‚¢B");
+                        errors.Add($"æ—¢ã«ä»–ã®ãƒ¦ãƒ¼ã‚¶ãŒæ›´æ–°ã—ãŸã‹ã€å€¤ãŒé‡è¤‡ã—ãŸãŸã‚å‡¦ç†ãŒã‚­ãƒ£ãƒ³ã‚»ãƒ«ã•ã‚Œã¾ã—ãŸã€‚\nç”»é¢ã‚’ãƒªãƒ­ãƒ¼ãƒ‰ã—ã¦ã‚„ã‚Šç›´ã—ã¦ãã ã•ã„ã€‚");
                     }
                     else if (e.InnerException.Message.Contains("conflicted"))
                     {
-                        errors.Add($"‚±‚Ìƒ}ƒXƒ^‚ğg—p‚µ‚Ä‚¢‚éƒXƒ^ƒ“ƒv‚ª‚ ‚é‚½‚ßíœ‚Å‚«‚Ü‚¹‚ñB");
+                        errors.Add($"ã“ã®ãƒã‚¹ã‚¿ã‚’ä½¿ç”¨ã—ã¦ã„ã‚‹ã‚¹ã‚¿ãƒ³ãƒ—ãŒã‚ã‚‹ãŸã‚å‰Šé™¤ã§ãã¾ã›ã‚“ã€‚");
                     }
                     else if (e.InnerException.Message.Contains("would be truncated"))
                     {
-                        errors.Add($"•¶š”‚ª‘½‚·‚¬‚½‚½‚ßXV‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B");
+                        errors.Add($"æ–‡å­—æ•°ãŒå¤šã™ããŸãŸã‚æ›´æ–°ã§ãã¾ã›ã‚“ã§ã—ãŸã€‚");
                     }
                     else
                     {
-                        errors.Add($"‘z’è‚³‚ê‚Ä‚¢‚È‚¢ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½:{e}");
+                        errors.Add($"æƒ³å®šã•ã‚Œã¦ã„ãªã„ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸ:{e}");
                     }
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError("@(Mod.Pascal)ƒ}ƒXƒ^ƒƒ“ƒe‚Å‘z’èŠO‚ÌƒGƒ‰[‚ª”­¶B");
+                    _logger.LogError("@(Mod.Pascal)ãƒã‚¹ã‚¿ãƒ¡ãƒ³ãƒ†ã§æƒ³å®šå¤–ã®ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã€‚");
                     _logger.LogError(e.ToString());
-                    errors.Add($"‘z’è‚³‚ê‚Ä‚¢‚È‚¢ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½:{e}");
+                    errors.Add($"æƒ³å®šã•ã‚Œã¦ã„ãªã„ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸ:{e}");
                 }
             }
 
             if (errors.Count == 0)
             {
-                // ƒGƒ‰[‚È‚µ
+                // ã‚¨ãƒ©ãƒ¼ãªã—
                 await _db.CommitTransactionAsync();
 
                 var result = await GetListAsync();
@@ -158,7 +158,7 @@ namespace CmmpWeb.Controllers.Master
             }
             else
             {
-                // ƒGƒ‰[‚ ‚è
+                // ã‚¨ãƒ©ãƒ¼ã‚ã‚Š
                 _db.RollbackTransaction();
 
                 var result = await GetListAsync();
@@ -171,7 +171,7 @@ namespace CmmpWeb.Controllers.Master
 
         #region Create
         /// <summary>
-        /// @(Mod.Comment)‚ğì¬‚µ‚Ü‚·B
+        /// @(Mod.Comment)ã‚’ä½œæˆã—ã¾ã™ã€‚
         /// </summary>
         /// <returns></returns>
         public async Task<ActionResult> PostCreateAsync(int order@(fieldList), long userId, string userName)
@@ -179,18 +179,18 @@ namespace CmmpWeb.Controllers.Master
             _logger.LogInformation($"PostCreate");
             var @(Model.Settings.IdCamel) = long.Parse(User.FindFirst("@(Model.Settings.Id)").Value);
             
-            // Å‘å’l‚ÆÅ¬’l‚Ì”»’è
+            // æœ€å¤§å€¤ã¨æœ€å°å€¤ã®åˆ¤å®š
             @foreach(var field in Mod.FieldList){
                 if(field.Min != ""){
                 @:if (@(field.Camel) < @(field.Min))
                 @:{
-                @:    return BadRequest(new { Message = $"“o˜^‚É¸”s‚µ‚Ü‚µ‚½B@(field.Comment)‚Í@(field.Min)ˆÈã‚Å“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B" });
+                @:    return BadRequest(new { Message = $"ç™»éŒ²ã«å¤±æ•—ã—ã¾ã—ãŸã€‚@(field.Comment)ã¯@(field.Min)ä»¥ä¸Šã§å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚" });
                 @:}
                 }
                 if(field.Max != ""){
                 @:if (@(field.Camel) > @(field.Max))
                 @:{
-                @:    return BadRequest(new { Message = $"“o˜^‚É¸”s‚µ‚Ü‚µ‚½B@(field.Comment)‚Í@(field.Max)ˆÈ‰º‚Å“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B" });
+                @:    return BadRequest(new { Message = $"ç™»éŒ²ã«å¤±æ•—ã—ã¾ã—ãŸã€‚@(field.Comment)ã¯@(field.Max)ä»¥ä¸‹ã§å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚" });
                 @:}
                 }
             }
@@ -206,9 +206,9 @@ namespace CmmpWeb.Controllers.Master
             });
             if (!result.IsSuccess)
             {
-                return BadRequest(new { Message = $"“o˜^‚É¸”s‚µ‚Ü‚µ‚½B{string.Join(',', result.Messages) }" });
+                return BadRequest(new { Message = $"ç™»éŒ²ã«å¤±æ•—ã—ã¾ã—ãŸã€‚{string.Join(',', result.Messages) }" });
             }
-            return Ok(new { Message = $"“o˜^‚ªŠ®—¹‚µ‚Ü‚µ‚½B{string.Join(',', result.Messages) }" });
+            return Ok(new { Message = $"ç™»éŒ²ãŒå®Œäº†ã—ã¾ã—ãŸã€‚{string.Join(',', result.Messages) }" });
         }
         #endregion
 
@@ -216,28 +216,28 @@ namespace CmmpWeb.Controllers.Master
 
         #region Post
         /// <summary>
-        /// @(Mod.Comment)‚ğXV‚µ‚Ü‚·B
+        /// @(Mod.Comment)ã‚’æ›´æ–°ã—ã¾ã™ã€‚
         /// </summary>
         /// <returns></returns>
         public async Task<ActionResult> PostUpdateAsync(long id@(fieldList), int order, long version, long userId, string userName)
         {
             _logger.LogInformation($"PostEdit");
 
-            // ‘ÎÛƒŒƒR[ƒhˆÈŠO‚Ì•À‚Ñ‡‚ÌC³‚É•K—v
+            // å¯¾è±¡ãƒ¬ã‚³ãƒ¼ãƒ‰ä»¥å¤–ã®ä¸¦ã³é †ã®ä¿®æ­£ã«å¿…è¦
             var @(Model.Settings.IdCamel) = long.Parse(User.FindFirst("@(Model.Settings.Id)").Value);
             
-            // Å‘å’l‚ÆÅ¬’l‚Ì”»’è
+            // æœ€å¤§å€¤ã¨æœ€å°å€¤ã®åˆ¤å®š
             @foreach(var field in Mod.FieldList){
                 if(field.Min != ""){
                 @:if (@(field.Camel) < @(field.Min))
                 @:{
-                @:    return BadRequest(new { Message = $"“o˜^‚É¸”s‚µ‚Ü‚µ‚½B@(field.Comment)‚Í@(field.Min)ˆÈã‚Å“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B" });
+                @:    return BadRequest(new { Message = $"ç™»éŒ²ã«å¤±æ•—ã—ã¾ã—ãŸã€‚@(field.Comment)ã¯@(field.Min)ä»¥ä¸Šã§å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚" });
                 @:}
                 }
                 if(field.Max != ""){
                 @:if (@(field.Camel) > @(field.Max))
                 @:{
-                @:    return BadRequest(new { Message = $"“o˜^‚É¸”s‚µ‚Ü‚µ‚½B@(field.Comment)‚Í@(field.Max)ˆÈ‰º‚Å“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B" });
+                @:    return BadRequest(new { Message = $"ç™»éŒ²ã«å¤±æ•—ã—ã¾ã—ãŸã€‚@(field.Comment)ã¯@(field.Max)ä»¥ä¸‹ã§å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚" });
                 @:}
                 }
             }
@@ -256,9 +256,9 @@ namespace CmmpWeb.Controllers.Master
             });
             if (!result.IsSuccess)
             {
-                return BadRequest(new { Message = $"XV‚É¸”s‚µ‚Ü‚µ‚½B{string.Join(',', result.Messages) }" });
+                return BadRequest(new { Message = $"æ›´æ–°ã«å¤±æ•—ã—ã¾ã—ãŸã€‚{string.Join(',', result.Messages) }" });
             }
-            return Ok(new { Message = $"XV‚ªŠ®—¹‚µ‚Ü‚µ‚½B{string.Join(',', result.Messages) }" });
+            return Ok(new { Message = $"æ›´æ–°ãŒå®Œäº†ã—ã¾ã—ãŸã€‚{string.Join(',', result.Messages) }" });
         }
         #endregion
 
@@ -267,7 +267,7 @@ namespace CmmpWeb.Controllers.Master
         #region Delete
         /// <summary>
         /// @(Mod.Pascal)/PostDelete
-        /// íœ‚µ‚Ü‚·B
+        /// å‰Šé™¤ã—ã¾ã™ã€‚
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -282,45 +282,45 @@ namespace CmmpWeb.Controllers.Master
             });
             if (!result.IsSuccess)
             {
-                return BadRequest(new { Message = $"íœ‚É¸”s‚µ‚Ü‚µ‚½B{string.Join(',', result.Messages) }" });
+                return BadRequest(new { Message = $"å‰Šé™¤ã«å¤±æ•—ã—ã¾ã—ãŸã€‚{string.Join(',', result.Messages) }" });
             }
-            return Ok(new { Message = $"íœ‚ªŠ®—¹‚µ‚Ü‚µ‚½B{string.Join(',', result.Messages) }" });
+            return Ok(new { Message = $"å‰Šé™¤ãŒå®Œäº†ã—ã¾ã—ãŸã€‚{string.Join(',', result.Messages) }" });
         }
         #endregion
 
     }
 
     #region List
-    /// <summary>‹¤’Ê‚Ìˆ—Œ‹‰Ê</summary>
+    /// <summary>å…±é€šã®å‡¦ç†çµæœ</summary>
     public class Post@(Mod.Pascal)Result
     {
-        /// <summary>Œ‹‰Ê</summary> 
+        /// <summary>çµæœ</summary> 
         public bool IsSuccess { get; set; } = true;
 
-        /// <summary>ƒƒbƒZ[ƒW</summary> 
+        /// <summary>ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸</summary> 
         public List<string> Messages { get; set; } = new List<string>();
     }
 
     #region Get
-    /// <summary>ŒŸõğŒ</summary>
+    /// <summary>æ¤œç´¢æ¡ä»¶</summary>
     public class Get@(Mod.Pascal)ListQuery : IRequest<Get@(Mod.Pascal)ListResult>
     {
         public long @(Model.Settings.Id) { get; set; }
     }
 
-    /// <summary>ŒŸõŒ‹‰Ê</summary>
+    /// <summary>æ¤œç´¢çµæœ</summary>
     public class Get@(Mod.Pascal)ListResult
     {
-        /// <summary>ŒŸõ‚µ‚½î•ñ</summary> 
+        /// <summary>æ¤œç´¢ã—ãŸæƒ…å ±</summary> 
         public @(Mod.Pascal)Model[] @(Mod.PascalPlural) { get; set; }
-        /// <summary>‰æ–Ê‚É•\¦‚·‚éˆ—Œ‹‰Ê</summary> 
+        /// <summary>ç”»é¢ã«è¡¨ç¤ºã™ã‚‹å‡¦ç†çµæœ</summary> 
         public string Message { get; set; }
-        /// <summary>‰æ–Ê‚É•\¦‚·‚éƒGƒ‰[</summary> 
+        /// <summary>ç”»é¢ã«è¡¨ç¤ºã™ã‚‹ã‚¨ãƒ©ãƒ¼</summary> 
         public string Error { get; set; }
     }
 
     /// <summary> 
-    /// @(Mod.Comment)ˆê——ŒŸõƒnƒ“ƒhƒ‰
+    /// @(Mod.Comment)ä¸€è¦§æ¤œç´¢ãƒãƒ³ãƒ‰ãƒ©
     /// </summary> 
     public class Get@(Mod.Pascal)ListQueryHandler : IRequestHandler<Get@(Mod.Pascal)ListQuery, Get@(Mod.Pascal)ListResult>
     {
@@ -334,17 +334,17 @@ namespace CmmpWeb.Controllers.Master
         }
 
         /// <summary>
-        /// ŒŸõ‚Ì•û–@‚ğ’è‹`‚·‚é
+        /// æ¤œç´¢ã®æ–¹æ³•ã‚’å®šç¾©ã™ã‚‹
         /// </summary>
-        /// <param name="query">ŒŸõğŒ</param>
+        /// <param name="query">æ¤œç´¢æ¡ä»¶</param>
         /// <param name="token"></param>
         /// <returns></returns>
         public async Task<Get@(Mod.Pascal)ListResult> Handle(Get@(Mod.Pascal)ListQuery query, CancellationToken token)
         {
-            // DBŒŸõ
+            // DBæ¤œç´¢
             var @(Mod.CamelPlural) = _db.@(Mod.PascalPlural).Where(x => x.@(Model.Settings.Id) == query.@(Model.Settings.Id)).OrderBy(x => x.Order).AsNoTracking().ToArray();
 
-            // ŒŸõŒ‹‰Ê‚ÌŠi”[
+            // æ¤œç´¢çµæœã®æ ¼ç´
             var result = new Get@(Mod.Pascal)ListResult
             {
                 @(Mod.PascalPlural) = _mapper.Map<@(Mod.Pascal)Entity[], @(Mod.Pascal)Model[]>(@(Mod.CamelPlural))
@@ -359,7 +359,7 @@ namespace CmmpWeb.Controllers.Master
     #region Create
 
     #region Post
-    /// <summary>ˆ—ğŒ</summary>
+    /// <summary>å‡¦ç†æ¡ä»¶</summary>
     public class Post@(Mod.Pascal)CreateQuery : IRequest<Post@(Mod.Pascal)Result>
     {
         @foreach(var field in Mod.FieldList){
@@ -372,8 +372,8 @@ namespace CmmpWeb.Controllers.Master
     }
 
     /// <summary> 
-    /// ƒnƒ“ƒhƒ‰ 
-    /// Post@(Mod.Pascal)CreateQuery‚ğSend‚·‚é‚Æ“®ì‚µA@(Mod.Pascal)CreateResult‚ğ•Ô‚· 
+    /// ãƒãƒ³ãƒ‰ãƒ© 
+    /// Post@(Mod.Pascal)CreateQueryã‚’Sendã™ã‚‹ã¨å‹•ä½œã—ã€@(Mod.Pascal)CreateResultã‚’è¿”ã™ 
     /// </summary> 
     public class Post@(Mod.Pascal)CreateQueryHandler : IRequestHandler<Post@(Mod.Pascal)CreateQuery, Post@(Mod.Pascal)Result>
     {
@@ -385,9 +385,9 @@ namespace CmmpWeb.Controllers.Master
         }
 
         /// <summary>
-        /// ˆ—‚ğ’è‹`‚·‚é
+        /// å‡¦ç†ã‚’å®šç¾©ã™ã‚‹
         /// </summary>
-        /// <param name="query">ˆ—ğŒ</param>
+        /// <param name="query">å‡¦ç†æ¡ä»¶</param>
         /// <param name="token"></param>
         /// <returns></returns>
         public async Task<Post@(Mod.Pascal)Result> Handle(Post@(Mod.Pascal)CreateQuery query, CancellationToken token)
@@ -396,7 +396,7 @@ namespace CmmpWeb.Controllers.Master
 
             try
             {
-                // “o˜^
+                // ç™»éŒ²
                 _db.@(Mod.PascalPlural).Add(new @(Mod.Pascal)Entity
                 {
                     @foreach(var field in Mod.FieldList){
@@ -410,7 +410,7 @@ namespace CmmpWeb.Controllers.Master
                 });
                 await _db.SaveChangesAsync();
 
-                result.Messages.Add($"[•\¦‡F{query.Order}@(fieldLogList)]");
+                result.Messages.Add($"[è¡¨ç¤ºé †ï¼š{query.Order}@(fieldLogList)]");
 
                 return await Task.FromResult(result);
             }
@@ -427,7 +427,7 @@ namespace CmmpWeb.Controllers.Master
     #region Update
 
     #region Post
-    /// <summary>ŒŸõğŒ</summary>
+    /// <summary>æ¤œç´¢æ¡ä»¶</summary>
     public class Post@(Mod.Pascal)UpdateQuery : IRequest<Post@(Mod.Pascal)Result>
     {
         public long Id { get; set; }
@@ -442,7 +442,7 @@ namespace CmmpWeb.Controllers.Master
     }
 
     /// <summary> 
-    /// ƒnƒ“ƒhƒ‰
+    /// ãƒãƒ³ãƒ‰ãƒ©
     /// </summary> 
     public class Post@(Mod.Pascal)UpdateQueryHandler : IRequestHandler<Post@(Mod.Pascal)UpdateQuery, Post@(Mod.Pascal)Result>
     {
@@ -454,9 +454,9 @@ namespace CmmpWeb.Controllers.Master
         }
 
         /// <summary>
-        /// ˆ—‚Ì•û–@‚ğ’è‹`‚·‚é
+        /// å‡¦ç†ã®æ–¹æ³•ã‚’å®šç¾©ã™ã‚‹
         /// </summary>
-        /// <param name="query">ŒŸõğŒ</param>
+        /// <param name="query">æ¤œç´¢æ¡ä»¶</param>
         /// <param name="token"></param>
         /// <returns></returns>
         public async Task<Post@(Mod.Pascal)Result> Handle(Post@(Mod.Pascal)UpdateQuery query, CancellationToken token)
@@ -466,18 +466,18 @@ namespace CmmpWeb.Controllers.Master
 
             try
             {
-                // ƒf[ƒ^ì¬
+                // ãƒ‡ãƒ¼ã‚¿ä½œæˆ
                 var target = _db.@(Mod.PascalPlural).FirstOrDefault(x => x.@(Mod.Pascal)Id == query.Id && x.Version == query.Version);
                 if (target == null)
                 {
                     result.IsSuccess = false;
-                    result.Messages.Add($"Šù‚É‘¼‚Ìƒ†[ƒU‚ªXV‚µ‚½‚½‚ßAˆ—‚ªƒLƒƒƒ“ƒZƒ‹‚³‚ê‚Ü‚µ‚½B\n‰æ–Ê‚ğƒŠƒ[ƒh‚µ‚Ä‚â‚è’¼‚µ‚Ä‚­‚¾‚³‚¢B");
+                    result.Messages.Add($"æ—¢ã«ä»–ã®ãƒ¦ãƒ¼ã‚¶ãŒæ›´æ–°ã—ãŸãŸã‚ã€å‡¦ç†ãŒã‚­ãƒ£ãƒ³ã‚»ãƒ«ã•ã‚Œã¾ã—ãŸã€‚\nç”»é¢ã‚’ãƒªãƒ­ãƒ¼ãƒ‰ã—ã¦ã‚„ã‚Šç›´ã—ã¦ãã ã•ã„ã€‚");
                     return await Task.FromResult(result);
                 }
 
-                var message = $"XV‘O[•\¦‡F{target.Order}@(fieldTargetLogList)]";
+                var message = $"æ›´æ–°å‰[è¡¨ç¤ºé †ï¼š{target.Order}@(fieldTargetLogList)]";
 
-                // XV
+                // æ›´æ–°
                 @foreach(var field in Mod.FieldList){
                 @:target.@(field.Pascal) = query.@(field.Pascal);
                 }
@@ -489,7 +489,7 @@ namespace CmmpWeb.Controllers.Master
 
                 await _db.SaveChangesAsync();
 
-                result.Messages.Add($"{message} XVŒã[•\¦‡F{query.Order}@(fieldLogList)]");
+                result.Messages.Add($"{message} æ›´æ–°å¾Œ[è¡¨ç¤ºé †ï¼š{query.Order}@(fieldLogList)]");
 
                 return await Task.FromResult(result);
             }
@@ -505,7 +505,7 @@ namespace CmmpWeb.Controllers.Master
     #endregion
 
     #region Delete
-    /// <summary>ŒŸõğŒ</summary>
+    /// <summary>æ¤œç´¢æ¡ä»¶</summary>
     public class PostDelete@(Mod.Pascal)Query : IRequest<Post@(Mod.Pascal)Result>
     {
         public long Id { get; set; }
@@ -513,8 +513,8 @@ namespace CmmpWeb.Controllers.Master
     }
 
     /// <summary> 
-    /// ƒnƒ“ƒhƒ‰ 
-    /// PostDelete@(Mod.Pascal)Query‚ğSend‚·‚é‚Æ“®ì‚µAPostDelete@(Mod.Pascal)Result‚ğ•Ô‚· 
+    /// ãƒãƒ³ãƒ‰ãƒ© 
+    /// PostDelete@(Mod.Pascal)Queryã‚’Sendã™ã‚‹ã¨å‹•ä½œã—ã€PostDelete@(Mod.Pascal)Resultã‚’è¿”ã™ 
     /// </summary> 
     public class PostDelete@(Mod.Pascal)QueryHandler : IRequestHandler<PostDelete@(Mod.Pascal)Query, Post@(Mod.Pascal)Result>
     {
@@ -526,10 +526,10 @@ namespace CmmpWeb.Controllers.Master
         }
 
         /// <summary>
-        /// ˆ—‚Ì•û–@‚ğ’è‹`‚·‚é
-        /// IRequestHandler‚ÅÀ‘•‚·‚é‚±‚Æ‚É‚È‚Á‚Ä‚¢‚é
+        /// å‡¦ç†ã®æ–¹æ³•ã‚’å®šç¾©ã™ã‚‹
+        /// IRequestHandlerã§å®Ÿè£…ã™ã‚‹ã“ã¨ã«ãªã£ã¦ã„ã‚‹
         /// </summary>
-        /// <param name="query">ŒŸõğŒ</param>
+        /// <param name="query">æ¤œç´¢æ¡ä»¶</param>
         /// <param name="token"></param>
         /// <returns></returns>
         public async Task<Post@(Mod.Pascal)Result> Handle(PostDelete@(Mod.Pascal)Query query, CancellationToken token)
@@ -537,18 +537,18 @@ namespace CmmpWeb.Controllers.Master
             var result = new Post@(Mod.Pascal)Result();
             try
             {
-                // íœ
+                // å‰Šé™¤
                 var target = _db.@(Mod.PascalPlural).FirstOrDefault(x => x.@(Mod.Pascal)Id == query.Id && x.Version == query.Version);
                 if (target == null)
                 {
                     result.IsSuccess = false;
-                    result.Messages.Add($"Šù‚É‘¼‚Ìƒ†[ƒU‚ªXV‚µ‚½‚½‚ßAˆ—‚ªƒLƒƒƒ“ƒZƒ‹‚³‚ê‚Ü‚µ‚½B\n‰æ–Ê‚ğƒŠƒ[ƒh‚µ‚Ä‚â‚è’¼‚µ‚Ä‚­‚¾‚³‚¢B");
+                    result.Messages.Add($"æ—¢ã«ä»–ã®ãƒ¦ãƒ¼ã‚¶ãŒæ›´æ–°ã—ãŸãŸã‚ã€å‡¦ç†ãŒã‚­ãƒ£ãƒ³ã‚»ãƒ«ã•ã‚Œã¾ã—ãŸã€‚\nç”»é¢ã‚’ãƒªãƒ­ãƒ¼ãƒ‰ã—ã¦ã‚„ã‚Šç›´ã—ã¦ãã ã•ã„ã€‚");
                     return await Task.FromResult(result);
                 }
                 _db.@(Mod.PascalPlural).Remove(target);
                 await _db.SaveChangesAsync();
 
-                result.Messages.Add($"[•\¦‡F{target.Order}@(fieldTargetLogList)]");
+                result.Messages.Add($"[è¡¨ç¤ºé †ï¼š{target.Order}@(fieldTargetLogList)]");
 
                 return await Task.FromResult(result);
             }

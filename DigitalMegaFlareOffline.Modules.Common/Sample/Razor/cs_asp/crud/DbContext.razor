@@ -7,34 +7,34 @@ using System.Threading.Tasks;
 namespace @(Model.Settings.Name).Entities
 {
     /// <summary>
-    /// ƒ}ƒXƒ^ƒƒ“ƒe—pƒGƒ“ƒeƒBƒeƒB‚Ì‹¤’Ê€–Ú‚Å‚·B
+    /// ãƒã‚¹ã‚¿ãƒ¡ãƒ³ãƒ†ç”¨ã‚¨ãƒ³ãƒ†ã‚£ãƒ†ã‚£ã®å…±é€šé …ç›®ã§ã™ã€‚
     /// </summary>
     public class EntityBase
     {
         /// <summary>
-        /// XVƒ†[ƒUID‚ğæ“¾A‚à‚µ‚­‚ÍAİ’è‚µ‚Ü‚·B
+        /// æ›´æ–°ãƒ¦ãƒ¼ã‚¶IDã‚’å–å¾—ã€ã‚‚ã—ãã¯ã€è¨­å®šã—ã¾ã™ã€‚
         /// </summary>
         public long UpdatedUserId { get; set; }
 
         /// <summary>
-        /// XVƒ†[ƒU–¼‚ğæ“¾A‚à‚µ‚­‚ÍAİ’è‚µ‚Ü‚·B
+        /// æ›´æ–°ãƒ¦ãƒ¼ã‚¶åã‚’å–å¾—ã€ã‚‚ã—ãã¯ã€è¨­å®šã—ã¾ã™ã€‚
         /// </summary>
         public string UpdatedBy { get; set; }
 
         /// <summary>
-        /// XV“ú‚ğæ“¾A‚à‚µ‚­‚ÍAİ’è‚µ‚Ü‚·B
+        /// æ›´æ–°æ—¥æ™‚ã‚’å–å¾—ã€ã‚‚ã—ãã¯ã€è¨­å®šã—ã¾ã™ã€‚
         /// </summary>
         public DateTime UpdatedDate { get; set; }
 
         /// <summary>
-        /// ŠyŠÏ“I”r‘¼§Œä‚ğæ“¾A‚à‚µ‚­‚ÍAİ’è‚µ‚Ü‚·B
-        /// è“®XV
+        /// æ¥½è¦³çš„æ’ä»–åˆ¶å¾¡ã‚’å–å¾—ã€ã‚‚ã—ãã¯ã€è¨­å®šã—ã¾ã™ã€‚
+        /// æ‰‹å‹•æ›´æ–°
         /// </summary>
         public long Version { get; set; }
 
     }
 }@{
-	// ƒ†ƒj[ƒN§–ñ•t‚«‚ÅDbContext‚ğì¬‚µ‚Ü‚·B
+	// ãƒ¦ãƒ‹ãƒ¼ã‚¯åˆ¶ç´„ä»˜ãã§DbContextã‚’ä½œæˆã—ã¾ã™ã€‚
 	var Index = int.Parse(Model.General.Index); 
 	var Mod = Model.RootList[Index];
 }
@@ -62,12 +62,12 @@ namespace @(Model.Settings.Name).Infrastructure.Database
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			// ƒ†[ƒU–¼‚Íƒ†ƒj[ƒN§–ñ‚ğ•t‚¯‚é
+			// ãƒ¦ãƒ¼ã‚¶åã¯ãƒ¦ãƒ‹ãƒ¼ã‚¯åˆ¶ç´„ã‚’ä»˜ã‘ã‚‹
 			modelBuilder.Entity<UserEntity>()
 				.HasIndex(m => m.Name)
 				.IsUnique();
 
-			// ƒ†ƒj[ƒN§–ñ‚ğ•t‚¯‚é
+			// ãƒ¦ãƒ‹ãƒ¼ã‚¯åˆ¶ç´„ã‚’ä»˜ã‘ã‚‹
 			@foreach(var mod in Model.RootList){
 			if(mod.IsMaster){
 			var UniqueList = "";
@@ -81,7 +81,7 @@ namespace @(Model.Settings.Name).Infrastructure.Database
 		}
 		@if(Model.Settings.IsRapTransaction){
 		@:
-		@:#region ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“ˆ—‚Ìƒ‰ƒbƒv
+		@:#region ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³å‡¦ç†ã®ãƒ©ãƒƒãƒ—
 		@:public async Task BeginTransactionAsync()
 		@:{
 		@:	if (_currentTransaction != null)

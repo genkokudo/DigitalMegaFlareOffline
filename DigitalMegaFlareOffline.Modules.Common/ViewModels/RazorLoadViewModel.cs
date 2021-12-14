@@ -26,6 +26,8 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         public DelegateCommand TextChangedCommand { get; private set; }
         /// <summary>ツリー選択時コマンド</summary>
         public DelegateCommand<TreeSource<FileData>> TreeSelectCommand { get; private set; }
+        /// <summary>クリップボードのコマンド</summary>
+        public DelegateCommand ClipCommand { get; private set; }
 
         /// <summary>
         /// 現在選択中のファイル
@@ -117,6 +119,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             TreeSelectCommand = new DelegateCommand<TreeSource<FileData>>(TreeSelect);
             TextChangedCommand = new DelegateCommand(TextChanged);
             RenameCommand = new DelegateCommand(Rename);
+            ClipCommand = new DelegateCommand(Clip);
 
             // ツリー取得
             // ディレクトリ階層を読み込み
@@ -136,6 +139,15 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             // 画面の状態はリセットしない
+        }
+
+        /// <summary>
+        /// クリップボードにExcel用のパスをコピー
+        /// </summary>
+        private void Clip()
+        {
+            MessageBox.Show(SelectedFileOrDirectory.Value.FullPath);
+            Clipboard.SetText(SelectedFileOrDirectory.Value.FullPath);
         }
 
         /// <summary>

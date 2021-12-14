@@ -22,18 +22,18 @@ namespace @(Model.Settings.Name).Infrastructure.Database
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			// Œ»İ‚Ì‚Æ‚±‚ëA•¡‡index‚Íİ’è‚µ‚Ä‚¢‚È‚¢
+			// ç¾åœ¨ã®ã¨ã“ã‚ã€è¤‡åˆindexã¯è¨­å®šã—ã¦ã„ãªã„
 			//modelBuilder.Entity<CourseAssignment>()
 			//    .HasKey(c => new { c.CourseID, c.InstructorID });
 
-			// ƒ†[ƒU–¼‚Íƒ†ƒj[ƒN§–ñ‚ğ•t‚¯‚é
+			// ãƒ¦ãƒ¼ã‚¶åã¯ãƒ¦ãƒ‹ãƒ¼ã‚¯åˆ¶ç´„ã‚’ä»˜ã‘ã‚‹
 			modelBuilder.Entity<UserEntity>()
 				.HasIndex(m => m.Name)
 				.IsUnique();
 		}
 		@if(Model.Settings.IsRapTransaction){
 		@:
-		@:#region ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“ˆ—‚Ìƒ‰ƒbƒv
+		@:#region ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³å‡¦ç†ã®ãƒ©ãƒƒãƒ—
 		@:public async Task BeginTransactionAsync()
 		@:{
 		@:	if (_currentTransaction != null)

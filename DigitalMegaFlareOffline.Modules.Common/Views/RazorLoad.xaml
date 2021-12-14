@@ -67,6 +67,7 @@
             <Button Content="ファイル作成" Margin="24,0,0,0" Command="{Binding MakeFileCommand}" IsEnabled="{Binding IsEnableMakeFileButton}"></Button>
             <Button Content="フォルダ作成" Margin="24,0,0,0" Command="{Binding MakeDirectoryCommand}" IsEnabled="{Binding IsEnableMakeDirectoryButton}"></Button>
             <Button Content="名前変更" Margin="24,0,0,0" Command="{Binding RenameCommand}" IsEnabled="{Binding IsEnableChangeButton}"></Button>
+            <Button Content="※" Margin="24,0,0,0" Command="{Binding ClipCommand}" IsEnabled="{Binding IsEnableEditButton}" ToolTip="Excelに記述するパスをクリップボードにコピーします。"></Button>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="削除" Margin="24,0,0,0" Background="Red" BorderBrush="Red" Command="{Binding DeleteCommand}" IsEnabled="{Binding IsEnableDeleteButton}"></Button>

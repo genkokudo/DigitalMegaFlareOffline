@@ -1,8 +1,8 @@
 @{
-	// ƒiƒrƒQ[ƒVƒ‡ƒ“ƒƒjƒ…[‚È‚Ì‚ÅAƒ}ƒXƒ^ƒƒ“ƒe—p‚Æ‚ÍŒÀ‚ç‚È‚¢
-	// ‚æ‚Á‚ÄAˆÈ‰º‚ÌƒŠƒXƒg‚ğì¬‚·‚é‚±‚Æ
-	// NavKindList(Key	Parent	Value	Part)(ƒL[	eƒ‚ƒfƒ‹	’l	•”•i)
-	// NavList(Key	Parent	Name	Value	Part)(ƒL[	eƒ‚ƒfƒ‹	–¼‘O	’l	•”•i)
+	// ãƒŠãƒ“ã‚²ãƒ¼ã‚·ãƒ§ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãªã®ã§ã€ãƒã‚¹ã‚¿ãƒ¡ãƒ³ãƒ†ç”¨ã¨ã¯é™ã‚‰ãªã„
+	// ã‚ˆã£ã¦ã€ä»¥ä¸‹ã®ãƒªã‚¹ãƒˆã‚’ä½œæˆã™ã‚‹ã“ã¨
+	// NavKindList(Key	Parent	Value	Part)(ã‚­ãƒ¼	è¦ªãƒ¢ãƒ‡ãƒ«	å€¤	éƒ¨å“)
+	// NavList(Key	Parent	Name	Value	Part)(ã‚­ãƒ¼	è¦ªãƒ¢ãƒ‡ãƒ«	åå‰	å€¤	éƒ¨å“)
 	var Index = int.Parse(Model.General.Index); 
 	var Mod = Model.RootList[Index];
 }
@@ -13,13 +13,13 @@ import '../NavMenu.css';
 
 // @(Mod.Comment)
 const @(Mod.Pascal)Nav = () => {
-    // ƒnƒ“ƒo[ƒK[ƒƒjƒ…[‚ÌƒgƒOƒ‹
+    // ãƒãƒ³ãƒãƒ¼ã‚¬ãƒ¼ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®ãƒˆã‚°ãƒ«
     const [isOpen, setIsOpen] = React.useState(false);
-    // •`‰æˆ—
+    // æç”»å‡¦ç†
     return (
         <Navbar className="navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" light>
             <Container fluid={true}>
-                {/* ¬‚³‚¢‰æ–Ê‚Ìƒnƒ“ƒo[ƒK[ƒƒjƒ…[•\¦ */}
+                {/* å°ã•ã„ç”»é¢ã®æ™‚ãƒãƒ³ãƒãƒ¼ã‚¬ãƒ¼ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤º */}
                 <NavbarToggler onClick={() => { setIsOpen(!isOpen); }} className="mr-2" />
                 <Collapse className="d-sm-inline-flex" isOpen={isOpen} navbar>
                     <ul className="navbar-nav flex-grow">
@@ -30,7 +30,7 @@ const @(Mod.Pascal)Nav = () => {
                             @:<DropdownMenu>
                             foreach(var nav in navKind.NavList){
                                 if(nav.Part == "DropdownItem"){
-                                // TODO:¡“ú‚Ì‰üC‚ğs‚¢Aindex‚ÆApp‚ğC³ŒãAApp‚Æ‘µ‚¦‚é‚±‚Æ
+                                // TODO:ä»Šæ—¥ã®æ”¹ä¿®ã‚’è¡Œã„ã€indexã¨Appã‚’ä¿®æ­£å¾Œã€Appã¨æƒãˆã‚‹ã“ã¨
                                 @:<DropdownItem tag={Link} to="/react/@(Mod.Hyphen)/@(nav.Hyphen)">@(nav.Value)</DropdownItem>
                                 }
                             }
@@ -38,7 +38,7 @@ const @(Mod.Pascal)Nav = () => {
                         }else if(navKind.Part == "NavItem"){
                             foreach(var nav in navKind.NavList){
                                 if(nav.Part == "NavLink"){
-                            // TODO:¡“ú‚Ì‰üC‚ğs‚¢Aindex‚ÆApp‚ğC³ŒãAApp‚Æ‘µ‚¦‚é‚±‚Æ
+                            // TODO:ä»Šæ—¥ã®æ”¹ä¿®ã‚’è¡Œã„ã€indexã¨Appã‚’ä¿®æ­£å¾Œã€Appã¨æƒãˆã‚‹ã“ã¨
                             @:<NavLink tag={Link} className="text-dark" to="/react/@(Mod.Hyphen)/@(nav.Hyphen)">@(nav.Value)</NavLink>
                                 }
                             }
@@ -46,7 +46,7 @@ const @(Mod.Pascal)Nav = () => {
                         @:</@(navKind.Part)>
                         }
                         <NavItem>
-                            <NavLink href="/" className="text-primary">–ß‚é</NavLink>
+                            <NavLink href="/" className="text-primary">æˆ»ã‚‹</NavLink>
                         </NavItem>
                     </ul>
                 </Collapse>

@@ -5,40 +5,40 @@
 namespace @(Model.Settings.Name).Models.Master
 {
     /// <summary>
-    /// @(Mod.Comment)‚Ì‰æ–Êƒ‚ƒfƒ‹‚Å‚·B
+    /// @(Mod.Comment)ã®ç”»é¢ãƒ¢ãƒ‡ãƒ«ã§ã™ã€‚
     /// </summary>
     public class @(Mod.Pascal)Model
     {
         /// <summary>
-        /// ID‚ğæ“¾A‚à‚µ‚­‚ÍAİ’è‚µ‚Ü‚·B
+        /// IDã‚’å–å¾—ã€ã‚‚ã—ãã¯ã€è¨­å®šã—ã¾ã™ã€‚
         /// </summary>
         public long @(Mod.Pascal)Id { get; set; }
         @foreach(var field in Mod.FieldList){
-        @* ƒtƒB[ƒ‹ƒh‚ÌƒŠƒXƒg *@
+        @* ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®ãƒªã‚¹ãƒˆ *@
         @:
         @:/// <summary>
-        @:/// @(field.Comment)‚ğæ“¾A‚à‚µ‚­‚ÍAİ’è‚µ‚Ü‚·B
+        @:/// @(field.Comment)ã‚’å–å¾—ã€ã‚‚ã—ãã¯ã€è¨­å®šã—ã¾ã™ã€‚
         @:/// </summary>
         @:public @(field.Type) @(field.Pascal) { get; set; }
         }
         
         /// <summary>
-        /// •À‚Ñ‡‚ğæ“¾A‚à‚µ‚­‚ÍAİ’è‚µ‚Ü‚·B
+        /// ä¸¦ã³é †ã‚’å–å¾—ã€ã‚‚ã—ãã¯ã€è¨­å®šã—ã¾ã™ã€‚
         /// </summary>
         public int Order { get; set; }
         
         /// <summary>
-        /// XV‰ñ”‚ğæ“¾A‚à‚µ‚­‚ÍAİ’è‚µ‚Ü‚·B
+        /// æ›´æ–°å›æ•°ã‚’å–å¾—ã€ã‚‚ã—ãã¯ã€è¨­å®šã—ã¾ã™ã€‚
         /// </summary>
         public long Version { get; set; }
         
         /// <summary>
-        /// XV“ú‚ğæ“¾A‚à‚µ‚­‚ÍAİ’è‚µ‚Ü‚·B
+        /// æ›´æ–°æ—¥ã‚’å–å¾—ã€ã‚‚ã—ãã¯ã€è¨­å®šã—ã¾ã™ã€‚
         /// </summary>
         public string UpdatedDate { get; set; }
         
         /// <summary>
-        /// XVÒ‚ğæ“¾A‚à‚µ‚­‚ÍAİ’è‚µ‚Ü‚·B
+        /// æ›´æ–°è€…ã‚’å–å¾—ã€ã‚‚ã—ãã¯ã€è¨­å®šã—ã¾ã™ã€‚
         /// </summary>
         public string UpdatedBy { get; set; }
     }
