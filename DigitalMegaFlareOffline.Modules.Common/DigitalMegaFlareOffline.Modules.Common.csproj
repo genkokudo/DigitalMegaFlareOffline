@@ -2,7 +2,6 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <AssemblyName>DigitalMegaFlareOffline.Modules.Common</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Sample\Excel\MasterMenteSample.xlsx" />
@@ -18,6 +17,8 @@
     <None Remove="Sample\Razor\cs_asp\database\ApplicationDbContext.razor" />
     <None Remove="Sample\Razor\cs_asp\database\DbInitializer.razor" />
     <None Remove="Sample\Razor\cs_asp\database\Model.razor" />
+    <None Remove="Sample\Razor\cs_asp\memo\CheckBox.razor" />
+    <None Remove="Sample\Razor\cs_asp\memo\ListBox.razor" />
     <None Remove="Sample\Razor\cs_asp\memo\OutTest.razor" />
     <None Remove="Sample\Razor\react\crud\componentsList.razor" />
     <None Remove="Sample\Razor\react\crud\custom.razor" />
@@ -69,6 +70,8 @@
     <EmbeddedResource Include="Sample\Razor\cs_asp\database\Model.razor">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Sample\Razor\cs_asp\memo\CheckBox.razor" />
+    <EmbeddedResource Include="Sample\Razor\cs_asp\memo\ListBox.razor" />
     <EmbeddedResource Include="Sample\Razor\cs_asp\memo\OutTest.razor">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -102,6 +105,7 @@
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Mintea\MinteaCore\MinteaCore.csproj" />
     <ProjectReference Include="..\..\MithrilCube\MithrilCubeWpf\MithrilCubeWpf.csproj" />
     <ProjectReference Include="..\..\MithrilCube\MithrilCube\MithrilCube.csproj" />
     <ProjectReference Include="..\DigitalMegaFlareOffline\Services\DigitalMegaFlareOffline.Services\DigitalMegaFlareOffline.Services.csproj" />

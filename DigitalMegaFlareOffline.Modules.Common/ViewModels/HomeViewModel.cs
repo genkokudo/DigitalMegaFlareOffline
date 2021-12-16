@@ -47,9 +47,11 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         {
             var excelDir = $"./{ModuleSettings.Default.ExcelDirectory}";
             var razorDir = $"./{ModuleSettings.Default.RazorDirectory}";
-            if ((!Directory.Exists("./Sample") && !Directory.Exists(excelDir) || !Directory.Exists(razorDir)))
+            var outDir = $"./{ModuleSettings.Default.OutDirectory}";
+            if ((!Directory.Exists("./Sample") && !Directory.Exists(excelDir) || !Directory.Exists(razorDir) || !Directory.Exists(outDir)))
             {
                 MessageBox.Show($"初回起動なのでフォルダとサンプルデータを作成します。");
+                _directoryService.SafeCreateDirectory(outDir);
 
                 // サンプルデータを作成する
                 // 埋め込みリソースから外に出す

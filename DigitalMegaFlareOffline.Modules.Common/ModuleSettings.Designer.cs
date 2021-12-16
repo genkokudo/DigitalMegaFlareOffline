@@ -40,5 +40,14 @@ namespace DigitalMegaFlareOffline.Modules.Common {
                 return ((string)(this["RazorDirectory"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Output")]
+        public string OutDirectory {
+            get {
+                return ((string)(this["OutDirectory"]));
+            }
+        }
     }
 }

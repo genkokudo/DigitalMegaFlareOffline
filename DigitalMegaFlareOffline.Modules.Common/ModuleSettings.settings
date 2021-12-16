@@ -8,5 +8,8 @@
     <Setting Name="RazorDirectory" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Razor</Value>
     </Setting>
+    <Setting Name="OutDirectory" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Output</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

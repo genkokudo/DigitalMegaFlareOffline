@@ -6,6 +6,7 @@ using MithrilCube.Services;
 using Prism.Ioc;
 using Prism.Modularity;
 using System.Windows;
+using MinteaCore.RazorHelper;
 
 namespace DigitalMegaFlareOffline
 {
@@ -24,7 +25,7 @@ namespace DigitalMegaFlareOffline
             containerRegistry.RegisterSingleton<IMessageService, MessageService>();
             containerRegistry.Register<IDirectoryService, DirectoryService>();
             containerRegistry.Register<IExcelService, ExcelService>();
-            //containerRegistry.Register<IRazorService, RazorService>();
+            containerRegistry.Register<IRazorService, RazorService>();
             containerRegistry.Register<IWpfDirectoryService, WpfDirectoryService>();
         }
 

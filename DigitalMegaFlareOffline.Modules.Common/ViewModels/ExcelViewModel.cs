@@ -1,6 +1,7 @@
 ﻿using DigitalMegaFlareOffline.Modules.Common.Models;
 using DigitalMegaFlareOffline.Modules.Common.Mvvm;
 using DigitalMegaFlareOffline.Services;
+using MinteaCore.RazorHelper;
 using MithrilCube.Services;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -21,6 +22,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
     {
         private readonly IDirectoryService _directoryService;
         private readonly IExcelService _excelService;
+        private readonly IRazorService _razorService;
 
         /// <summary>生成コマンド</summary>
         public DelegateCommand<long?> GenerateCommand { get; private set; }
@@ -60,15 +62,16 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             set { SetProperty(ref _excelItems, value); }
         }
 
-        public ExcelViewModel(IRegionManager regionManager, IDirectoryService directoryService, IExcelService excelService) :
+        public ExcelViewModel(IRegionManager regionManager, IDirectoryService directoryService, IExcelService excelService, IRazorService razorService) :
             base(regionManager)
         {
             // DI
             _directoryService = directoryService;
             _excelService = excelService;
+            _razorService = razorService;
 
             // コマンドの設定
-            GenerateCommand = new DelegateCommand<long?>(Generate);
+            GenerateCommand = new DelegateCommand<long?>(GenerateAsync);
             OpenCommand = new DelegateCommand<long?>(Open);
             DeleteCommand = new DelegateCommand<long?>(Delete);
             SetIsEnableNameCommand = new DelegateCommand(SetIsEnableName);
@@ -112,7 +115,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         /// <summary>
         /// ソース生成
         /// </summary>
-        private void Generate(long? Id)
+        private async void GenerateAsync(long? Id)
         {
             var res = MessageBox.Show(
                 $"ソース生成してよろしいですか？",
@@ -124,6 +127,30 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             {
                 return;
             }
+            var target = ExcelItems.First(x => x.Id == Id);
+            await _razorService.GenerateAsync(target.FullPath, Environment.CurrentDirectory, $"./{ModuleSettings.Default.OutDirectory}");
+
+            // フォルダを開く
+            var res2 = MessageBox.Show(
+                $"生成しました。フォルダを開きますか？",
+                "確認メッセージ",
+                MessageBoxButton.OKCancel,
+                MessageBoxImage.Question, MessageBoxResult.Cancel
+                );
+            if (res2 == MessageBoxResult.Cancel)
+            {
+                return;
+            }
+            OpenFolder(ModuleSettings.Default.OutDirectory);
+        }
+
+        /// <summary>
+        /// フォルダを開く
+        /// </summary>
+        private void OpenFolder(string folder)
+        {
+            string path = Environment.CurrentDirectory;
+            System.Diagnostics.Process.Start("explorer.exe", $"{Path.Combine(path, folder)}");
         }
 
         /// <summary>
@@ -200,11 +227,5 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
             }
         }
 
-
-
-
-
-
     }
-
 }
