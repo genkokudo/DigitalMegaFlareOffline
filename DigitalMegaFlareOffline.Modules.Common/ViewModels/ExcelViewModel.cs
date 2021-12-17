@@ -128,7 +128,20 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
                 return;
             }
             var target = ExcelItems.First(x => x.Id == Id);
-            await _razorService.GenerateAsync(target.FullPath, Environment.CurrentDirectory, $"./{ModuleSettings.Default.OutDirectory}");
+            try
+            {
+                await _razorService.GenerateAsync(target.FullPath, Environment.CurrentDirectory, $"./{ModuleSettings.Default.OutDirectory}");
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    $"{e.Message}",
+                    "失敗しました",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error, MessageBoxResult.Cancel
+                    );
+                return;
+            }
 
             // フォルダを開く
             var res2 = MessageBox.Show(

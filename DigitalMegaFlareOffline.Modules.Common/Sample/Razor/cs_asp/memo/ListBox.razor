@@ -1,12 +1,8 @@
 @{
-	var Index = int.Parse(Model.General.Index); 
-	var Mod = Model.RootList[Index];
+    var Index = int.Parse(Model.General.Index);
+    var Mod = Model.RootList[Index];
 }
 // ListBox.razorの生成ソース
-// @(Model.General.Index)
-@* コメント *@
+@* コメント：これは生成結果に改行も入らない *@
 @* @foreach(){}の中での出力は、先頭に"@:"を書く。 *@
 // @(Model.General.Index)
-
-
-

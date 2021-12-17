@@ -16,7 +16,6 @@
     <None Remove="Sample\Razor\cs_asp\crud\ViewModel.razor" />
     <None Remove="Sample\Razor\cs_asp\database\ApplicationDbContext.razor" />
     <None Remove="Sample\Razor\cs_asp\database\DbInitializer.razor" />
-    <None Remove="Sample\Razor\cs_asp\database\Model.razor" />
     <None Remove="Sample\Razor\cs_asp\memo\CheckBox.razor" />
     <None Remove="Sample\Razor\cs_asp\memo\ListBox.razor" />
     <None Remove="Sample\Razor\cs_asp\memo\OutTest.razor" />
@@ -65,9 +64,6 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Sample\Razor\cs_asp\database\DbInitializer.razor">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Sample\Razor\cs_asp\database\Model.razor">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Sample\Razor\cs_asp\memo\CheckBox.razor" />
