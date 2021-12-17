@@ -17,8 +17,11 @@ https://www.ipentec.com/document/csharp-open-xml-sdk-create-blank-excel-book
 
 ・ライブラリ内
 Optionsを実装すること。
-子シートの書き方を修正し、サンプルデータを更新すること。
 
 使い方を少しずつ書いていって、新規作成用のサンプルExcelを作成すること。
 
+・子シートの仕様について直す所がある。
+子シートの書き方を修正し、サンプルデータを更新すること。
 
+・生成中
+くるくる待機画面

@@ -7,6 +7,7 @@ using Prism.Ioc;
 using Prism.Modularity;
 using System.Windows;
 using MinteaCore.RazorHelper;
+using Microsoft.Extensions.Options;
 
 namespace DigitalMegaFlareOffline
 {
@@ -25,8 +26,10 @@ namespace DigitalMegaFlareOffline
             containerRegistry.RegisterSingleton<IMessageService, MessageService>();
             containerRegistry.Register<IDirectoryService, DirectoryService>();
             containerRegistry.Register<IExcelService, ExcelService>();
-            containerRegistry.Register<IRazorService, RazorService>();
             containerRegistry.Register<IWpfDirectoryService, WpfDirectoryService>();
+
+            containerRegistry.Register<IRazorService, RazorService>();
+            containerRegistry.RegisterInstance(typeof(IOptions<RazorServiceOptions>), Options.Create(new RazorServiceOptions()));
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

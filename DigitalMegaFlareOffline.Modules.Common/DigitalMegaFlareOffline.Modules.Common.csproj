@@ -7,8 +7,6 @@
     <None Remove="Sample\Excel\MasterMenteSample.xlsx" />
     <None Remove="Sample\Excel\NavMenu作成.xlsx" />
     <None Remove="Sample\Excel\OutTest.xlsx" />
-    <None Remove="Sample\Razor\CSharp\ASP\Aaaa.razor" />
-    <None Remove="Sample\Razor\CSharp\WPF\SampleWpf.razor" />
     <None Remove="Sample\Razor\cs_asp\crud\Controller.razor" />
     <None Remove="Sample\Razor\cs_asp\crud\DbContext.razor" />
     <None Remove="Sample\Razor\cs_asp\crud\EntityBase.razor" />
@@ -43,8 +41,6 @@
     <EmbeddedResource Include="Sample\Excel\MasterMenteSample.xlsx" />
     <EmbeddedResource Include="Sample\Excel\NavMenu作成.xlsx" />
     <EmbeddedResource Include="Sample\Excel\OutTest.xlsx" />
-    <EmbeddedResource Include="Sample\Razor\CSharp\ASP\Aaaa.razor" />
-    <EmbeddedResource Include="Sample\Razor\CSharp\WPF\SampleWpf.razor" />
     <EmbeddedResource Include="Sample\Razor\cs_asp\crud\Controller.razor">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
