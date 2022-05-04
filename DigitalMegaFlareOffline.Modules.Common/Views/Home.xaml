@@ -1,21 +1,45 @@
-﻿<UserControl x:Class="DigitalMegaFlareOffline.Modules.Common.Views.Home"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:DigitalMegaFlareOffline.Modules.Common.Views"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="600"
-             xmlns:prism="http://prismlibrary.com/"
-             prism:ViewModelLocator.AutoWireViewModel="True" >
+﻿<UserControl
+    x:Class="DigitalMegaFlareOffline.Modules.Common.Views.Home"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:DigitalMegaFlareOffline.Modules.Common.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    d:DesignHeight="400"
+    d:DesignWidth="600"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    mc:Ignorable="d">
     <Grid>
         <StackPanel>
             <TextBlock Margin="0,10,0,0" Text="これは、コードテンプレートとExcelでソースコードを生成するソフトウェアです。" />
+            <TextBlock Margin="0,0,0,0" Text="ExcelフォルダとRazorフォルダを削除した状態でプログラムを起動すると初期化されます。" />
+            <TextBlock Margin="0,10,0,0" Text="■作り方" />
+            <TextBlock Margin="0,0,0,0" Text="・テンプレートの作成" />
+            <TextBlock Margin="0,0,0,0" Text="テンプレにしたいソースコードに、@で始まるRazor変数を置き換えていく。" />
+            <TextBlock Margin="0,10,0,0" Text="・Excelの作成" />
+            <TextBlock Margin="0,0,0,0" Text="安全に作るために、サンプルをコピーして作成すること。" />
         </StackPanel>
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Excelフォルダを開く" Margin="10,0" Command="{Binding OpenFolderCommand}" CommandParameter="Excel" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
-            <Button Content="Razorフォルダを開く" Margin="10,0" Command="{Binding OpenFolderCommand}" CommandParameter="Razor" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+        <StackPanel
+            Grid.Row="2"
+            Grid.Column="1"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button
+                Margin="10,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Command="{Binding OpenFolderCommand}"
+                CommandParameter="Excel"
+                Content="Excelフォルダを開く" />
+            <Button
+                Margin="10,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Command="{Binding OpenFolderCommand}"
+                CommandParameter="Razor"
+                Content="Razorフォルダを開く" />
         </StackPanel>
     </Grid>
 </UserControl>
