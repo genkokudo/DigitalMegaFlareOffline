@@ -1,0 +1,77 @@
+﻿<UserControl
+    x:Class="DigitalMegaFlareOffline.Modules.Common.Views.Templatization"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:DigitalMegaFlareOffline.Modules.Common.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <Grid>
+        <!--  画面分割の定義  -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <!--  左上  -->
+        <TextBox
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="0,0,5,0"
+            materialDesign:HintAssist.Hint="テンプレート化したいコード"
+            AcceptsReturn="True"
+            Style="{StaticResource MaterialDesignOutlinedTextBox}"
+            Text="{Binding TemplateInput}"
+            TextWrapping="Wrap"
+            ToolTip="ここにテンプレートとなるソースを入力してください。置換する場所は$Abcd$のように特殊文字で囲んでください。"
+            VerticalScrollBarVisibility="Auto" />
+        <!--  右上  -->
+        <TextBox
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="5,0,0,0"
+            materialDesign:HintAssist.Hint="変換後のテンプレート"
+            AcceptsReturn="True"
+            IsReadOnly="True"
+            Style="{StaticResource MaterialDesignOutlinedTextBox}"
+            Text="{Binding TemplateOutput}"
+            TextWrapping="Wrap"
+            ToolTip="指定したファイルを参照しています。"
+            VerticalScrollBarVisibility="Auto" />
+        <!--  下側  -->
+        <Button
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="0,0,10,0"
+            HorizontalAlignment="Right"
+            Command="{Binding ExecuteCommand}"
+            Content="実行" />
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            VerticalAlignment="Bottom"
+            Orientation="Horizontal">
+            <TextBox
+                MinWidth="240"
+                materialDesign:HintAssist.Hint="置換前文字列"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                Text="{Binding BeforeString}"
+                ToolTip="PascalCaseで指定を推奨します。" />
+            <TextBox
+                MinWidth="240"
+                Margin="15,0,0,0"
+                materialDesign:HintAssist.Hint="置換後文字列"
+                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                Text="{Binding AfterString}"
+                ToolTip="入力が無い場合はデフォルト文字列に置換します。" />
+        </StackPanel>
+    </Grid>
+</UserControl>

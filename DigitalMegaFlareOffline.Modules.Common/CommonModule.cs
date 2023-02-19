@@ -18,6 +18,7 @@ namespace DigitalMegaFlareOffline.Modules.Common
             containerRegistry.RegisterForNavigation<Home>();
             containerRegistry.RegisterForNavigation<Labo>();
             containerRegistry.RegisterForNavigation<RazorLoad>();
+            containerRegistry.RegisterForNavigation<Templatization>();
         }
     }
 
@@ -31,5 +32,6 @@ namespace DigitalMegaFlareOffline.Modules.Common
         public const string ViewHome = "Home";
         public const string ViewRazorLoad = "RazorLoad";
         public const string ViewLabo = "Labo";
+        public const string ViewTemplatization = "Templatization";
     }
 }
