@@ -52,7 +52,8 @@
             Margin="0,0,10,0"
             HorizontalAlignment="Right"
             Command="{Binding ExecuteCommand}"
-            Content="実行" />
+            Content="実行"
+            IsEnabled="{Binding IsEnabled}" />
         <StackPanel
             Grid.Row="1"
             Grid.Column="0"
@@ -63,8 +64,15 @@
                 MinWidth="240"
                 materialDesign:HintAssist.Hint="置換前文字列"
                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                Text="{Binding BeforeString}"
-                ToolTip="PascalCaseで指定を推奨します。" />
+                Text="{Binding BeforeString, UpdateSourceTrigger=PropertyChanged}"
+                ToolTip="PascalCaseでの指定を推奨します。">
+                <i:Interaction.Triggers>
+                    <!--  入力時の処理  -->
+                    <i:EventTrigger EventName="TextChanged">
+                        <i:InvokeCommandAction Command="{Binding SetBeforeStringCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
             <TextBox
                 MinWidth="240"
                 Margin="15,0,0,0"

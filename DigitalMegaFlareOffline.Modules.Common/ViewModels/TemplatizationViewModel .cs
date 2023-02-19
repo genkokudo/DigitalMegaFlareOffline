@@ -1,10 +1,12 @@
 ﻿using DigitalMegaFlareOffline.Modules.Common.Mvvm;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,6 +19,7 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
     {
         /// <summary>実行するコマンド</summary>
         public DelegateCommand ExecuteCommand { get; private set; }
+        public DelegateCommand SetBeforeStringCommand { get; private set; }
 
         /// <summary>他のモジュールに通知する</summary>
         public IEventAggregator EventAggregator { get; set; }
@@ -42,7 +45,17 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         public string BeforeString
         {
             get { return _beforeString; }
-            set { SetProperty(ref _beforeString, value); }
+            set
+            {
+                SetProperty(ref _beforeString, value);
+            }
+        }
+        
+        private bool _isEnabled = false;
+        public bool IsEnabled
+        {
+            get { return _isEnabled; }
+            set { SetProperty(ref _isEnabled, value); }
         }
 
         // 置換後文字列
@@ -58,6 +71,12 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         {
             EventAggregator = eventAggregator;
             ExecuteCommand = new DelegateCommand(Execute);
+            SetBeforeStringCommand = new DelegateCommand(SetBeforeString);
+        }
+
+        private void SetBeforeString()
+        {
+            IsEnabled = !string.IsNullOrWhiteSpace(_beforeString);
         }
 
         /// <summary>
@@ -65,16 +84,36 @@ namespace DigitalMegaFlareOffline.Modules.Common.ViewModels
         /// </summary>
         private void Execute()
         {
-            MessageBox.Show($"test");
-            MessageBox.Show($"{BeforeString} {AfterString}");
-            TemplateOutput = TemplateInput;
-            //var path = ModuleSettings.Default.GinpayModeFile;
-            //IsExistsFile = File.Exists(path);
-            //if (IsExistsFile)
-            //{
-            //    File.WriteAllText(path, TemplatizationInput);
-            //    MessageBox.Show($"保存しました。");
-            //}
+            if (string.IsNullOrWhiteSpace(BeforeString))
+            {
+                return;
+            }
+            var isDefault = string.IsNullOrWhiteSpace(AfterString);
+
+            var inf = new Inflector.Inflector(new CultureInfo("en-US"));
+            // BeforeStringは単数形のPascalCaseで入力される
+            var pascalSingularBefore = BeforeString.Trim();
+            var pascalSingularAfter = isDefault ? "$PascalSingular$" : AfterString.Trim();
+
+            var camelSingularBefore = inf.Camelize(pascalSingularBefore);
+            var camelSingularAfter = isDefault ? "$CamelSingular$" : inf.Camelize(pascalSingularAfter);
+            var kebabSingularBefore = inf.Underscore(pascalSingularBefore).Replace("_", "-");
+            var kebabSingularAfter = isDefault ? "$KebabSingular$" : inf.Underscore(pascalSingularAfter).Replace("_", "-");
+            
+            var pascalPluralBefore = inf.Pluralize(BeforeString);    // 複数形
+            var pascalPluralAfter = isDefault ? "$PascalPlural$" : inf.Pluralize(AfterString);
+            var camelPluralBefore = inf.Camelize(pascalPluralBefore);
+            var camelPluralAfter = isDefault ? "$CamelPlural$" : inf.Camelize(pascalPluralAfter);
+            var kebabPluralBefore = inf.Underscore(pascalPluralBefore).Replace("_", "-");
+            var kebabPluralAfter = isDefault ? "$KebabPlural$" : inf.Underscore(pascalPluralAfter).Replace("_", "-");
+            
+            TemplateOutput = TemplateInput
+                .Replace(pascalPluralBefore, pascalPluralAfter)
+                .Replace(camelPluralBefore, camelPluralAfter)
+                .Replace(kebabPluralBefore, kebabPluralAfter)
+                .Replace(pascalSingularBefore, pascalSingularAfter)
+                .Replace(camelSingularBefore, camelSingularAfter)
+                .Replace(kebabSingularBefore, kebabSingularAfter);
         }
     }
 }
